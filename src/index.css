@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Barlow:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Reset & Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: #0c0905;
+  color: #f8fafc;
+  font-family: 'Barlow Condensed', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Custom Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar               { width: 5px; }
+::-webkit-scrollbar-track         { background: #0c0905; }
+::-webkit-scrollbar-thumb         { background: rgba(249,115,22,0.45); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover   { background: rgba(249,115,22,0.75); }
+
+/* ── Ken Burns ──────────────────────────────────────────────────── */
+@keyframes kenBurns {
+  0%   { transform: scale(1.00); transform-origin: center center; }
+  100% { transform: scale(1.15); transform-origin: center center; }
+}
+.kb-active { animation: kenBurns 8s ease-out forwards; }
+
+/* ── Shimmer sweep (VIP / CTA buttons) ─────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.10) 35%,
+    rgba(255,255,255,0.20) 50%,
+    rgba(255,255,255,0.10) 65%,
+    transparent 100%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 3s infinite linear;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* ── Neon glow pulse ────────────────────────────────────────────── */
+@keyframes pulseNeon {
+  0%,100% { box-shadow: 0 0 12px rgba(234,88,12,0.5); }
+  50%     { box-shadow: 0 0 30px rgba(234,88,12,0.9), 0 0 60px rgba(249,115,22,0.4); }
+}
+
+/* ── Float (logo on landing) ────────────────────────────────────── */
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50%     { transform: translateY(-12px); }
+}
+
+/* ── CRT Scan line ───────────────────────────────────────────────── */
+@keyframes scanLine {
+  0%   { transform: translateY(-5px); opacity: 0.6; }
+  50%  { opacity: 0.3; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+.scan-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(251,146,60,0.5), transparent);
+  animation: scanLine 8s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Floating particles ──────────────────────────────────────────── */
+@keyframes particleDrift {
+  0%   { transform: translateY(105vh) translateX(0px);   opacity: 0; }
+  8%   { opacity: 0.8; }
+  92%  { opacity: 0.4; }
+  100% { transform: translateY(-5vh) translateX(30px);   opacity: 0; }
+}
+.particle {
+  position: fixed;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(249,115,22,0.7);
+  pointer-events: none;
+  animation: particleDrift linear infinite;
+  z-index: 1;
+}
+
+/* ── Glass card utility ──────────────────────────────────────────── */
+.glass-card {
+  background: rgba(28,15,42,0.45);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(249,115,22,0.2);
+}
+
+/* ── Cyber grid background ───────────────────────────────────────── */
+.cyber-grid {
+  background-image:
+    linear-gradient(rgba(249,115,22,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249,115,22,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Neon text glow ──────────────────────────────────────────────── */
+.glow-violet { text-shadow: 0 0 10px rgba(249,115,22,0.8), 0 0 20px rgba(249,115,22,0.4); }
+.glow-orange { text-shadow: 0 0 10px rgba(249,115,22,0.8), 0 0 20px rgba(249,115,22,0.4); }
+.glow-cyan   { text-shadow: 0 0 10px rgba(251,146,60,0.8), 0 0 20px rgba(251,146,60,0.4); }
+.glow-pink   { text-shadow: 0 0 10px rgba(236,72,153,0.8), 0 0 20px rgba(236,72,153,0.4); }
+
+/* ── VIP rank badge shimmer ──────────────────────────────────────── */
+.vip-badge {
+  background: linear-gradient(
+    90deg,
+    #ec4899 0%, #f97316 40%, #fb923c 60%, #ec4899 100%
+  );
+  background-size: 300% 100%;
+  animation: shimmer 2.5s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
