@@ -185,7 +185,7 @@ function LoginModal({ onClose, onEnter }) {
   const handleDiscordLogin = () => {
     // Discord OAuth2 — solicita identify + guilds para verificar membresía
     const CLIENT_ID = "1497015005219131553" // <-- reemplaza con tu Application Client ID de Discord
-    const REDIRECT_URI = encodeURIComponent(window.location.origin + window.location.pathname)
+    const REDIRECT_URI = encodeURIComponent("https://portalweb-arica.netlify.app")
     const SCOPES = encodeURIComponent("identify guilds guilds.members.read")
     const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPES}`
     window.location.href = discordAuthUrl
