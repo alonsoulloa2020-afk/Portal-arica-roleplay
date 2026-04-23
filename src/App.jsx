@@ -10,7 +10,7 @@ import {
   RefreshCw, ChevronLeft, Landmark, MapPin,
   FileText, PiggyBank, Banknote, Receipt,
   AlertTriangle, Lock, Eye, Radio,
-  BadgeCheck, Search, Siren
+  BadgeCheck, Search, Siren, Plus
 } from "lucide-react"
 import clsx from "clsx"
 
@@ -42,6 +42,7 @@ const NAV_ITEMS = [
   { id: "cedula",        label: "Cedula",        icon: CreditCard  },
   { id: "banco",         label: "Banco",         icon: Wallet      },
   { id: "mercado",       label: "Mercado",       icon: ShoppingBag },
+  { id: "deepweb",       label: "Deep Web",      icon: Eye         },
   { id: "empresas",      label: "Empresas",      icon: Building2   },
   { id: "municipalidad", label: "Municipalidad", icon: Landmark    },
   { id: "faccion",       label: "Facciones",     icon: Shield      },
@@ -49,14 +50,14 @@ const NAV_ITEMS = [
 ]
 
 const NAV_SISTEMAS = [
-  { id: "gepol", label: "GEPOL (PDI)",  icon: Siren,  color: "#fb923c" },
+  { id: "gepol", label: "GEPOL (PDI)",  icon: Siren,  color: "#3b82f6" },
   { id: "aupol", label: "AUPOL (CAR)",  icon: ShieldCheck, color: "#22c55e" },
   { id: "snsm",  label: "SNSM",   icon: Eye,    color: "#f59e0b" },
 ]
 
 const DISCORD_ROLES_SISTEMAS = {
   "Carabineros": {
-    sistema: "GEPOL", fullName: "Gestion Policial ACRP", color: "#fb923c", icon: "Siren",
+    sistema: "GEPOL", fullName: "Gestion Policial ACRP", color: "#3b82f6", icon: "Siren",
     desc: "Sistema de Gestion Policial — Control de operativos, registros y partes.",
     features: ["Consulta RUT/Placa", "Registro de Detenidos", "Partes Policiales", "Operativos Activos", "Control de Turnos"]
   },
@@ -91,12 +92,12 @@ const RARITY = {
 }
 
 const TEAM = [
-  { role: "Presidente",              dept: "Junta Directiva",       user: "Gabriel",  color: "#f97316" },
-  { role: "VicePresidente",          dept: "Junta Directiva",       user: "Ignacio",  color: "#f97316" },
-  { role: "Gestor Administrativo",   dept: "Administración",        user: "Kouki",    color: "#fb923c" },
-  { role: "Director Ejecutivo",      dept: "Dirección Ejecutiva",   user: "Pipe",     color: "#ec4899" },
-  { role: "Director Corporativo",    dept: "Dirección Corporativa", user: "Ason",     color: "#f59e0b" },
-  { role: "Director de Gestiones",   dept: "Gestiones",             user: "Carl",     color: "#fb923c" },
+  { role: "Owner",                    dept: "Fundadores",             user: "Brexes777",   color: "#f97316" },
+  { role: "Co-Owner",                 dept: "Fundadores",             user: "Bentey",      color: "#f97316" },
+  { role: "Co-Owner",                 dept: "Fundadores",             user: "MrOrtiz",     color: "#f97316" },
+  { role: "Community Manager",        dept: "Gestión Comunitaria",    user: "MartiNashe",  color: "#ec4899" },
+  { role: "Gerente Administrativo",   dept: "Administración",         user: "Mr Renato",   color: "#fb923c" },
+  { role: "Gerente Ejecutivo",        dept: "Dirección Ejecutiva",    user: "Isla",        color: "#f59e0b" },
 ]
 
 function Particles() {
@@ -183,8 +184,8 @@ function TeamList({ animated }) {
 function LoginModal({ onClose, onEnter }) {
   const handleDiscordLogin = () => {
     // Discord OAuth2 — solicita identify + guilds para verificar membresía
-    const CLIENT_ID = "1497008908546343035" // <-- reemplaza con tu Application Client ID de Discord
-    const REDIRECT_URI = encodeURIComponent("https://portalweb-arica.netlify.app")
+    const CLIENT_ID = "1497015005219131553" // <-- reemplaza con tu Application Client ID de Discord
+    const REDIRECT_URI = encodeURIComponent(window.location.origin + window.location.pathname)
     const SCOPES = encodeURIComponent("identify guilds guilds.members.read")
     const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPES}`
     window.location.href = discordAuthUrl
@@ -419,7 +420,7 @@ function CedulaSection() {
   const [fotoError, setFotoError] = useState(false)
   useEffect(() => { const t = setInterval(() => setHoraChile(new Date().toLocaleTimeString("es-CL", { timeZone: "America/Santiago" })), 1000); return () => clearInterval(t) }, [])
   const handleGuardar = () => {
-    if (!formData.nombres || !formData.roblox) { alert("Completa al menos tu nombre y usuario de Roblox."); return }
+    if (!formData.nombres || !formData.roblox || !formData.discord) { alert("Completa tu nombre, usuario de Roblox y Discord Tag (obligatorios)."); return }
     setIsProcessing(true); setFotoError(false)
     setTimeout(() => {
       const base = Math.floor(Math.random() * (29000000 - 18000000) + 18000000)
@@ -455,7 +456,7 @@ function CedulaSection() {
             <div className="relative"><input type="date" className="w-full p-4 rounded-2xl outline-none text-slate-400 font-semibold font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onChange={e=>setFormData({...formData,fechaNac:e.target.value})} /><span className="absolute right-4 top-4 text-[10px] text-slate-500 uppercase font-bold pointer-events-none">F. Nacimiento</span></div>
             <input type="text" placeholder="Firma del Titular" className="w-full p-4 rounded-2xl outline-none font-bold text-[#f97316] placeholder-slate-600 font-body" style={{ background: "rgba(249,115,22,0.06)", border: "1px solid rgba(249,115,22,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(249,115,22,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(249,115,22,0.25)")} onChange={e=>setFormData({...formData,firma:e.target.value})} />
             <input type="text" placeholder="Usuario Roblox o ID (para foto)" className="w-full p-4 rounded-2xl outline-none font-bold text-[#fb923c] placeholder-slate-600 font-body" style={{ background: "rgba(251,146,60,0.06)", border: "1px solid rgba(251,146,60,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(251,146,60,0.25)")} onChange={e=>setFormData({...formData,roblox:e.target.value})} />
-            <input type="text" placeholder="Discord Tag (Opcional)" className="w-full p-4 rounded-2xl outline-none font-semibold text-white placeholder-slate-600 font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.5)")} onBlur={e=>(e.target.style.borderColor="rgba(255,255,255,0.08)")} onChange={e=>setFormData({...formData,discord:e.target.value})} />
+            <input type="text" placeholder="Discord Tag (Obligatorio)" className="w-full p-4 rounded-2xl outline-none font-bold text-[#7289da] placeholder-slate-600 font-body" style={{ background: "rgba(114,137,218,0.06)", border: "1px solid rgba(114,137,218,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(114,137,218,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(114,137,218,0.25)")} onChange={e=>setFormData({...formData,discord:e.target.value})} />
             <button onClick={handleGuardar} disabled={isProcessing} className="w-full py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all mt-2 disabled:opacity-50 font-display tracking-widest text-white shimmer-btn" style={{ background: "linear-gradient(135deg,#fb923c,#3b82f6)", boxShadow: "0 10px 30px rgba(8,145,178,0.3)" }}>
               {isProcessing ? <><RefreshCw className="animate-spin" size={20} /> PROCESANDO DATOS...</> : <><Check size={20} /> GUARDAR IDENTIDAD</>}
             </button>
@@ -692,8 +693,8 @@ function BancoSection() {
             <h3 className="font-display text-white text-xs tracking-widest mb-4">TABLA DE SUELDOS POR ROL</h3>
             <div className="flex flex-col gap-1">
               {[
-                { rol: "Presidente",            sueldo: 25000, color: "#f97316" },
-                { rol: "VicePresidente",         sueldo: 20000, color: "#f97316" },
+                { rol: "Owner",                  sueldo: 25000, color: "#f97316" },
+                { rol: "Co-Owner",               sueldo: 20000, color: "#f97316" },
                 { rol: "Director Ejecutivo",     sueldo: 16000, color: "#ec4899" },
                 { rol: "Director Corporativo",   sueldo: 14000, color: "#f59e0b" },
                 { rol: "Director de Gestiones",  sueldo: 8500,  color: "#fb923c" },
@@ -721,21 +722,239 @@ function BancoSection() {
   )
 }
 
+function DeepWebSection() {
+  const [posts, setPosts] = useState([
+    { id: "DW-001", tipo: "Venta", titulo: "Arma modificada silenciador", precio: 85000, vendedor: "S***w", desc: "Sin preguntas. Entrega en punto acordado.", categoria: "Armas", hora: "02:14", estado: "Disponible" },
+    { id: "DW-002", tipo: "Compra", titulo: "Busco placas policiales", precio: 50000, vendedor: "R***x", desc: "Pago al instante. Contactar privado.", categoria: "Documentos", hora: "03:47", estado: "Activo" },
+    { id: "DW-003", tipo: "Venta", titulo: "Vehículo sin placas + papeles", precio: 220000, vendedor: "T***9", desc: "Clonado. Entrega zona industrial.", categoria: "Vehículos", hora: "01:08", estado: "Disponible" },
+  ])
+  const [chatMsg, setChatMsg] = useState("")
+  const [chatHistory, setChatHistory] = useState([
+    { user: "A***3", msg: "¿Alguien tiene fentanilo?", hora: "01:02" },
+    { user: "X***7", msg: "DM abierto, mandar credenciales", hora: "01:45" },
+    { user: "S***w", msg: "Nuevo stock de hardware disponible", hora: "02:14" },
+  ])
+  const [showPublicar, setShowPublicar] = useState(false)
+  const [form, setForm] = useState({ titulo: "", precio: "", tipo: "Venta", categoria: "Armas", desc: "" })
+  const CATS = ["Armas", "Documentos", "Vehículos", "Drogas", "Información", "Servicios", "Otro"]
+  const DW_COLOR = "#7c3aed"
+
+  function publicar() {
+    if (!form.titulo || !form.precio) return
+    const nid = `DW-${String(posts.length + 1).padStart(3, "0")}`
+    setPosts(prev => [{ id: nid, tipo: form.tipo, titulo: form.titulo, precio: parseInt(form.precio) || 0, vendedor: "T***u", desc: form.desc, categoria: form.categoria, hora: new Date().toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" }), estado: form.tipo === "Venta" ? "Disponible" : "Activo" }, ...prev])
+    setForm({ titulo: "", precio: "", tipo: "Venta", categoria: "Armas", desc: "" })
+    setShowPublicar(false)
+  }
+  function sendChat() {
+    if (!chatMsg.trim()) return
+    setChatHistory(prev => [...prev, { user: "T***u", msg: chatMsg, hora: new Date().toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" }) }])
+    setChatMsg("")
+  }
+
+  const tipoColor = { "Venta": { bg: "rgba(239,68,68,0.12)", color: "#ef4444", border: "rgba(239,68,68,0.3)" }, "Compra": { bg: "rgba(124,58,237,0.12)", color: "#a78bfa", border: "rgba(124,58,237,0.3)" } }
+  const estadoColor = { "Disponible": { color: "#22c55e" }, "Activo": { color: "#a78bfa" }, "Cerrado": { color: "#64748b" } }
+
+  return (
+    <motion.div {...slideUp} className="flex flex-col gap-5">
+      {/* HEADER */}
+      <div className="relative rounded-2xl p-5 overflow-hidden" style={{ background: "linear-gradient(135deg,rgba(124,58,237,0.14) 0%,rgba(15,5,30,0.9) 100%)", border: "1px solid rgba(124,58,237,0.3)" }}>
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "repeating-linear-gradient(45deg,transparent,transparent 15px,rgba(124,58,237,0.4) 15px,rgba(124,58,237,0.4) 16px)" }} />
+        <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-2xl" style={{ background: "rgba(124,58,237,0.15)", border: "1px solid rgba(124,58,237,0.35)" }}>
+              <Eye size={28} style={{ color: "#a78bfa" }} />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-display text-[9px] tracking-[0.25em] px-2 py-0.5 rounded" style={{ background: "rgba(124,58,237,0.2)", color: "#a78bfa" }}>CIFRADO TOR</span>
+                <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#a78bfa", boxShadow: "0 0 8px rgba(167,139,250,0.8)" }} />
+                <span className="font-body text-xs" style={{ color: "#a78bfa" }}>Conexión Anónima</span>
+              </div>
+              <h2 className="font-display text-xl text-white tracking-widest">MERCADO PROFUNDO — ZONA CLANDESTINA</h2>
+              <p className="text-slate-600 font-body text-xs mt-0.5">Compras, ventas y servicios sin restricciones. Opera bajo tu propio riesgo.</p>
+            </div>
+          </div>
+          <button onClick={() => setShowPublicar(true)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest flex items-center gap-2 transition-all" style={{ background: "rgba(124,58,237,0.2)", border: "1px solid rgba(124,58,237,0.5)", color: "#a78bfa", boxShadow: "0 0 20px rgba(124,58,237,0.2)" }}>
+            <Plus size={13} /> PUBLICAR ANUNCIO
+          </button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* ANUNCIOS */}
+        <div className="lg:col-span-2 flex flex-col gap-3">
+          <div className="flex items-center justify-between mb-1">
+            <h3 className="font-display text-xs tracking-widest text-slate-400">{posts.length} ANUNCIOS ACTIVOS</h3>
+            <span className="font-display text-[10px] text-slate-600 tracking-widest">↺ ACTUALIZADO</span>
+          </div>
+          {posts.map(p => (
+            <div key={p.id} className="rounded-2xl p-4 border transition-all" style={{ background: "rgba(10,5,20,0.8)", borderColor: "rgba(124,58,237,0.18)" }}>
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-2 flex-wrap">
+                    <span className="font-display text-[9px] tracking-widest px-2 py-0.5 rounded" style={{ background: tipoColor[p.tipo].bg, color: tipoColor[p.tipo].color, border: `1px solid ${tipoColor[p.tipo].border}` }}>{p.tipo}</span>
+                    <span className="font-display text-[9px] tracking-widest px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.05)", color: "#64748b", border: "1px solid rgba(255,255,255,0.08)" }}>{p.categoria}</span>
+                    <span className="font-mono text-[9px] text-slate-700">{p.id}</span>
+                  </div>
+                  <p className="text-white font-body text-sm font-semibold">{p.titulo}</p>
+                  <p className="text-slate-600 font-body text-xs mt-0.5">{p.desc}</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="font-display text-sm font-black" style={{ color: "#a78bfa" }}>${p.precio.toLocaleString("es-CL")}</p>
+                  <p className="text-slate-700 font-mono text-[10px]">{p.vendedor}</p>
+                  <p className="text-slate-700 font-mono text-[10px]">{p.hora}</p>
+                  <span className="font-display text-[9px]" style={{ color: estadoColor[p.estado]?.color }}>{p.estado}</span>
+                </div>
+              </div>
+              <div className="flex gap-2 mt-3">
+                <button className="flex-1 py-2 rounded-xl font-display text-[10px] tracking-widest transition-all" style={{ background: "rgba(124,58,237,0.1)", border: "1px solid rgba(124,58,237,0.25)", color: "#a78bfa" }}>CONTACTAR</button>
+                <button className="px-3 py-2 rounded-xl font-display text-[10px] tracking-widest transition-all" style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#ef4444" }}>REPORTAR</button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* MINI CHAT */}
+        <div className="flex flex-col rounded-2xl overflow-hidden" style={{ background: "rgba(8,4,16,0.9)", border: "1px solid rgba(124,58,237,0.2)", height: "fit-content" }}>
+          <div className="p-3 flex items-center gap-2" style={{ borderBottom: "1px solid rgba(124,58,237,0.15)", background: "rgba(124,58,237,0.08)" }}>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#a78bfa" }} />
+            <span className="font-display text-[10px] tracking-widest text-slate-400">CANAL OSCURO — ANÓNIMO</span>
+          </div>
+          <div className="flex flex-col gap-2 p-3 overflow-y-auto" style={{ maxHeight: "260px", minHeight: "200px" }}>
+            {chatHistory.map((c, i) => (
+              <div key={i} className="flex flex-col gap-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="font-display text-[9px] tracking-widest" style={{ color: "#a78bfa" }}>{c.user}</span>
+                  <span className="font-mono text-[9px] text-slate-700">{c.hora}</span>
+                </div>
+                <p className="text-slate-300 font-body text-xs pl-2" style={{ borderLeft: "2px solid rgba(124,58,237,0.3)" }}>{c.msg}</p>
+              </div>
+            ))}
+          </div>
+          <div className="p-3 flex gap-2" style={{ borderTop: "1px solid rgba(124,58,237,0.12)" }}>
+            <input type="text" value={chatMsg} onChange={e => setChatMsg(e.target.value)} onKeyDown={e => e.key === "Enter" && sendChat()} placeholder="Mensaje anónimo..." className="flex-1 px-3 py-2 rounded-xl font-body text-xs text-white placeholder-slate-700 outline-none" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }} />
+            <button onClick={sendChat} className="px-3 py-2 rounded-xl font-display text-[10px] transition-all" style={{ background: "rgba(124,58,237,0.2)", border: "1px solid rgba(124,58,237,0.4)", color: "#a78bfa" }}>↗</button>
+          </div>
+        </div>
+      </div>
+
+      {/* MODAL PUBLICAR */}
+      <AnimatePresence>
+        {showPublicar && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(6px)" }} onClick={() => setShowPublicar(false)}>
+            <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }} onClick={e => e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={{ background: "#08040f", border: "1px solid rgba(124,58,237,0.35)", boxShadow: "0 0 60px rgba(124,58,237,0.15), 0 24px 64px rgba(0,0,0,0.8)" }}>
+              <div className="flex items-center justify-between">
+                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><Eye size={14} style={{ color: "#a78bfa" }} /> PUBLICAR ANUNCIO</h3>
+                <button onClick={() => setShowPublicar(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16} /></button>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <select value={form.tipo} onChange={e => setForm({ ...form, tipo: e.target.value })} className="col-span-1 px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}>
+                  <option>Venta</option><option>Compra</option>
+                </select>
+                <select value={form.categoria} onChange={e => setForm({ ...form, categoria: e.target.value })} className="col-span-1 px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}>
+                  {CATS.map(c => <option key={c}>{c}</option>)}
+                </select>
+              </div>
+              <input type="text" placeholder="Título del anuncio" value={form.titulo} onChange={e => setForm({ ...form, titulo: e.target.value })} className="w-full px-4 py-3 rounded-xl font-body text-sm text-white placeholder-slate-600 outline-none" style={{ background: "rgba(124,58,237,0.06)", border: "1px solid rgba(124,58,237,0.2)" }} />
+              <input type="number" placeholder="Precio ($)" value={form.precio} onChange={e => setForm({ ...form, precio: e.target.value })} className="w-full px-4 py-3 rounded-xl font-body text-sm text-white placeholder-slate-600 outline-none" style={{ background: "rgba(124,58,237,0.06)", border: "1px solid rgba(124,58,237,0.2)" }} />
+              <textarea placeholder="Descripción (opcional)" value={form.desc} onChange={e => setForm({ ...form, desc: e.target.value })} rows={2} className="w-full px-4 py-3 rounded-xl font-body text-sm text-white placeholder-slate-600 outline-none resize-none" style={{ background: "rgba(124,58,237,0.06)", border: "1px solid rgba(124,58,237,0.2)" }} />
+              <div className="flex gap-3">
+                <button onClick={() => setShowPublicar(false)} className="flex-1 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400">Cancelar</button>
+                <button onClick={publicar} className="flex-1 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: "rgba(124,58,237,0.2)", color: "#a78bfa", border: "1px solid rgba(124,58,237,0.45)" }}>PUBLICAR</button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  )
+}
+
 function MercadoSection() {
   const cats = ["Todos", "Armas", "Protección", "Vehículos", "Equipo", "Médico", "Premium"]
   const [filter, setFilter] = useState("Todos")
+  const [showPublicar, setShowPublicar] = useState(false)
+  const [userPosts, setUserPosts] = useState([])
+  const [form, setForm] = useState({ titulo: "", precio: "", categoria: "Equipo", desc: "", tipo: "Venta" })
   const items = filter === "Todos" ? MARKET_ITEMS : MARKET_ITEMS.filter(i => i.category === filter)
+  const CATS_FORM = ["Armas", "Protección", "Vehículos", "Equipo", "Médico", "Premium"]
+
+  function publicar() {
+    if (!form.titulo || !form.precio) return
+    setUserPosts(prev => [{ id: Date.now(), ...form, precio: parseInt(form.precio) || 0, user: "Jugador_001", hora: new Date().toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" }) }, ...prev])
+    setForm({ titulo: "", precio: "", categoria: "Equipo", desc: "", tipo: "Venta" })
+    setShowPublicar(false)
+  }
+
   return (
     <motion.div {...slideUp} className="flex flex-col gap-5">
-      <div className="flex items-center justify-between"><h2 className="font-display text-white text-base tracking-widest">MERCADO NEGRO</h2><span className="text-slate-500 font-body text-sm">{items.length} artículos</span></div>
+      <div className="flex items-center justify-between">
+        <h2 className="font-display text-white text-base tracking-widest">MERCADO NEGRO</h2>
+        <div className="flex items-center gap-3">
+          <span className="text-slate-500 font-body text-sm">{items.length} artículos</span>
+          <button onClick={() => setShowPublicar(true)} className="px-4 py-2 rounded-xl font-display text-[10px] tracking-widest flex items-center gap-2 transition-all" style={{ background: "rgba(234,88,12,0.12)", border: "1px solid rgba(234,88,12,0.35)", color: "#f97316" }}>
+            <Plus size={12} /> PUBLICAR
+          </button>
+        </div>
+      </div>
       <div className="flex gap-2 flex-wrap">
         {cats.map(c => <button key={c} onClick={() => setFilter(c)} className={clsx("px-3.5 py-1.5 rounded-lg font-display text-[11px] tracking-widest transition-all duration-200 border", c===filter ? "bg-[#ea580c] text-white border-transparent shadow-[0_0_14px_rgba(234,88,12,0.5)]" : "text-slate-400 border-orange-500/18 hover:border-orange-500/45 hover:text-white")} style={c!==filter ? { background: "rgba(234,88,12,0.06)" } : {}}>{c}</button>)}
       </div>
+      {userPosts.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <p className="font-display text-[10px] tracking-widest text-slate-500">PUBLICACIONES DE JUGADORES</p>
+          {userPosts.map(p => (
+            <div key={p.id} className="rounded-2xl p-4 border flex items-center justify-between gap-4" style={{ background: "rgba(20,12,4,0.7)", borderColor: "rgba(234,88,12,0.2)" }}>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="font-display text-[9px] px-2 py-0.5 rounded tracking-widest" style={{ background: "rgba(234,88,12,0.12)", color: "#f97316", border: "1px solid rgba(234,88,12,0.25)" }}>{p.tipo}</span>
+                  <span className="font-display text-[9px] px-2 py-0.5 rounded tracking-widest text-slate-500">{p.categoria}</span>
+                </div>
+                <p className="text-white font-body text-sm font-semibold">{p.titulo}</p>
+                {p.desc && <p className="text-slate-600 text-xs font-body">{p.desc}</p>}
+              </div>
+              <div className="text-right shrink-0">
+                <p className="font-display text-sm font-black text-[#f97316]">${p.precio.toLocaleString("es-CL")}</p>
+                <p className="text-slate-600 font-mono text-[10px]">{p.user} · {p.hora}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       <motion.div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" layout>
         <AnimatePresence mode="popLayout">
           {items.map(item => <motion.div key={item.id} layout initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.88 }} transition={{ duration: 0.22 }}><MarketCard item={item} /></motion.div>)}
         </AnimatePresence>
       </motion.div>
+
+      <AnimatePresence>
+        {showPublicar && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(6px)" }} onClick={() => setShowPublicar(false)}>
+            <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }} onClick={e => e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={{ background: "#0f0a05", border: "1px solid rgba(234,88,12,0.3)", boxShadow: "0 0 60px rgba(234,88,12,0.1), 0 24px 64px rgba(0,0,0,0.8)" }}>
+              <div className="flex items-center justify-between">
+                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><ShoppingBag size={14} style={{ color: "#f97316" }} /> PUBLICAR EN CANAL MERCADO</h3>
+                <button onClick={() => setShowPublicar(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16} /></button>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <select value={form.tipo} onChange={e => setForm({ ...form, tipo: e.target.value })} className="px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.2)" }}>
+                  <option>Venta</option><option>Compra</option>
+                </select>
+                <select value={form.categoria} onChange={e => setForm({ ...form, categoria: e.target.value })} className="px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.2)" }}>
+                  {CATS_FORM.map(c => <option key={c}>{c}</option>)}
+                </select>
+              </div>
+              <input type="text" placeholder="Título del artículo" value={form.titulo} onChange={e => setForm({ ...form, titulo: e.target.value })} className="w-full px-4 py-3 rounded-xl font-body text-sm text-white placeholder-slate-600 outline-none" style={{ background: "rgba(234,88,12,0.06)", border: "1px solid rgba(234,88,12,0.2)" }} />
+              <input type="number" placeholder="Precio ($)" value={form.precio} onChange={e => setForm({ ...form, precio: e.target.value })} className="w-full px-4 py-3 rounded-xl font-body text-sm text-white placeholder-slate-600 outline-none" style={{ background: "rgba(234,88,12,0.06)", border: "1px solid rgba(234,88,12,0.2)" }} />
+              <textarea placeholder="Descripción (opcional)" value={form.desc} onChange={e => setForm({ ...form, desc: e.target.value })} rows={2} className="w-full px-4 py-3 rounded-xl font-body text-sm text-white placeholder-slate-600 outline-none resize-none" style={{ background: "rgba(234,88,12,0.06)", border: "1px solid rgba(234,88,12,0.2)" }} />
+              <div className="flex gap-3">
+                <button onClick={() => setShowPublicar(false)} className="flex-1 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400">Cancelar</button>
+                <button onClick={publicar} className="flex-1 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: "rgba(234,88,12,0.18)", color: "#f97316", border: "1px solid rgba(234,88,12,0.4)" }}>PUBLICAR</button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
@@ -1092,7 +1311,7 @@ const GEPOL_TURNOS = [
   { nombre: "Ins. Fuentes",    rango: "Inspector",   turno: "Mañana",   estado: "En Servicio", unidad: "Autopista",       desde: "08:00" },
   { nombre: "Cte. Vega",       rango: "Comisario",   turno: "Tarde",    estado: "En Servicio", unidad: "Comando GOPE",    desde: "14:00" },
 ]
-const GEPOL_COLOR = "#fb923c"
+const GEPOL_COLOR = "#3b82f6"
 
 function GepolSection() {
   const [tab, setTab]                 = useState("dashboard")
@@ -1107,8 +1326,8 @@ function GepolSection() {
   const [opeForm, setOpeForm]         = useState({ nombre:"", tipo:"Patrullaje", oficial:"", personal:"" })
   const [parteForm, setParteForm]     = useState({ titulo:"", tipo:"Delito", oficial:"", rut:"" })
   const [selectedRow, setSelectedRow] = useState(null)
-
-  const GCOLOR = GEPOL_COLOR
+  const [enServicio, setEnServicio] = useState(false)
+  const [horaServicio, setHoraServicio] = useState(null)
 
   const filteredDet = detenidos.filter(d =>
     d.nombre.toLowerCase().includes(search.toLowerCase()) ||
@@ -1158,16 +1377,16 @@ function GepolSection() {
     setShowParteModal(false)
   }
 
-  const MODAL_STYLE = { background: "#0a0f1c", backdropFilter: "blur(20px)", border: "1px solid rgba(251,146,60,0.25)", boxShadow: "0 0 60px rgba(251,146,60,0.1), 0 24px 64px rgba(0,0,0,0.7)" }
-  const INPUT_STYLE = { background: "rgba(251,146,60,0.05)", border: "1px solid rgba(251,146,60,0.2)", color: "#f8fafc" }
-  const INPUT_FOCUS = (e) => (e.target.style.borderColor = "rgba(251,146,60,0.6)")
-  const INPUT_BLUR  = (e) => (e.target.style.borderColor = "rgba(251,146,60,0.2)")
+  const MODAL_STYLE = { background: "#0a0f1c", backdropFilter: "blur(20px)", border: "1px solid rgba(59,130,246,0.25)", boxShadow: "0 0 60px rgba(59,130,246,0.1), 0 24px 64px rgba(0,0,0,0.7)" }
+  const INPUT_STYLE = { background: "rgba(59,130,246,0.05)", border: "1px solid rgba(59,130,246,0.2)", color: "#f8fafc" }
+  const INPUT_FOCUS = (e) => (e.target.style.borderColor = "rgba(59,130,246,0.6)")
+  const INPUT_BLUR  = (e) => (e.target.style.borderColor = "rgba(59,130,246,0.2)")
 
   return (
     <motion.div {...slideUp} className="flex flex-col gap-0">
       {/* ── HEADER ── */}
-      <div className="relative rounded-2xl p-5 mb-5 overflow-hidden" style={{ background: "linear-gradient(135deg,rgba(251,146,60,0.12) 0%,rgba(251,146,60,0.06) 100%)", border: `1px solid ${GCOLOR}28` }}>
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "repeating-linear-gradient(0deg,transparent,transparent 20px,rgba(251,146,60,0.3) 20px,rgba(251,146,60,0.3) 21px)" }} />
+      <div className="relative rounded-2xl p-5 mb-5 overflow-hidden" style={{ background: "linear-gradient(135deg,rgba(59,130,246,0.12) 0%,rgba(59,130,246,0.06) 100%)", border: `1px solid ${GCOLOR}28` }}>
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "repeating-linear-gradient(0deg,transparent,transparent 20px,rgba(59,130,246,0.3) 20px,rgba(59,130,246,0.3) 21px)" }} />
         <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
             <div className="p-2 rounded-2xl shrink-0" style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${GCOLOR}30` }}>
@@ -1196,6 +1415,13 @@ function GepolSection() {
                 <div className="text-slate-600 font-body text-[10px] mt-0.5">{s.label}</div>
               </div>
             ))}
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <button onClick={()=>{ if(!enServicio){setEnServicio(true);setHoraServicio(new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}))}else{setEnServicio(false);setHoraServicio(null)} }} className="px-4 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all flex items-center gap-2" style={{ background: enServicio?"rgba(239,68,68,0.15)":"rgba(59,130,246,0.15)", border:`1px solid ${enServicio?"rgba(239,68,68,0.4)":"rgba(59,130,246,0.4)"}`, color: enServicio?"#ef4444":"#60a5fa" }}>
+              <span className="w-2 h-2 rounded-full" style={{background:enServicio?"#ef4444":"#3b82f6",boxShadow:enServicio?"0 0 6px rgba(239,68,68,0.9)":"0 0 6px rgba(59,130,246,0.9)"}} />
+              {enServicio ? "FINALIZAR SERVICIO" : "INICIAR SERVICIO"}
+            </button>
+            {enServicio && <span className="font-mono text-[10px] text-blue-400">En servicio desde {horaServicio}</span>}
           </div>
         </div>
       </div>
@@ -1597,7 +1823,8 @@ function AupolSection() {
   const [patForm, setPatForm]     = useState({ sector:"", unidad:"", personal:"" })
   const [infForm, setInfForm]     = useState({ desc:"", rut:"", monto:"" })
   const [selectedRow, setSelectedRow] = useState(null)
-
+  const [enServicio, setEnServicio] = useState(false)
+  const [horaServicio, setHoraServicio] = useState(null)
   const filteredProc = procedimientos.filter(p =>
     p.nombre.toLowerCase().includes(search.toLowerCase()) ||
     p.rut.includes(search) || p.id.toLowerCase().includes(search.toLowerCase())
@@ -1674,7 +1901,7 @@ function AupolSection() {
         <div className="relative z-10 flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
             <div className="p-2 rounded-2xl shrink-0" style={{ background:"rgba(255,255,255,0.05)", border:`1px solid ${ACOLOR}30` }}>
-              <img src="/assets/logo-carabineros.png" alt="Carabineros" className="w-14 h-14 object-contain" />
+              <img src="/assets/logo-carabineros.png" alt="Carabineros" className="w-14 h-14 object-contain" style={{ filter: "brightness(1) saturate(1)" }} />
             </div>
             <div>
               <div className="flex items-center gap-2 mb-0.5">
@@ -1699,6 +1926,13 @@ function AupolSection() {
                 <div className="text-slate-600 font-body text-[10px] mt-0.5">{s.label}</div>
               </div>
             ))}
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <button onClick={()=>{ if(!enServicio){setEnServicio(true);setHoraServicio(new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}))}else{setEnServicio(false);setHoraServicio(null)} }} className="px-4 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all flex items-center gap-2" style={{ background: enServicio?"rgba(239,68,68,0.15)":"rgba(34,197,94,0.15)", border:`1px solid ${enServicio?"rgba(239,68,68,0.4)":"rgba(34,197,94,0.4)"}`, color: enServicio?"#ef4444":"#22c55e" }}>
+              <span className="w-2 h-2 rounded-full" style={{background:enServicio?"#ef4444":"#22c55e",boxShadow:enServicio?"0 0 6px rgba(239,68,68,0.9)":"0 0 6px rgba(34,197,94,0.9)"}} />
+              {enServicio ? "FINALIZAR SERVICIO" : "INICIAR SERVICIO"}
+            </button>
+            {enServicio && <span className="font-mono text-[10px] text-green-400">En servicio desde {horaServicio}</span>}
           </div>
         </div>
       </div>
@@ -2195,7 +2429,7 @@ export default function App() {
     }
   }, [])
 
-  const sectionLabel = { home: "PANEL PRINCIPAL", cedula: "CEDULA DIGITAL", banco: "BANCO METROPOLITANO", mercado: "MERCADO NEGRO", empresas: "GESTION DE EMPRESAS", municipalidad: "MUNICIPALIDAD ACRP", faccion: "FACCIONES", comunidad: "COMUNIDAD", gepol: "GEPOL — GESTIÓN POLICIAL", aupol: "AUPOL — ARCHIVO POLICIAL", snsm: "SNSM — SEG. MUNICIPAL" }
+  const sectionLabel = { home: "PANEL PRINCIPAL", cedula: "CEDULA DIGITAL", banco: "BANCO METROPOLITANO", mercado: "MERCADO NEGRO", deepweb: "DEEP WEB — MERCADO CLANDESTINO", empresas: "GESTION DE EMPRESAS", municipalidad: "MUNICIPALIDAD ACRP", faccion: "FACCIONES", comunidad: "COMUNIDAD", gepol: "GEPOL — GESTIÓN POLICIAL", aupol: "AUPOL — ARCHIVO POLICIAL", snsm: "SNSM — SEG. MUNICIPAL" }
 
   return (
     <div className="min-h-screen font-body" style={{ background: "#0f0a05", color: "#f8fafc" }}>
@@ -2220,6 +2454,7 @@ export default function App() {
                 {activeSection === "cedula"        && <CedulaSection    key="cedula"        />}
                 {activeSection === "banco"         && <BancoSection     key="banco"         />}
                 {activeSection === "mercado"       && <MercadoSection   key="mercado"       />}
+                {activeSection === "deepweb"       && <DeepWebSection   key="deepweb"       />}
                 {activeSection === "empresas"      && <EmpresasSection  key="empresas"      />}
                 {activeSection === "municipalidad" && <MunicipalidadSection key="municipalidad" />}
                 {activeSection === "gepol"         && <GepolSection         key="gepol"         />}
