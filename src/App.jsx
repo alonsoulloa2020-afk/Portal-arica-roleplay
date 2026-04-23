@@ -181,6 +181,14 @@ function TeamList({ animated }) {
 }
 
 function LoginModal({ onClose, onEnter }) {
+  const handleDiscordLogin = () => {
+    // Discord OAuth2 — solicita identify + guilds para verificar membresía
+    const CLIENT_ID = "1497008908546343035" // <-- reemplaza con tu Application Client ID de Discord
+    const REDIRECT_URI = encodeURIComponent(window.location.origin + window.location.pathname)
+    const SCOPES = encodeURIComponent("identify guilds guilds.members.read")
+    const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPES}`
+    window.location.href = discordAuthUrl
+  }
   return (
     <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <div className="absolute inset-0 bg-black/65 backdrop-blur-sm" onClick={onClose} />
@@ -200,7 +208,7 @@ function LoginModal({ onClose, onEnter }) {
               </div>
             ))}
           </div>
-          <button onClick={onEnter} className="shimmer-btn w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl font-display text-sm text-white tracking-widest transition-all duration-200 group" style={{ background: "linear-gradient(135deg, #5865F2 0%, #4752C4 100%)", boxShadow: "0 0 24px rgba(88,101,242,0.4)" }}>
+          <button onClick={handleDiscordLogin} className="shimmer-btn w-full flex items-center justify-center gap-2.5 py-3.5 rounded-xl font-display text-sm text-white tracking-widest transition-all duration-200 group" style={{ background: "linear-gradient(135deg, #5865F2 0%, #4752C4 100%)", boxShadow: "0 0 24px rgba(88,101,242,0.4)" }}>
             <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
             CONTINUAR CON DISCORD
             <ChevronRight size={15} className="group-hover:translate-x-1 transition-transform" />
@@ -543,25 +551,14 @@ function BancoSection() {
   const [activeTab, setActiveTab] = useState("overview")
   const [filterType, setFilterType] = useState("Todos")
 
-  const discordSueldo = { rol: "Director de Gestiones", monto: 8500, ciclo: "Semanal", proximo: "Viernes 11 Abr" }
+  const discordSueldo = { rol: "—", monto: 0, ciclo: "—", proximo: "—" }
 
-  const tx = [
-    { desc: "Nomina semanal — Discord (Director)", amount: +8500, date: "Hoy, 09:00",    type: "salary",   ref: "NOM-2026-041" },
-    { desc: "Pago servicio policial S.I.P.",       amount: -1200, date: "Hoy, 07:30",    type: "service",  ref: "SRV-0441" },
-    { desc: "Compra Chaleco Balistico NIJ-III",    amount: -12500,date: "Ayer, 18:22",   type: "purchase", ref: "MKT-0892" },
-    { desc: "Transferencia de GabrielRP",          amount: +3000, date: "Ayer, 14:10",   type: "transfer", ref: "TRF-3312" },
-    { desc: "Multa — Velocidad Zona Centro",       amount: -800,  date: "02 Abr, 11:05", type: "fine",     ref: "MUL-0221" },
-    { desc: "Ingreso empresa ConstruRP Ltda",      amount: +5200, date: "01 Abr, 16:00", type: "empresa",  ref: "EMP-0078" },
-    { desc: "Fianza por detencion temporal",       amount: -2500, date: "31 Mar, 20:15", type: "bail",     ref: "JUD-0033" },
-    { desc: "Deposito cuenta principal",           amount: +10000,date: "30 Mar, 09:00", type: "deposit",  ref: "DEP-0901" },
-    { desc: "Mantenimiento vehiculo patrulla",     amount: -850,  date: "29 Mar, 15:40", type: "service",  ref: "SRV-0312" },
-    { desc: "Nomina semanal — Discord (Director)", amount: +8500, date: "28 Mar, 09:00", type: "salary",   ref: "NOM-2026-034" },
-  ]
+  const tx = []
 
   const txFiltered = filterType === "Todos" ? tx : tx.filter(t => TX_TYPES[t.type]?.label.startsWith(filterType.slice(0,4)))
   const totalIn = tx.filter(t=>t.amount>0).reduce((a,b)=>a+b.amount,0)
   const totalOut = tx.filter(t=>t.amount<0).reduce((a,b)=>a+Math.abs(b.amount),0)
-  const saldo = 24500
+  const saldo = 0
 
   return (
     <motion.div {...slideUp} className="flex flex-col gap-5">
@@ -1085,22 +1082,9 @@ function MunicipalidadSection() {
 }
 
 // ─── GEPOL DATA ─────────────────────────────────────────────────────────────
-const GEPOL_DETENIDOS_INIT = [
-  { id: "DET-001", nombre: "Carlos Ramírez Vega",   rut: "18.432.210-K", delito: "Robo con violencia",    estado: "Detenido",  fecha: "18 ABR 2026", turno: "Nocturno", oficial: "Sgto. Morales" },
-  { id: "DET-002", nombre: "Ignacio Pérez López",   rut: "20.115.887-3", delito: "Porte ilegal de arma",  estado: "Imputado",  fecha: "17 ABR 2026", turno: "Mañana",   oficial: "Cap. Rojas"    },
-  { id: "DET-003", nombre: "Felipe Torres Castro",  rut: "22.304.551-7", delito: "Tráfico de sustancias", estado: "Liberado",  fecha: "15 ABR 2026", turno: "Tarde",    oficial: "Det. Soto"     },
-]
-const GEPOL_OPERATIVOS_INIT = [
-  { id: "OPE-001", nombre: "Operativo Sector Norte",        tipo: "Patrullaje",     estado: "Activo",   unidad: "Carabineros", hora: "06:00 — En curso",    oficial: "Cap. Rojas",    personal: 6 },
-  { id: "OPE-002", nombre: "Control de Tráfico Autopista",  tipo: "Control",        estado: "Activo",   unidad: "PDI",         hora: "08:30 — En curso",    oficial: "Ins. Fuentes",  personal: 4 },
-  { id: "OPE-003", nombre: "Allanamiento Zona Centro",      tipo: "Allanamiento",   estado: "Cerrado",  unidad: "GOPE",        hora: "22:00 — Finalizado",  oficial: "Cte. Vega",     personal: 10},
-  { id: "OPE-004", nombre: "Respuesta Robo Banco ACRP",     tipo: "Emergencia",     estado: "Activo",   unidad: "Carabineros", hora: "11:45 — En curso",    oficial: "Sgto. Morales", personal: 8 },
-]
-const GEPOL_PARTES_INIT = [
-  { id: "PRT-001", titulo: "Robo con fuerza en Local Comercial", fecha: "18 ABR 2026", tipo: "Delito",     estado: "Abierto",   oficial: "Sgto. Morales", rut: "18.432.210-K" },
-  { id: "PRT-002", titulo: "Accidente de Tránsito — Av. Grecia", fecha: "17 ABR 2026", tipo: "Accidente",  estado: "Cerrado",   oficial: "Cap. Rojas",    rut: "—"             },
-  { id: "PRT-003", titulo: "Denuncia Porte Ilegal Arma de Fuego", fecha: "17 ABR 2026", tipo: "Denuncia",   estado: "Derivado",  oficial: "Det. Soto",     rut: "20.115.887-3"  },
-]
+const GEPOL_DETENIDOS_INIT = []
+const GEPOL_OPERATIVOS_INIT = []
+const GEPOL_PARTES_INIT = []
 const GEPOL_TURNOS = [
   { nombre: "Sgto. Morales",   rango: "Sargento",    turno: "Nocturno", estado: "En Servicio", unidad: "Patrulla Alpha", desde: "23:00" },
   { nombre: "Cap. Rojas",      rango: "Capitán",     turno: "Mañana",   estado: "En Servicio", unidad: "Comando Central", desde: "06:00" },
@@ -1595,21 +1579,9 @@ function GepolSection() {
 }
 
 const AUPOL_COLOR = "#22c55e"
-const AUPOL_PROCEDIMIENTOS_INIT = [
-  { id: "PRO-001", nombre: "Carlos Andrés Muñoz Vera",   rut: "17.882.310-K", cargo: "Infracción de Tránsito",   estado: "Cerrado",   fecha: "17 ABR 2026", oficial: "Cap. Ramírez" },
-  { id: "PRO-002", nombre: "Sofía Isabel Reyes Cáceres", rut: "21.043.557-8", cargo: "Alteración Orden Público", estado: "Activo",    fecha: "18 ABR 2026", oficial: "Sgto. Flores" },
-  { id: "PRO-003", nombre: "Matías Rodríguez Poblete",   rut: "19.765.002-3", cargo: "Conducción en Estado de Ebriedad", estado: "Derivado", fecha: "16 ABR 2026", oficial: "Ten. Naranjo" },
-]
-const AUPOL_PATRULLAJES_INIT = [
-  { id: "PAT-001", sector: "Sector Norte — Av. Diego Portales", unidad: "Radio Patrulla 12", estado: "Activo",   hora: "06:00 — En curso",    personal: 2 },
-  { id: "PAT-002", sector: "Centro Histórico Arica",            unidad: "Radio Patrulla 7",  estado: "Activo",   hora: "08:00 — En curso",    personal: 3 },
-  { id: "PAT-003", sector: "Población Los Industriales",        unidad: "Radio Patrulla 3",  estado: "Cerrado",  hora: "22:00 — Finalizado",  personal: 2 },
-]
-const AUPOL_INFRACCIONES_INIT = [
-  { id: "INF-001", desc: "Exceso de velocidad — Av. Comandante San Martín", rut: "18.432.210-K", monto: 42000, estado: "Pendiente", fecha: "18 ABR 2026" },
-  { id: "INF-002", desc: "Estacionamiento en zona prohibida",                rut: "20.115.887-3", monto: 15000, estado: "Pagada",   fecha: "17 ABR 2026" },
-  { id: "INF-003", desc: "No uso de cinturón de seguridad",                  rut: "22.304.551-7", monto: 18000, estado: "Pendiente", fecha: "16 ABR 2026" },
-]
+const AUPOL_PROCEDIMIENTOS_INIT = []
+const AUPOL_PATRULLAJES_INIT = []
+const AUPOL_INFRACCIONES_INIT = []
 
 function AupolSection() {
   const ACOLOR = AUPOL_COLOR
@@ -2195,6 +2167,33 @@ export default function App() {
   const [view, setView] = useState("landing")
   const [showLogin, setShowLogin] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
+  const [discordUser, setDiscordUser] = useState(null)
+
+  // Handle Discord OAuth2 implicit flow token in URL hash
+  useEffect(() => {
+    const hash = window.location.hash
+    if (hash && hash.includes("access_token")) {
+      const params = new URLSearchParams(hash.replace("#", "?"))
+      const token = params.get("access_token")
+      if (token) {
+        // Limpia el hash de la URL
+        window.history.replaceState(null, "", window.location.pathname)
+        // Obtener perfil del usuario de Discord
+        fetch("https://discord.com/api/users/@me", {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+          .then(r => r.json())
+          .then(user => {
+            setDiscordUser(user)
+            setView("dashboard")
+          })
+          .catch(() => {
+            // Si falla igual entra al dashboard
+            setView("dashboard")
+          })
+      }
+    }
+  }, [])
 
   const sectionLabel = { home: "PANEL PRINCIPAL", cedula: "CEDULA DIGITAL", banco: "BANCO METROPOLITANO", mercado: "MERCADO NEGRO", empresas: "GESTION DE EMPRESAS", municipalidad: "MUNICIPALIDAD ACRP", faccion: "FACCIONES", comunidad: "COMUNIDAD", gepol: "GEPOL — GESTIÓN POLICIAL", aupol: "AUPOL — ARCHIVO POLICIAL", snsm: "SNSM — SEG. MUNICIPAL" }
 
