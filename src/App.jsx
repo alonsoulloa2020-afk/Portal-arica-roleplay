@@ -184,7 +184,7 @@ function TeamList({ animated }) {
 function LoginModal({ onClose, onEnter }) {
   const handleDiscordLogin = () => {
     // Discord OAuth2 — solicita identify + guilds para verificar membresía
-    const CLIENT_ID = "1497015005219131553" // <-- reemplaza con tu Application Client ID de Discord
+    const CLIENT_ID = "1497015005219131553"
     const REDIRECT_URI = encodeURIComponent("https://portalweb-arica.netlify.app")
     const SCOPES = encodeURIComponent("identify guilds guilds.members.read")
     const discordAuthUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPES}`
@@ -1313,21 +1313,40 @@ const GEPOL_TURNOS = [
 ]
 const GEPOL_COLOR = "#3b82f6"
 
-function GepolSection() {
+function GepolSection({ discordUser }) {
+  const discordName = discordUser?.username ?? "Oficial"
+  const avatarUrl = discordUser?.avatar
+    ? `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png?size=64`
+    : null
+
+  const LS_KEY = discordUser?.id ? `gepol_data_${discordUser.id}` : "gepol_data_guest"
+
+  const loadData = () => {
+    try { return JSON.parse(localStorage.getItem(LS_KEY)) || {} } catch { return {} }
+  }
+  const saveData = (key, value) => {
+    try {
+      const prev = loadData()
+      localStorage.setItem(LS_KEY, JSON.stringify({ ...prev, [key]: value }))
+    } catch {}
+  }
+
+  const saved = loadData()
+
   const [tab, setTab]                 = useState("dashboard")
   const [search, setSearch]           = useState("")
-  const [detenidos, setDetenidos]     = useState(GEPOL_DETENIDOS_INIT)
-  const [operativos, setOperativos]   = useState(GEPOL_OPERATIVOS_INIT)
-  const [partes, setPartes]           = useState(GEPOL_PARTES_INIT)
+  const [detenidos, setDetenidos]     = useState(saved.detenidos    ?? GEPOL_DETENIDOS_INIT)
+  const [operativos, setOperativos]   = useState(saved.operativos   ?? GEPOL_OPERATIVOS_INIT)
+  const [partes, setPartes]           = useState(saved.partes       ?? GEPOL_PARTES_INIT)
   const [showDetModal, setShowDetModal] = useState(false)
   const [showOpeModal, setShowOpeModal] = useState(false)
   const [showParteModal, setShowParteModal] = useState(false)
-  const [detForm, setDetForm]         = useState({ nombre:"", rut:"", delito:"", oficial:"", turno:"Mañana" })
-  const [opeForm, setOpeForm]         = useState({ nombre:"", tipo:"Patrullaje", oficial:"", personal:"" })
-  const [parteForm, setParteForm]     = useState({ titulo:"", tipo:"Delito", oficial:"", rut:"" })
+  const [detForm, setDetForm]         = useState({ nombre:"", rut:"", delito:"", oficial: discordName, turno:"Mañana" })
+  const [opeForm, setOpeForm]         = useState({ nombre:"", tipo:"Patrullaje", oficial: discordName, personal:"" })
+  const [parteForm, setParteForm]     = useState({ titulo:"", tipo:"Delito", oficial: discordName, rut:"" })
   const [selectedRow, setSelectedRow] = useState(null)
-  const [enServicio, setEnServicio] = useState(false)
-  const [horaServicio, setHoraServicio] = useState(null)
+  const [enServicio, setEnServicio] = useState(saved.enServicio ?? false)
+  const [horaServicio, setHoraServicio] = useState(saved.horaServicio ?? null)
 
   const filteredDet = detenidos.filter(d =>
     d.nombre.toLowerCase().includes(search.toLowerCase()) ||
@@ -1358,22 +1377,31 @@ function GepolSection() {
   function addDetenido() {
     if (!detForm.nombre || !detForm.rut || !detForm.delito) return
     const nid = `DET-${String(detenidos.length + 1).padStart(3,"0")}`
-    setDetenidos(prev => [{ id: nid, ...detForm, estado: "Detenido", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), ...detForm }, ...prev])
-    setDetForm({ nombre:"", rut:"", delito:"", oficial:"", turno:"Mañana" })
+    const nuevo = { id: nid, ...detForm, estado: "Detenido", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...detenidos]
+    setDetenidos(updated)
+    saveData("detenidos", updated)
+    setDetForm({ nombre:"", rut:"", delito:"", oficial: discordName, turno:"Mañana" })
     setShowDetModal(false)
   }
   function addOperativo() {
     if (!opeForm.nombre) return
     const nid = `OPE-${String(operativos.length + 1).padStart(3,"0")}`
-    setOperativos(prev => [{ id: nid, ...opeForm, estado: "Activo", hora: new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}) + " — En curso", unidad:"Carabineros" }, ...prev])
-    setOpeForm({ nombre:"", tipo:"Patrullaje", oficial:"", personal:"" })
+    const nuevo = { id: nid, ...opeForm, estado: "Activo", hora: new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}) + " — En curso", unidad: discordName }
+    const updated = [nuevo, ...operativos]
+    setOperativos(updated)
+    saveData("operativos", updated)
+    setOpeForm({ nombre:"", tipo:"Patrullaje", oficial: discordName, personal:"" })
     setShowOpeModal(false)
   }
   function addParte() {
     if (!parteForm.titulo) return
     const nid = `PRT-${String(partes.length + 1).padStart(3,"0")}`
-    setPartes(prev => [{ id: nid, ...parteForm, estado: "Abierto", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase() }, ...prev])
-    setParteForm({ titulo:"", tipo:"Delito", oficial:"", rut:"" })
+    const nuevo = { id: nid, ...parteForm, estado: "Abierto", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...partes]
+    setPartes(updated)
+    saveData("partes", updated)
+    setParteForm({ titulo:"", tipo:"Delito", oficial: discordName, rut:"" })
     setShowParteModal(false)
   }
 
@@ -1417,7 +1445,15 @@ function GepolSection() {
             ))}
           </div>
           <div className="flex flex-col items-end gap-2">
-            <button onClick={()=>{ if(!enServicio){setEnServicio(true);setHoraServicio(new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}))}else{setEnServicio(false);setHoraServicio(null)} }} className="px-4 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all flex items-center gap-2" style={{ background: enServicio?"rgba(239,68,68,0.15)":"rgba(59,130,246,0.15)", border:`1px solid ${enServicio?"rgba(239,68,68,0.4)":"rgba(59,130,246,0.4)"}`, color: enServicio?"#ef4444":"#60a5fa" }}>
+            {/* Perfil Discord en el panel */}
+            <div className="flex items-center gap-2 mb-1">
+              {avatarUrl
+                ? <img src={avatarUrl} alt="avatar" className="w-7 h-7 rounded-full object-cover" style={{ border: "1px solid rgba(59,130,246,0.5)" }} />
+                : <div className="w-7 h-7 rounded-full flex items-center justify-center font-display text-[10px] text-white" style={{ background: "rgba(59,130,246,0.3)" }}>{discordName[0]?.toUpperCase()}</div>
+              }
+              <span className="font-display text-[10px] tracking-widest text-blue-300">{discordName}</span>
+            </div>
+            <button onClick={()=>{ const hora = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}); if(!enServicio){setEnServicio(true);setHoraServicio(hora);saveData("enServicio",true);saveData("horaServicio",hora)}else{setEnServicio(false);setHoraServicio(null);saveData("enServicio",false);saveData("horaServicio",null)} }} className="px-4 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all flex items-center gap-2" style={{ background: enServicio?"rgba(239,68,68,0.15)":"rgba(59,130,246,0.15)", border:`1px solid ${enServicio?"rgba(239,68,68,0.4)":"rgba(59,130,246,0.4)"}`, color: enServicio?"#ef4444":"#60a5fa" }}>
               <span className="w-2 h-2 rounded-full" style={{background:enServicio?"#ef4444":"#3b82f6",boxShadow:enServicio?"0 0 6px rgba(239,68,68,0.9)":"0 0 6px rgba(59,130,246,0.9)"}} />
               {enServicio ? "FINALIZAR SERVICIO" : "INICIAR SERVICIO"}
             </button>
@@ -1809,22 +1845,32 @@ const AUPOL_PROCEDIMIENTOS_INIT = []
 const AUPOL_PATRULLAJES_INIT = []
 const AUPOL_INFRACCIONES_INIT = []
 
-function AupolSection() {
+function AupolSection({ discordUser }) {
+  const discordName = discordUser?.username ?? "Oficial"
+  const avatarUrl = discordUser?.avatar
+    ? `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png?size=64`
+    : null
+
+  const LS_KEY = discordUser?.id ? `aupol_data_${discordUser.id}` : "aupol_data_guest"
+  const loadData = () => { try { return JSON.parse(localStorage.getItem(LS_KEY)) || {} } catch { return {} } }
+  const saveData = (key, value) => { try { const prev = loadData(); localStorage.setItem(LS_KEY, JSON.stringify({ ...prev, [key]: value })) } catch {} }
+  const saved = loadData()
+
   const ACOLOR = AUPOL_COLOR
   const [tab, setTab]                       = useState("dashboard")
   const [search, setSearch]                 = useState("")
-  const [procedimientos, setProcedimientos] = useState(AUPOL_PROCEDIMIENTOS_INIT)
-  const [patrullajes, setPatrullajes]       = useState(AUPOL_PATRULLAJES_INIT)
-  const [infracciones, setInfracciones]     = useState(AUPOL_INFRACCIONES_INIT)
+  const [procedimientos, setProcedimientos] = useState(saved.procedimientos ?? AUPOL_PROCEDIMIENTOS_INIT)
+  const [patrullajes, setPatrullajes]       = useState(saved.patrullajes    ?? AUPOL_PATRULLAJES_INIT)
+  const [infracciones, setInfracciones]     = useState(saved.infracciones   ?? AUPOL_INFRACCIONES_INIT)
   const [showProcModal, setShowProcModal]   = useState(false)
   const [showPatModal, setShowPatModal]     = useState(false)
   const [showInfModal, setShowInfModal]     = useState(false)
-  const [procForm, setProcForm]   = useState({ nombre:"", rut:"", cargo:"", oficial:"" })
-  const [patForm, setPatForm]     = useState({ sector:"", unidad:"", personal:"" })
+  const [procForm, setProcForm]   = useState({ nombre:"", rut:"", cargo:"", oficial: discordName })
+  const [patForm, setPatForm]     = useState({ sector:"", unidad: discordName, personal:"" })
   const [infForm, setInfForm]     = useState({ desc:"", rut:"", monto:"" })
   const [selectedRow, setSelectedRow] = useState(null)
-  const [enServicio, setEnServicio] = useState(false)
-  const [horaServicio, setHoraServicio] = useState(null)
+  const [enServicio, setEnServicio] = useState(saved.enServicio ?? false)
+  const [horaServicio, setHoraServicio] = useState(saved.horaServicio ?? null)
   const filteredProc = procedimientos.filter(p =>
     p.nombre.toLowerCase().includes(search.toLowerCase()) ||
     p.rut.includes(search) || p.id.toLowerCase().includes(search.toLowerCase())
@@ -1861,21 +1907,30 @@ function AupolSection() {
   function addProcedimiento() {
     if (!procForm.nombre || !procForm.rut) return
     const nid = `PRO-${String(procedimientos.length+1).padStart(3,"0")}`
-    setProcedimientos(prev => [{ id:nid, ...procForm, estado:"Activo", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase() }, ...prev])
-    setProcForm({ nombre:"", rut:"", cargo:"", oficial:"" })
+    const nuevo = { id:nid, ...procForm, estado:"Activo", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...procedimientos]
+    setProcedimientos(updated)
+    saveData("procedimientos", updated)
+    setProcForm({ nombre:"", rut:"", cargo:"", oficial: discordName })
     setShowProcModal(false)
   }
   function addPatrullaje() {
     if (!patForm.sector) return
     const nid = `PAT-${String(patrullajes.length+1).padStart(3,"0")}`
-    setPatrullajes(prev => [{ id:nid, ...patForm, estado:"Activo", hora: new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}) + " — En curso" }, ...prev])
-    setPatForm({ sector:"", unidad:"", personal:"" })
+    const nuevo = { id:nid, ...patForm, estado:"Activo", hora: new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}) + " — En curso", registradoPor: discordName }
+    const updated = [nuevo, ...patrullajes]
+    setPatrullajes(updated)
+    saveData("patrullajes", updated)
+    setPatForm({ sector:"", unidad: discordName, personal:"" })
     setShowPatModal(false)
   }
   function addInfraccion() {
     if (!infForm.desc || !infForm.rut) return
     const nid = `INF-${String(infracciones.length+1).padStart(3,"0")}`
-    setInfracciones(prev => [{ id:nid, ...infForm, monto: parseInt(infForm.monto)||0, estado:"Pendiente", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase() }, ...prev])
+    const nuevo = { id:nid, ...infForm, monto: parseInt(infForm.monto)||0, estado:"Pendiente", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...infracciones]
+    setInfracciones(updated)
+    saveData("infracciones", updated)
     setInfForm({ desc:"", rut:"", monto:"" })
     setShowInfModal(false)
   }
@@ -1928,7 +1983,14 @@ function AupolSection() {
             ))}
           </div>
           <div className="flex flex-col items-end gap-2">
-            <button onClick={()=>{ if(!enServicio){setEnServicio(true);setHoraServicio(new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}))}else{setEnServicio(false);setHoraServicio(null)} }} className="px-4 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all flex items-center gap-2" style={{ background: enServicio?"rgba(239,68,68,0.15)":"rgba(34,197,94,0.15)", border:`1px solid ${enServicio?"rgba(239,68,68,0.4)":"rgba(34,197,94,0.4)"}`, color: enServicio?"#ef4444":"#22c55e" }}>
+            <div className="flex items-center gap-2 mb-1">
+              {avatarUrl
+                ? <img src={avatarUrl} alt="avatar" className="w-7 h-7 rounded-full object-cover" style={{ border: "1px solid rgba(34,197,94,0.5)" }} />
+                : <div className="w-7 h-7 rounded-full flex items-center justify-center font-display text-[10px] text-white" style={{ background: "rgba(34,197,94,0.3)" }}>{discordName[0]?.toUpperCase()}</div>
+              }
+              <span className="font-display text-[10px] tracking-widest text-green-300">{discordName}</span>
+            </div>
+            <button onClick={()=>{ const hora = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"}); if(!enServicio){setEnServicio(true);setHoraServicio(hora);saveData("enServicio",true);saveData("horaServicio",hora)}else{setEnServicio(false);setHoraServicio(null);saveData("enServicio",false);saveData("horaServicio",null)} }} className="px-4 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all flex items-center gap-2" style={{ background: enServicio?"rgba(239,68,68,0.15)":"rgba(34,197,94,0.15)", border:`1px solid ${enServicio?"rgba(239,68,68,0.4)":"rgba(34,197,94,0.4)"}`, color: enServicio?"#ef4444":"#22c55e" }}>
               <span className="w-2 h-2 rounded-full" style={{background:enServicio?"#ef4444":"#22c55e",boxShadow:enServicio?"0 0 6px rgba(239,68,68,0.9)":"0 0 6px rgba(34,197,94,0.9)"}} />
               {enServicio ? "FINALIZAR SERVICIO" : "INICIAR SERVICIO"}
             </button>
@@ -2405,26 +2467,32 @@ export default function App() {
 
   // Handle Discord OAuth2 implicit flow token in URL hash
   useEffect(() => {
+    // Intentar restaurar sesión guardada
+    try {
+      const saved = localStorage.getItem("discord_user")
+      if (saved) {
+        const user = JSON.parse(saved)
+        setDiscordUser(user)
+        setView("dashboard")
+      }
+    } catch {}
+
     const hash = window.location.hash
     if (hash && hash.includes("access_token")) {
       const params = new URLSearchParams(hash.replace("#", "?"))
       const token = params.get("access_token")
       if (token) {
-        // Limpia el hash de la URL
         window.history.replaceState(null, "", window.location.pathname)
-        // Obtener perfil del usuario de Discord
         fetch("https://discord.com/api/users/@me", {
           headers: { Authorization: `Bearer ${token}` }
         })
           .then(r => r.json())
           .then(user => {
+            try { localStorage.setItem("discord_user", JSON.stringify(user)) } catch {}
             setDiscordUser(user)
             setView("dashboard")
           })
-          .catch(() => {
-            // Si falla igual entra al dashboard
-            setView("dashboard")
-          })
+          .catch(() => { setView("dashboard") })
       }
     }
   }, [])
@@ -2439,14 +2507,20 @@ export default function App() {
         {view === "landing" && <LandingPage key="landing" onLogin={() => setShowLogin(true)} />}
         {view === "dashboard" && (
           <motion.div key="dashboard" className="flex h-screen overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} onLogout={() => { setView("landing"); setActiveSection("home") }} />
+            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} onLogout={() => { try { localStorage.removeItem("discord_user") } catch {}; setDiscordUser(null); setView("landing"); setActiveSection("home") }} />
             <main className="flex-1 overflow-y-auto p-6 md:p-8 cyber-grid">
               <div className="flex items-center justify-between mb-7">
                 <h1 className="font-display text-white text-sm md:text-base tracking-widest">{sectionLabel[activeSection] ?? "PANEL"}</h1>
                 <div className="flex items-center gap-3">
                   <button className="p-2 rounded-lg hover:bg-white/5 text-slate-500 hover:text-white transition-all"><Bell size={17} /></button>
-                  <div className="text-right hidden sm:block"><div className="text-white font-display text-[11px] tracking-wider">Jugador_001</div><div className="text-[#fb923c] font-body text-[11px]">◉ En línea</div></div>
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-display text-xs shrink-0" style={{ background: "linear-gradient(135deg,#ea580c,#ec4899)" }}>RP</div>
+                  <div className="text-right hidden sm:block">
+                    <div className="text-white font-display text-[11px] tracking-wider">{discordUser?.username ?? "Jugador_001"}</div>
+                    <div className="text-[#fb923c] font-body text-[11px]">◉ En línea</div>
+                  </div>
+                  {discordUser?.avatar
+                    ? <img src={`https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png?size=64`} alt="avatar" className="w-8 h-8 rounded-full object-cover shrink-0" style={{ border: "2px solid rgba(251,146,60,0.5)" }} />
+                    : <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-display text-xs shrink-0" style={{ background: "linear-gradient(135deg,#ea580c,#ec4899)" }}>{(discordUser?.username?.[0] ?? "R").toUpperCase()}</div>
+                  }
                 </div>
               </div>
               <AnimatePresence mode="wait">
@@ -2457,8 +2531,8 @@ export default function App() {
                 {activeSection === "deepweb"       && <DeepWebSection   key="deepweb"       />}
                 {activeSection === "empresas"      && <EmpresasSection  key="empresas"      />}
                 {activeSection === "municipalidad" && <MunicipalidadSection key="municipalidad" />}
-                {activeSection === "gepol"         && <GepolSection         key="gepol"         />}
-                {activeSection === "aupol"         && <AupolSection         key="aupol"         />}
+                {activeSection === "gepol"         && <GepolSection         key="gepol"          discordUser={discordUser} />}
+                {activeSection === "aupol"         && <AupolSection         key="aupol"          discordUser={discordUser} />}
                 {activeSection === "snsm"          && <SnsmSection          key="snsm"          />}
                 {activeSection === "faccion"       && <ComingSoon       key="faccion"       label="Facciones" />}
                 {activeSection === "comunidad"     && <ComunidadSection key="comunidad"     />}
