@@ -15,14 +15,15 @@ import {
 import clsx from "clsx"
 
 const GALLERY_IMAGES = [
-  { src: "/assets/hero1.png", label: "Operativo Nocturno — Zona Centro" },
-  { src: "/assets/hero2.png", label: "Unidad Centauros — Táctica Especial" },
-  { src: "/assets/hero3.png", label: "Carabineros S.I.P. — Interior" },
-  { src: "/assets/hero4.png", label: "S.I.P. — Control Operativo" },
-  { src: "/assets/hero5.png", label: "PDI — Control de Autopista" },
-  { src: "/assets/hero6.png", label: "Carabineros — Patrullaje Nocturno" },
-  { src: "/assets/hero7.png", label: "SAMU — Unidad de Emergencias" },
-  { src: "/assets/hero8.png", label: "Robo al Banco — Operativo Activo" },
+  { src: "/assets/hero1.png", label: "Bomberos Arica — Rescate Vehicular" },
+  { src: "/assets/hero2.png", label: "Staff ACRP — Vehículos Especiales" },
+  { src: "/assets/hero3.png", label: "Carabineros — Patrullaje Navideño" },
+  { src: "/assets/hero4.png", label: "Operativo Mayor — Zona Urbana" },
+  { src: "/assets/hero5.png", label: "Carabineros — Unidad Túnel" },
+  { src: "/assets/hero6.png", label: "Carabineros — Control Carretero" },
+  { src: "/assets/hero7.png", label: "Carabineros — Grúa y Desvío" },
+  { src: "/assets/hero8.png", label: "Bomberos — Segunda Compañía ACRP" },
+  { src: "/assets/hero9.png", label: "PDI — Operativo Autopista" },
 ]
 
 const MARKET_ITEMS = [
@@ -808,8 +809,8 @@ function DeepWebSection() {
                 </div>
               </div>
               <div className="flex gap-2 mt-3">
-                <button className="flex-1 py-2 rounded-xl font-display text-[10px] tracking-widest transition-all" style={{ background: "rgba(124,58,237,0.1)", border: "1px solid rgba(124,58,237,0.25)", color: "#a78bfa" }}>CONTACTAR</button>
-                <button className="px-3 py-2 rounded-xl font-display text-[10px] tracking-widest transition-all" style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.2)", color: "#ef4444" }}>REPORTAR</button>
+                <button onClick={() => { setChatMsg(`Interesado en: ${p.titulo} — $${p.precio.toLocaleString("es-CL")}`) }} className="flex-1 py-2 rounded-xl font-display text-[10px] tracking-widest transition-all hover:opacity-80" style={{ background: "rgba(124,58,237,0.18)", border: "1px solid rgba(124,58,237,0.45)", color: "#a78bfa" }}>CONTACTAR</button>
+                <button onClick={() => alert("Anuncio reportado al moderador.")} className="px-3 py-2 rounded-xl font-display text-[10px] tracking-widest transition-all hover:opacity-80" style={{ background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.3)", color: "#ef4444" }}>REPORTAR</button>
               </div>
             </div>
           ))}
@@ -849,10 +850,10 @@ function DeepWebSection() {
                 <button onClick={() => setShowPublicar(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16} /></button>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <select value={form.tipo} onChange={e => setForm({ ...form, tipo: e.target.value })} className="col-span-1 px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}>
+                <select value={form.tipo} onChange={e => setForm({ ...form, tipo: e.target.value })} className="col-span-1 px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "#0d0d0d", border: "1px solid rgba(124,58,237,0.4)" }}>
                   <option>Venta</option><option>Compra</option>
                 </select>
-                <select value={form.categoria} onChange={e => setForm({ ...form, categoria: e.target.value })} className="col-span-1 px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "rgba(124,58,237,0.08)", border: "1px solid rgba(124,58,237,0.2)" }}>
+                <select value={form.categoria} onChange={e => setForm({ ...form, categoria: e.target.value })} className="col-span-1 px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "#0d0d0d", border: "1px solid rgba(124,58,237,0.4)" }}>
                   {CATS.map(c => <option key={c}>{c}</option>)}
                 </select>
               </div>
@@ -937,10 +938,10 @@ function MercadoSection() {
                 <button onClick={() => setShowPublicar(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16} /></button>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <select value={form.tipo} onChange={e => setForm({ ...form, tipo: e.target.value })} className="px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.2)" }}>
+                <select value={form.tipo} onChange={e => setForm({ ...form, tipo: e.target.value })} className="px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "#0d0d0d", border: "1px solid rgba(234,88,12,0.4)" }}>
                   <option>Venta</option><option>Compra</option>
                 </select>
-                <select value={form.categoria} onChange={e => setForm({ ...form, categoria: e.target.value })} className="px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "rgba(234,88,12,0.08)", border: "1px solid rgba(234,88,12,0.2)" }}>
+                <select value={form.categoria} onChange={e => setForm({ ...form, categoria: e.target.value })} className="px-3 py-2.5 rounded-xl font-display text-xs text-white outline-none" style={{ background: "#0d0d0d", border: "1px solid rgba(234,88,12,0.4)" }}>
                   {CATS_FORM.map(c => <option key={c}>{c}</option>)}
                 </select>
               </div>
@@ -979,10 +980,7 @@ function ComunidadSection() {
 
 function EmpresasSection() {
   const [activeTab, setActiveTab] = useState("mis")
-  const empresas = [
-    { nombre: "ConstruRP Ltda.", tipo: "Construccion", empleados: 4, ingresos: 24000, estado: "Activa", color: "#f59e0b" },
-    { nombre: "TransMetro SpA", tipo: "Transporte",    empleados: 2, ingresos: 12500, estado: "Activa", color: "#fb923c" },
-  ]
+  const empresas = []
   return (
     <motion.div {...slideUp} className="flex flex-col gap-5">
       <div className="flex items-center gap-3 p-5 rounded-2xl border border-amber-500/20" style={{ background: "rgba(245,158,11,0.07)" }}>
@@ -1017,8 +1015,8 @@ function EmpresasSection() {
                 ))}
               </div>
               <div className="flex gap-2 mt-4">
-                <button className="flex-1 py-2 rounded-xl font-display text-xs tracking-widest text-white border border-amber-500/25 hover:border-amber-500/50 transition-all" style={{ background: "rgba(245,158,11,0.06)" }}>GESTIONAR</button>
-                <button className="flex-1 py-2 rounded-xl font-display text-xs tracking-widest text-white border border-violet-500/25 hover:border-violet-500/50 transition-all" style={{ background: "rgba(234,88,12,0.06)" }}>EMPLEADOS</button>
+                <button onClick={() => alert(`Gestión de ${e.nombre}\nTipo: ${e.tipo}\nEstado: ${e.estado}\n\nFuncionalidad completa próximamente.`)} className="flex-1 py-2 rounded-xl font-display text-xs tracking-widest text-white border border-amber-500/25 hover:border-amber-500/50 transition-all" style={{ background: "rgba(245,158,11,0.1)" }}>GESTIONAR</button>
+                <button onClick={() => alert(`Empleados de ${e.nombre}\nTotal: ${e.empleados} empleado(s)\n\nGestión de personal próximamente.`)} className="flex-1 py-2 rounded-xl font-display text-xs tracking-widest text-white border border-violet-500/25 hover:border-violet-500/50 transition-all" style={{ background: "rgba(234,88,12,0.1)" }}>EMPLEADOS</button>
               </div>
             </div>
           ))}
@@ -1029,13 +1027,38 @@ function EmpresasSection() {
         </div>
       )}
       {activeTab === "mercado" && (
-        <div className="rounded-2xl p-5 border border-violet-500/12" style={{ background: "rgba(20,12,4,0.5)" }}>
-          <p className="text-slate-500 font-body text-sm text-center py-8">Directorio de empresas activas — Proximamente</p>
+        <div className="rounded-2xl p-5 border border-amber-500/15 flex flex-col gap-4" style={{ background: "rgba(20,12,4,0.6)" }}>
+          <p className="font-display text-xs tracking-widest text-amber-400 mb-2">DIRECTORIO PÚBLICO — EMPRESAS ACRP</p>
+          {[
+            { nombre: "Bomberos Arica", tipo: "Servicio de Emergencias", color: "#ef4444", icon: "🚒" },
+            { nombre: "Carabineros de Chile", tipo: "Institución Policial", color: "#22c55e", icon: "🚔" },
+            { nombre: "PDI Arica", tipo: "Policía de Investigaciones", color: "#3b82f6", icon: "🕵️" },
+            { nombre: "SAMU Arica", tipo: "Servicio Médico", color: "#f97316", icon: "🚑" },
+          ].map((emp, i) => (
+            <div key={i} className="flex items-center gap-4 p-4 rounded-xl border" style={{ background: "rgba(0,0,0,0.3)", borderColor: `${emp.color}25` }}>
+              <span className="text-2xl">{emp.icon}</span>
+              <div className="flex-1">
+                <p className="text-white font-display text-sm">{emp.nombre}</p>
+                <p className="text-slate-500 font-body text-xs">{emp.tipo}</p>
+              </div>
+              <button onClick={() => alert(`${emp.nombre}\nTipo: ${emp.tipo}\nContacto vía Discord del servidor.`)} className="px-3 py-1.5 rounded-lg font-display text-[10px] tracking-widest transition-all" style={{ background: `${emp.color}15`, border: `1px solid ${emp.color}30`, color: emp.color }}>VER</button>
+            </div>
+          ))}
         </div>
       )}
       {activeTab === "registro" && (
-        <div className="rounded-2xl p-5 border border-violet-500/12" style={{ background: "rgba(20,12,4,0.5)" }}>
-          <p className="text-slate-500 font-body text-sm text-center py-8">Registro legal ante el Servicio de Impuestos Internos RP — Proximamente</p>
+        <div className="rounded-2xl p-6 border border-amber-500/15 flex flex-col gap-4" style={{ background: "rgba(20,12,4,0.6)" }}>
+          <p className="font-display text-xs tracking-widest text-amber-400 mb-1">REGISTRO LEGAL — SII ARICA RP</p>
+          <p className="text-slate-400 font-body text-sm">Para registrar tu empresa ante el SII RP debes completar el formulario y enviarlo al equipo de administración vía Discord.</p>
+          <div className="flex flex-col gap-3">
+            {[["Nombre de Empresa","text","Nombre legal..."],["RUT Empresa","text","XX.XXX.XXX-X"],["Rubro","text","Ej: Transporte, Retail..."]].map(([label, type, ph], i) => (
+              <div key={i}>
+                <p className="font-display text-[10px] tracking-widest text-slate-500 mb-1">{label}</p>
+                <input type={type} placeholder={ph} className="w-full px-4 py-3 rounded-xl font-body text-sm text-white placeholder-slate-600 outline-none" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(245,158,11,0.2)" }} />
+              </div>
+            ))}
+            <button onClick={() => alert("Formulario enviado. Un administrador revisará tu solicitud en Discord.")} className="w-full py-3 rounded-xl font-display text-xs tracking-widest text-white mt-2" style={{ background: "linear-gradient(135deg,#f59e0b,#f97316)" }}>ENVIAR SOLICITUD</button>
+          </div>
         </div>
       )}
     </motion.div>
@@ -1281,7 +1304,7 @@ function MunicipalidadSection() {
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-display text-[10px] tracking-[0.2em] text-slate-400">TIPO DE TRÁMITE</label>
-                <select value={tramiteTipo} onChange={e => setTramiteTipo(e.target.value)} className="w-full px-4 py-3 rounded-xl font-body text-sm outline-none appearance-none" style={{ background: "rgba(251,146,60,0.06)", border: "1px solid rgba(251,146,60,0.25)", color: tramiteTipo ? "#f8fafc" : "#64748b" }}>
+                <select value={tramiteTipo} onChange={e => setTramiteTipo(e.target.value)} className="w-full px-4 py-3 rounded-xl font-body text-sm outline-none appearance-none" style={{ background: "#0d0d0d", border: "1px solid rgba(251,146,60,0.25)", color: tramiteTipo ? "#f8fafc" : "#64748b" }}>
                   <option value="">– Seleccione un trámite –</option>
                   {tiposTramite.map(t => <option key={t} value={t}>{t}</option>)}
                 </select>
@@ -1304,16 +1327,11 @@ function MunicipalidadSection() {
 const GEPOL_DETENIDOS_INIT = []
 const GEPOL_OPERATIVOS_INIT = []
 const GEPOL_PARTES_INIT = []
-const GEPOL_TURNOS = [
-  { nombre: "Sgto. Morales",   rango: "Sargento",    turno: "Nocturno", estado: "En Servicio", unidad: "Patrulla Alpha", desde: "23:00" },
-  { nombre: "Cap. Rojas",      rango: "Capitán",     turno: "Mañana",   estado: "En Servicio", unidad: "Comando Central", desde: "06:00" },
-  { nombre: "Det. Soto",       rango: "Detective",   turno: "Tarde",    estado: "Descanso",    unidad: "Investigaciones", desde: "14:00" },
-  { nombre: "Ins. Fuentes",    rango: "Inspector",   turno: "Mañana",   estado: "En Servicio", unidad: "Autopista",       desde: "08:00" },
-  { nombre: "Cte. Vega",       rango: "Comisario",   turno: "Tarde",    estado: "En Servicio", unidad: "Comando GOPE",    desde: "14:00" },
-]
+const GEPOL_TURNOS = []
 const GEPOL_COLOR = "#3b82f6"
 
 function GepolSection({ discordUser }) {
+  const GCOLOR = GEPOL_COLOR
   const discordName = discordUser?.username ?? "Oficial"
   const avatarUrl = discordUser?.avatar
     ? `https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png?size=64`
