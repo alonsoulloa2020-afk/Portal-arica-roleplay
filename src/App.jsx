@@ -111,16 +111,15 @@ function Particles() {
   return <>{particles.map(p => <div key={p.id} className="particle" style={{ left: p.left, animationDelay: p.delay, animationDuration: p.dur, width: p.size, height: p.size, background: p.color }} />)}</>
 }
 
-function VideoBackground() {
+function VideoBackground({ fixed = false }) {
   return (
-    <div className="absolute inset-0 overflow-hidden">
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" style={{ filter: "brightness(0.4) saturate(1.1)" }}>
-        <source src="/assets/bg-video.mov" type="video/mp4" />
-        <source src="/assets/bg-video.mov" type="video/quicktime" />
+    <div className={fixed ? "fixed inset-0 overflow-hidden z-0 pointer-events-none" : "absolute inset-0 overflow-hidden"}>
+      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" style={{ filter: "brightness(0.35) saturate(1.2)" }}>
+        <source src="/assets/bg-video.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(15,10,4,0.80)_100%)]" />
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0f0a05] to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0f0a05] to-transparent" />
+      <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, transparent 20%, rgba(10,8,5,0.75) 100%)" }} />
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0a0805] to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0a0805] to-transparent" />
     </div>
   )
 }
@@ -284,7 +283,13 @@ function MarketCard({ item }) {
   )
 }
 
-function Sidebar({ activeSection, setActiveSection, onLogout }) {
+function Sidebar({ activeSection, setActiveSection, onLogout, discordUser, playerData }) {
+  const primerNombre = playerData?.nombres?.trim().split(/\s+/)[0] || null
+  const primerApellido = playerData?.apellidos?.trim().split(/\s+/)[0] || null
+  const displayName = primerNombre && primerApellido ? `${primerNombre} ${primerApellido}` : (discordUser?.username ?? "Jugador_001")
+  const profesion = playerData?.profesion || null
+  const robloxFoto = playerData?.fotoUrl || null
+
   return (
     <aside className="w-[260px] shrink-0 flex flex-col h-full" style={{ background: "#0a0805", borderRight: "1px solid rgba(249,115,22,0.14)" }}>
       <div className="p-5 flex items-center gap-3 border-b border-violet-500/10">
@@ -295,12 +300,18 @@ function Sidebar({ activeSection, setActiveSection, onLogout }) {
         </div>
       </div>
       <div className="mx-4 mt-4 p-3 rounded-xl border border-violet-500/20 flex items-center gap-3" style={{ background: "rgba(234,88,12,0.07)" }}>
-        <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-display text-xs shrink-0" style={{ background: "linear-gradient(135deg,#ea580c,#ec4899)" }}>RP</div>
-        <div className="min-w-0">
-          <div className="text-white font-display text-[11px] tracking-wider truncate">Jugador_001</div>
-          <div className="text-[#fb923c] font-body text-[11px] flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-[#fb923c] inline-block" style={{ boxShadow: "0 0 6px rgba(251,146,60,0.9)" }} /> En línea</div>
+        <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg,#ea580c,#ec4899)", border: "2px solid rgba(251,146,60,0.4)" }}>
+          {robloxFoto ? (
+            <img src={robloxFoto} alt="Avatar" className="w-full h-full object-cover" onError={e => { e.target.style.display = "none" }} />
+          ) : (
+            <span className="text-white font-display text-xs">{displayName[0]?.toUpperCase() ?? "R"}</span>
+          )}
         </div>
-        <div className="ml-auto font-display text-[#f97316] text-xs">Lvl 12</div>
+        <div className="min-w-0 flex-1">
+          <div className="text-white font-display text-[11px] tracking-wider truncate">{displayName}</div>
+          {profesion && <div className="text-slate-500 font-body text-[10px] truncate">{profesion}</div>}
+          <div className="text-[#fb923c] font-body text-[11px] flex items-center gap-1 mt-0.5"><span className="w-1.5 h-1.5 rounded-full bg-[#fb923c] inline-block" style={{ boxShadow: "0 0 6px rgba(251,146,60,0.9)" }} /> En línea</div>
+        </div>
       </div>
       <nav className="flex-1 p-4 flex flex-col gap-0.5 mt-3 overflow-y-auto">
         {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
@@ -331,7 +342,7 @@ function Sidebar({ activeSection, setActiveSection, onLogout }) {
       </nav>
       <div className="p-4 border-t border-violet-500/10 flex flex-col gap-0.5">
         <button className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-500 hover:text-slate-300 font-body text-sm tracking-wider hover:bg-white/4 transition-all"><Settings size={15} /> Ajustes</button>
-        <button onClick={onLogout} className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-500 hover:text-red-400 font-body text-sm tracking-wider hover:bg-red-500/5 transition-all"><LogOut size={15} /> Salir</button>
+        <button onClick={onLogout} className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-500 hover:text-red-400 font-body text-sm tracking-wider hover:bg-red-500/5 transition-all"><LogOut size={15} /> Cerrar Sesión</button>
       </div>
     </aside>
   )
@@ -413,22 +424,86 @@ function HomeSection({ setActiveSection }) {
   )
 }
 
-function CedulaSection() {
-  const [formData, setFormData] = useState({ apellidos: "", nombres: "", fechaNac: "", roblox: "", discord: "", firma: "" })
+// Map Discord roles to professions for the carnet
+const PROFESIONES_ROL = {
+  "Carabineros": "Carabinero de Chile",
+  "PDI": "Detective PDI",
+  "Bomberos": "Bombero",
+  "Seguridad Ciudadana": "Agente Seg. Ciudadana",
+  "Médico": "Médico / SAMU",
+  "Civil": "Civil",
+  "Staff": "Staff ACRP",
+  "Admin": "Administrador",
+  "Moderador": "Moderador",
+}
+
+function CedulaSection({ onSave }) {
+  const [formData, setFormData] = useState({ apellidos: "", nombres: "", fechaNac: "", roblox: "", discord: "", firma: "", profesion: "Civil", sexo: "M" })
   const [identidadFinal, setIdentidadFinal] = useState({ rut: "", nroDocumento: "", fotoUrl: "", registrado: false })
   const [isProcessing, setIsProcessing] = useState(false)
   const [horaChile, setHoraChile] = useState("")
   const [fotoError, setFotoError] = useState(false)
+  const [validationError, setValidationError] = useState("")
+
   useEffect(() => { const t = setInterval(() => setHoraChile(new Date().toLocaleTimeString("es-CL", { timeZone: "America/Santiago" })), 1000); return () => clearInterval(t) }, [])
-  const handleGuardar = () => {
-    if (!formData.nombres || !formData.roblox || !formData.discord) { alert("Completa tu nombre, usuario de Roblox y Discord Tag (obligatorios)."); return }
+
+  const validateForm = () => {
+    const nombres = formData.nombres.trim().split(/\s+/).filter(Boolean)
+    const apellidos = formData.apellidos.trim().split(/\s+/).filter(Boolean)
+    if (nombres.length < 2) return "Debes ingresar mínimo 2 nombres."
+    if (nombres.length > 3) return "Máximo 3 nombres permitidos."
+    if (apellidos.length < 1) return "Debes ingresar al menos 1 apellido."
+    if (apellidos.length > 2) return "Máximo 2 apellidos permitidos."
+    if (!formData.fechaNac) return "La fecha de nacimiento es obligatoria."
+    const nacDate = new Date(formData.fechaNac + "T12:00:00")
+    const today = new Date()
+    const age = (today - nacDate) / (1000 * 60 * 60 * 24 * 365.25)
+    if (nacDate > today) return "La fecha de nacimiento no puede ser en el futuro."
+    if (nacDate.getFullYear() > 2026) return "El año de nacimiento no puede ser mayor a 2026."
+    if (age < 15) return "El personaje debe tener al menos 15 años."
+    if (age > 100) return "El personaje no puede tener más de 100 años."
+    if (!formData.roblox.trim()) return "El usuario de Roblox es obligatorio."
+    if (!formData.discord.trim()) return "El Discord Tag es obligatorio."
+    return ""
+  }
+
+  const handleGuardar = async () => {
+    const err = validateForm()
+    if (err) { setValidationError(err); return }
+    setValidationError("")
     setIsProcessing(true); setFotoError(false)
-    setTimeout(() => {
+    try {
+      // Resolve Roblox username to userId
+      let userId = formData.roblox.trim()
+      // If not numeric, resolve username
+      if (isNaN(userId)) {
+        const res = await fetch(`https://users.roblox.com/v1/usernames/users`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ usernames: [userId], excludeBannedUsers: false })
+        })
+        const data = await res.json()
+        if (data.data && data.data.length > 0) {
+          userId = data.data[0].id
+        }
+      }
       const base = Math.floor(Math.random() * (29000000 - 18000000) + 18000000)
       const dv = ["0","1","2","3","4","5","6","7","8","9","K"][Math.floor(Math.random() * 11)]
-      setIdentidadFinal({ rut: `${new Intl.NumberFormat("es-CL").format(base)}-${dv}`, nroDocumento: Math.floor(Math.random() * 900000000 + 100000000), fotoUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${formData.roblox}&width=150&height=150&format=png`, registrado: true })
-      setIsProcessing(false)
-    }, 1500)
+      const finalData = {
+        rut: `${new Intl.NumberFormat("es-CL").format(base)}-${dv}`,
+        nroDocumento: Math.floor(Math.random() * 900000000 + 100000000),
+        fotoUrl: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`,
+        registrado: true
+      }
+      setIdentidadFinal(finalData)
+      if (onSave) onSave({ nombres: formData.nombres, apellidos: formData.apellidos, profesion: formData.profesion, fotoUrl: finalData.fotoUrl })
+    } catch {
+      const base = Math.floor(Math.random() * (29000000 - 18000000) + 18000000)
+      const dv = ["0","1","2","3","4","5","6","7","8","9","K"][Math.floor(Math.random() * 11)]
+      setIdentidadFinal({ rut: `${new Intl.NumberFormat("es-CL").format(base)}-${dv}`, nroDocumento: Math.floor(Math.random() * 900000000 + 100000000), fotoUrl: "", registrado: true })
+      setFotoError(true)
+    }
+    setIsProcessing(false)
   }
 
   // Fechas formateadas
@@ -439,6 +514,8 @@ function CedulaSection() {
   const fechaNacDisplay = formData.fechaNac
     ? fmtDate(new Date(formData.fechaNac + "T12:00:00"))
     : "DD MES AAAA"
+
+  const PROFESIONES = Object.values(PROFESIONES_ROL)
 
   return (
     <motion.div {...slideUp} className="flex flex-col gap-6">
@@ -452,12 +529,38 @@ function CedulaSection() {
           <div className="flex items-center gap-3 mb-7"><div className="p-3 rounded-2xl" style={{ background: "rgba(251,146,60,0.12)" }}><ShieldCheck size={24} className="text-[#fb923c]" /></div><h3 className="text-lg font-bold uppercase tracking-tight text-white font-display">Registro Civil Digital</h3></div>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              {[["nombres","Nombres"],["apellidos","Apellidos"]].map(([f,p]) => <input key={f} type="text" placeholder={p} className="w-full p-4 rounded-2xl outline-none font-semibold text-white placeholder-slate-600 font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.5)")} onBlur={e=>(e.target.style.borderColor="rgba(255,255,255,0.08)")} onChange={e=>setFormData({...formData,[f]:e.target.value})} />)}
+              <div className="flex flex-col gap-1">
+                <label className="font-display text-[9px] tracking-widest text-slate-500">NOMBRES (2-3)</label>
+                <input type="text" placeholder="Ej: Juan Carlos" className="w-full p-4 rounded-2xl outline-none font-semibold text-white placeholder-slate-600 font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.5)")} onBlur={e=>(e.target.style.borderColor="rgba(255,255,255,0.08)")} onChange={e=>setFormData({...formData,nombres:e.target.value})} />
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="font-display text-[9px] tracking-widest text-slate-500">APELLIDOS (máx. 2)</label>
+                <input type="text" placeholder="Ej: González Pérez" className="w-full p-4 rounded-2xl outline-none font-semibold text-white placeholder-slate-600 font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.5)")} onBlur={e=>(e.target.style.borderColor="rgba(255,255,255,0.08)")} onChange={e=>setFormData({...formData,apellidos:e.target.value})} />
+              </div>
             </div>
-            <div className="relative"><input type="date" className="w-full p-4 rounded-2xl outline-none text-slate-400 font-semibold font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onChange={e=>setFormData({...formData,fechaNac:e.target.value})} /><span className="absolute right-4 top-4 text-[10px] text-slate-500 uppercase font-bold pointer-events-none">F. Nacimiento</span></div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1">
+                <label className="font-display text-[9px] tracking-widest text-slate-500">SEXO</label>
+                <select className="w-full p-4 rounded-2xl outline-none font-semibold text-white font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onChange={e=>setFormData({...formData,sexo:e.target.value})}>
+                  <option value="M">Masculino (M)</option>
+                  <option value="F">Femenino (F)</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-1">
+                <label className="font-display text-[9px] tracking-widest text-slate-500">PROFESIÓN / ROL</label>
+                <select className="w-full p-4 rounded-2xl outline-none font-semibold text-white font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onChange={e=>setFormData({...formData,profesion:e.target.value})}>
+                  {PROFESIONES.map(p => <option key={p} value={p}>{p}</option>)}
+                </select>
+              </div>
+            </div>
+            <div className="relative">
+              <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1 block">FECHA DE NACIMIENTO (15-100 años, hasta 2026)</label>
+              <input type="date" className="w-full p-4 rounded-2xl outline-none text-slate-400 font-semibold font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} max="2026-12-31" onChange={e=>setFormData({...formData,fechaNac:e.target.value})} />
+            </div>
             <input type="text" placeholder="Firma del Titular" className="w-full p-4 rounded-2xl outline-none font-bold text-[#f97316] placeholder-slate-600 font-body" style={{ background: "rgba(249,115,22,0.06)", border: "1px solid rgba(249,115,22,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(249,115,22,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(249,115,22,0.25)")} onChange={e=>setFormData({...formData,firma:e.target.value})} />
-            <input type="text" placeholder="Usuario Roblox o ID (para foto)" className="w-full p-4 rounded-2xl outline-none font-bold text-[#fb923c] placeholder-slate-600 font-body" style={{ background: "rgba(251,146,60,0.06)", border: "1px solid rgba(251,146,60,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(251,146,60,0.25)")} onChange={e=>setFormData({...formData,roblox:e.target.value})} />
+            <input type="text" placeholder="Usuario Roblox (username)" className="w-full p-4 rounded-2xl outline-none font-bold text-[#fb923c] placeholder-slate-600 font-body" style={{ background: "rgba(251,146,60,0.06)", border: "1px solid rgba(251,146,60,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(251,146,60,0.25)")} onChange={e=>setFormData({...formData,roblox:e.target.value})} />
             <input type="text" placeholder="Discord Tag (Obligatorio)" className="w-full p-4 rounded-2xl outline-none font-bold text-[#7289da] placeholder-slate-600 font-body" style={{ background: "rgba(114,137,218,0.06)", border: "1px solid rgba(114,137,218,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(114,137,218,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(114,137,218,0.25)")} onChange={e=>setFormData({...formData,discord:e.target.value})} />
+            {validationError && <p className="text-red-400 font-body text-xs px-2">{validationError}</p>}
             <button onClick={handleGuardar} disabled={isProcessing} className="w-full py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all mt-2 disabled:opacity-50 font-display tracking-widest text-white shimmer-btn" style={{ background: "linear-gradient(135deg,#fb923c,#3b82f6)", boxShadow: "0 10px 30px rgba(8,145,178,0.3)" }}>
               {isProcessing ? <><RefreshCw className="animate-spin" size={20} /> PROCESANDO DATOS...</> : <><Check size={20} /> GUARDAR IDENTIDAD</>}
             </button>
@@ -474,7 +577,7 @@ function CedulaSection() {
             {identidadFinal.registrado && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.7 }} className="absolute inset-0 z-10" style={{ fontFamily: "'Arial Narrow', Arial, sans-serif" }}>
 
-                {/* FOTO DEL AVATAR — nueva imagen dni */}
+                {/* FOTO DEL AVATAR */}
                 <div className="absolute overflow-hidden" style={{
                   left: "3.5%", top: "18%",
                   width: "21%", height: "62%",
@@ -500,7 +603,7 @@ function CedulaSection() {
                 <div className="absolute" style={{ left: "27%", top: "52%", fontSize: "clamp(3px,0.72vw,6.5px)", fontWeight: "700", color: "#3a5a99", letterSpacing: "0.09em", textTransform: "uppercase" }}>NACIONALIDAD</div>
                 <div className="absolute" style={{ left: "63%", top: "52%", fontSize: "clamp(3px,0.72vw,6.5px)", fontWeight: "700", color: "#3a5a99", letterSpacing: "0.09em", textTransform: "uppercase" }}>SEXO</div>
                 <div className="absolute" style={{ left: "27%", top: "57.5%", fontSize: "clamp(4px,0.88vw,8px)", fontWeight: "700", color: "#0a1840", textTransform: "uppercase" }}>CHILENA</div>
-                <div className="absolute" style={{ left: "63%", top: "57.5%", fontSize: "clamp(4px,0.88vw,8px)", fontWeight: "700", color: "#0a1840" }}>M</div>
+                <div className="absolute" style={{ left: "63%", top: "57.5%", fontSize: "clamp(4px,0.88vw,8px)", fontWeight: "700", color: "#0a1840" }}>{formData.sexo}</div>
 
                 {/* FECHA NACIMIENTO + N° DOCUMENTO */}
                 <div className="absolute" style={{ left: "27%", top: "64%", fontSize: "clamp(3px,0.72vw,6.5px)", fontWeight: "700", color: "#3a5a99", letterSpacing: "0.09em", textTransform: "uppercase" }}>FECHA DE NACIMIENTO</div>
@@ -537,9 +640,10 @@ function CedulaSection() {
           </div>
           <p className="text-[10px] text-slate-600 uppercase tracking-[0.5em] font-black font-display">Cedula Oficial Arica Chile Roleplay ER:LC</p>
           {identidadFinal.registrado && (
-            <div className="flex gap-2 mt-1">
+            <div className="flex gap-2 mt-1 flex-wrap justify-center">
               <span className="px-3 py-1 rounded-lg font-body text-xs text-green-400 border border-green-500/30" style={{ background: "rgba(34,197,94,0.08)" }}>✓ Identidad Verificada</span>
               <span className="px-3 py-1 rounded-lg font-body text-xs text-[#fb923c] border border-cyan-500/30" style={{ background: "rgba(251,146,60,0.08)" }}>RUN: {identidadFinal.rut}</span>
+              <span className="px-3 py-1 rounded-lg font-body text-xs text-violet-300 border border-violet-500/30" style={{ background: "rgba(139,92,246,0.08)" }}>{formData.profesion}</span>
             </div>
           )}
         </div>
@@ -2347,10 +2451,11 @@ function SectionBadge({ emoji, text, color = "#f97316", bg = "rgba(234,88,12,0.1
 function LandingPage({ onLogin }) {
   return (
     <motion.div key="landing" className="relative flex flex-col overflow-x-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.55 }}>
+      {/* VIDEO FIJO DE FONDO — visible en toda la landing */}
+      <VideoBackground fixed={true} />
 
       {/* HERO */}
-      <div className="relative min-h-screen flex flex-col items-center justify-center">
-        <VideoBackground />
+      <div className="relative min-h-screen flex flex-col items-center justify-center" style={{ zIndex: 1 }}>
         <div className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-start gap-0">
           <motion.div className="flex items-center gap-3 flex-wrap mb-8" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2, duration: 0.7 }}>
             <SectionBadge emoji="🎮" text="PORTAL OFICIAL ARICA CHILE ROLEPLAY ER:LC" />
@@ -2392,7 +2497,7 @@ function LandingPage({ onLogin }) {
       </div>
 
       {/* CÓMO UNIRTE */}
-      <div className="relative z-10 bg-[#0f0a05] px-6 py-20">
+      <div className="relative px-6 py-20" style={{ zIndex: 1, background: "rgba(10,8,5,0.55)", backdropFilter: "blur(2px)" }}>
         <div className="max-w-5xl mx-auto">
           <div className="mb-10">
             <SectionBadge emoji="🎮" text="PRIMEROS PASOS" />
@@ -2401,11 +2506,11 @@ function LandingPage({ onLogin }) {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
-              { num: "01", icon: "💬", title: "Únete al Discord",      desc: "Ingresa al servidor oficial y conecta tu cuenta para acceder al portal.",         color: "#5865F2" },
-              { num: "02", icon: "🛡️", title: "Aprueba la Whitelist", desc: "Responde el cuestionario de roleplay para obtener acceso verificado.",              color: "#f97316" },
-              { num: "03", icon: "🪪",  title: "Crea tu Cédula",       desc: "Registra tu identidad roleplay y accede a todo el ecosistema del portal.",          color: "#fb923c" },
+              { num: "01", icon: "💬", title: "Únete al Discord",      desc: "Ingresa al servidor oficial y conecta tu cuenta para acceder al portal.",         color: "#5865F2", href: "https://discord.gg/zuw56G9qGa" },
+              { num: "02", icon: "🛡️", title: "Aprueba la Whitelist", desc: "Responde el cuestionario de roleplay para obtener acceso verificado.",              color: "#f97316", href: null },
+              { num: "03", icon: "🪪",  title: "Crea tu Cédula",       desc: "Registra tu identidad roleplay y accede a todo el ecosistema del portal.",          color: "#fb923c", href: null },
             ].map((step, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i*0.12, duration: 0.5 }} className="relative rounded-2xl p-6 border flex flex-col gap-4" style={{ background: "rgba(20,12,4,0.7)", borderColor: `${step.color}22`, backdropFilter: "blur(12px)" }}>
+              <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i*0.12, duration: 0.5 }} onClick={() => step.href && window.open(step.href, "_blank")} className="relative rounded-2xl p-6 border flex flex-col gap-4" style={{ background: "rgba(20,12,4,0.7)", borderColor: `${step.color}22`, backdropFilter: "blur(12px)", cursor: step.href ? "pointer" : "default" }}>
                 <div className="absolute top-4 right-5 font-display text-4xl font-black opacity-10 text-white">{step.num}</div>
                 <div className="p-3 rounded-xl w-fit" style={{ background: `${step.color}18` }}><span className="text-2xl">{step.icon}</span></div>
                 <div><p className="text-white font-display text-sm tracking-wide mb-2">{step.title}</p><p className="text-slate-500 font-body text-xs leading-relaxed">{step.desc}</p></div>
@@ -2417,7 +2522,7 @@ function LandingPage({ onLogin }) {
       </div>
 
       {/* SERVICIOS */}
-      <div className="relative z-10 bg-[#0f0a05] px-6 pb-20">
+      <div className="relative px-6 pb-20" style={{ zIndex: 1, background: "rgba(10,8,5,0.55)", backdropFilter: "blur(2px)" }}>
         <div className="max-w-5xl mx-auto">
           <div className="mb-10">
             <SectionBadge emoji="⚙️" text="SERVICIOS" color="#fb923c" bg="rgba(251,146,60,0.08)" border="rgba(251,146,60,0.25)" />
@@ -2441,7 +2546,7 @@ function LandingPage({ onLogin }) {
       </div>
 
       {/* GALERÍA */}
-      <div className="relative z-10 bg-[#0f0a05] px-6 pb-20">
+      <div className="relative px-6 pb-20" style={{ zIndex: 1, background: "rgba(10,8,5,0.55)", backdropFilter: "blur(2px)" }}>
         <div className="max-w-5xl mx-auto">
           <div className="mb-6">
             <SectionBadge emoji="📸" text="GALERÍA" color="#ec4899" bg="rgba(236,72,153,0.08)" border="rgba(236,72,153,0.25)" />
@@ -2453,7 +2558,7 @@ function LandingPage({ onLogin }) {
       </div>
 
       {/* EQUIPO */}
-      <div className="relative z-10 bg-[#0f0a05] px-6 pb-20">
+      <div className="relative px-6 pb-20" style={{ zIndex: 1, background: "rgba(10,8,5,0.55)", backdropFilter: "blur(2px)" }}>
         <div className="max-w-5xl mx-auto">
           <div className="mb-8">
             <SectionBadge emoji="👥" text="NOSOTROS" />
@@ -2465,10 +2570,11 @@ function LandingPage({ onLogin }) {
       </div>
 
       {/* FOOTER */}
-      <div className="relative z-10 bg-[#0a0805] border-t border-white/5 py-8 px-6">
+      <div className="relative border-t border-white/5 py-8 px-6" style={{ zIndex: 1, background: "rgba(5,4,2,0.75)", backdropFilter: "blur(8px)" }}>
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex gap-4 flex-wrap justify-center">
-            {["Normativa General", "Soporte Técnico", "Discord Oficial"].map(link => <span key={link} className="px-3 py-1.5 rounded-lg font-body text-xs text-slate-400 border border-white/8 cursor-pointer hover:text-white transition-colors" style={{ background: "rgba(255,255,255,0.03)" }}>{link}</span>)}
+            {["Normativa General", "Soporte Técnico"].map(link => <span key={link} className="px-3 py-1.5 rounded-lg font-body text-xs text-slate-400 border border-white/8 cursor-pointer hover:text-white transition-colors" style={{ background: "rgba(255,255,255,0.03)" }}>{link}</span>)}
+            <a href="https://discord.gg/zuw56G9qGa" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-lg font-body text-xs text-slate-400 border border-white/8 cursor-pointer hover:text-white transition-colors" style={{ background: "rgba(255,255,255,0.03)" }}>Discord Oficial</a>
           </div>
           <p className="text-slate-600 font-body text-xs">Portal <span className="text-[#f97316]">Arica Chile Roleplay ER:LC</span> · 2025</p>
         </div>
@@ -2482,6 +2588,7 @@ export default function App() {
   const [showLogin, setShowLogin] = useState(false)
   const [activeSection, setActiveSection] = useState("home")
   const [discordUser, setDiscordUser] = useState(null)
+  const [playerData, setPlayerData] = useState(null)  // {nombres, apellidos, profesion, fotoUrl}
 
   // Handle Discord OAuth2 implicit flow token in URL hash
   useEffect(() => {
@@ -2525,7 +2632,7 @@ export default function App() {
         {view === "landing" && <LandingPage key="landing" onLogin={() => setShowLogin(true)} />}
         {view === "dashboard" && (
           <motion.div key="dashboard" className="flex h-screen overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} onLogout={() => { try { localStorage.removeItem("discord_user") } catch {}; setDiscordUser(null); setView("landing"); setActiveSection("home") }} />
+            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} discordUser={discordUser} playerData={playerData} onLogout={() => { try { localStorage.removeItem("discord_user") } catch {}; setDiscordUser(null); setPlayerData(null); setView("landing"); setActiveSection("home") }} />
             <main className="flex-1 overflow-y-auto p-6 md:p-8 cyber-grid">
               <div className="flex items-center justify-between mb-7">
                 <h1 className="font-display text-white text-sm md:text-base tracking-widest">{sectionLabel[activeSection] ?? "PANEL"}</h1>
@@ -2543,7 +2650,7 @@ export default function App() {
               </div>
               <AnimatePresence mode="wait">
                 {activeSection === "home"          && <HomeSection      key="home"          setActiveSection={setActiveSection} />}
-                {activeSection === "cedula"        && <CedulaSection    key="cedula"        />}
+                {activeSection === "cedula"        && <CedulaSection    key="cedula"        onSave={setPlayerData} />}
                 {activeSection === "banco"         && <BancoSection     key="banco"         />}
                 {activeSection === "mercado"       && <MercadoSection   key="mercado"       />}
                 {activeSection === "deepweb"       && <DeepWebSection   key="deepweb"       />}
