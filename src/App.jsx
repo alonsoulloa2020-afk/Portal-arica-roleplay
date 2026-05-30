@@ -94,13 +94,13 @@ const RARITY = {
 
 const TEAM = [
   { role: "Presidente",                     dept: "Dirección Superior",       user: "Simon",       color: "#e8d5bc" },
-  { role: "Vicepresidente",                 dept: "Dirección Superior",       user: "Cauquis",     color: "#d4bc9e" },
+  { role: "Vicepresidente",                 dept: "Dirección Superior",       user: "Koukiz",     color: "#d4bc9e" },
   { role: "Director Asistente",             dept: "Dirección",                user: "Bastián",     color: "#c9a97a" },
   { role: "Community Manager",              dept: "Gestión Comunitaria",      user: "Jordan",      color: "#b8956a" },
-  { role: "Gerente General",               dept: "Gerencia General",         user: "Logica Puig", color: "#e8d5bc" },
+  { role: "Gerente General",               dept: "Gerencia General",         user: "Luiji Capu", color: "#e8d5bc" },
   { role: "Gerente Operativo",             dept: "Operaciones",              user: "Robert",      color: "#c9a97a" },
   { role: "Gerente de Recursos Humanos",   dept: "Recursos Humanos",        user: "Camilo",      color: "#d4bc9e" },
-  { role: "Gerente de Administración",     dept: "Administración",          user: "Chisui",      color: "#b8956a" },
+  { role: "Gerente de Administración",     dept: "Administración",          user: "Shisui",      color: "#b8956a" },
 ]
 
 function Particles() {
