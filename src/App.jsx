@@ -93,7 +93,7 @@ const RARITY = {
 }
 
 const TEAM = [
-  { role: "Presidente",                     dept: "Dirección Superior",       user: "Simon",       color: "#e8d5bc" },
+  { role: "Presidente",                     dept: "Dirección Superior",       user: "Saimon",       color: "#e8d5bc" },
   { role: "Vicepresidente",                 dept: "Dirección Superior",       user: "Koukiz",     color: "#d4bc9e" },
   { role: "Director Asistente",             dept: "Dirección",                user: "Bastián",     color: "#c9a97a" },
   { role: "Community Manager",              dept: "Gestión Comunitaria",      user: "Jordan",      color: "#b8956a" },
@@ -199,7 +199,7 @@ function LoginModal({ onClose, onEnter }) {
         <div className="rounded-2xl p-8 border" style={{ background: "rgba(18,10,3,0.92)", backdropFilter: "blur(25px)", borderColor: "rgba(232,213,188,0.3)", boxShadow: "0 0 60px rgba(232,213,188,0.1), 0 24px 64px rgba(0,0,0,0.6)" }}>
           <button onClick={onClose} className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors p-1"><X size={18} /></button>
           <div className="flex flex-col items-center mb-7">
-            <img src="/assets/logo-fpc.png" alt="Arica Chile Roleplay ER:LC" className="w-20 h-20 object-contain mb-3" style={{ mixBlendMode: "screen" }} />
+            <img src="/assets/logo-fpc.png" alt="Precordillera Roleplay Community" className="w-20 h-20 object-contain mb-3" style={{ mixBlendMode: "screen" }} />
             <h2 className="font-display text-white text-base tracking-widest">ACCESO AL SERVIDOR</h2>
             <p className="text-slate-500 font-body text-sm mt-1">Verifica tu identidad para continuar</p>
           </div>
@@ -297,8 +297,8 @@ function Sidebar({ activeSection, setActiveSection, onLogout, discordUser, playe
       <div className="p-5 flex items-center gap-3 border-b border-violet-500/10">
         <img src="/assets/logo-fpc.png" alt="Logo" className="w-11 h-11 object-contain" style={{ mixBlendMode: "screen" }} />
         <div>
-          <div className="font-display text-white text-[11px] tracking-widest leading-tight">ARICA RP</div>
-          <div className="font-display text-[#f97316] text-[9px] tracking-[0.25em]">ER:LC ARICA</div>
+          <div className="font-display text-white text-[11px] tracking-widest leading-tight">Precordillera RP</div>
+          <div className="font-display text-[#f97316] text-[9px] tracking-[0.25em]">ER:LC Precordillera</div>
         </div>
       </div>
       <div className="mx-4 mt-4 p-3 rounded-xl border border-violet-500/20 flex items-center gap-3" style={{ background: "rgba(234,88,12,0.07)" }}>
