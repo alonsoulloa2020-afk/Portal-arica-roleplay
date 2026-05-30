@@ -40,12 +40,12 @@ const MARKET_ITEMS = [
 
 const NAV_ITEMS = [
   { id: "home",          label: "Inicio",        icon: Home        },
-  { id: "cedula",        label: "Cedula",        icon: CreditCard  },
   { id: "banco",         label: "Banco",         icon: Wallet      },
   { id: "mercado",       label: "Mercado",       icon: ShoppingBag },
   { id: "deepweb",       label: "Deep Web",      icon: Eye         },
   { id: "empresas",      label: "Empresas",      icon: Building2   },
   { id: "municipalidad", label: "Municipalidad", icon: Landmark    },
+  { id: "antecedentes",  label: "Antecedentes",  icon: FileText    },
   { id: "faccion",       label: "Facciones",     icon: Shield      },
   { id: "comunidad",     label: "Comunidad",     icon: Users       },
 ]
@@ -775,21 +775,44 @@ function BancoSection() {
       {/* PANEL SUELDOS DISCORD */}
       {activeTab === "sueldo" && (
         <div className="flex flex-col gap-4">
+          {/* Aviso integración bot */}
+          <div className="rounded-2xl p-5 border border-blue-500/30" style={{ background: "rgba(88,101,242,0.08)" }}>
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-xl shrink-0 mt-0.5" style={{ background: "rgba(88,101,242,0.2)" }}>
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="#818cf8"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+              </div>
+              <div>
+                <p className="text-white font-display text-xs tracking-widest mb-1">INTEGRACIÓN DE SUELDOS DISCORD</p>
+                <p className="text-slate-400 font-body text-xs leading-relaxed mb-3">Para que los sueldos por rol de Discord se depositen automáticamente en el banco de la página, <span className="text-blue-400 font-semibold">se requiere un bot de Discord propio del servidor</span> que lea los roles de cada miembro y use una API o base de datos conectada al portal web.</p>
+                <p className="text-slate-500 font-body text-xs leading-relaxed mb-3">El flujo funciona así: el bot detecta el rol del jugador en Discord → consulta la tabla de sueldos → deposita el monto en su cuenta del banco del portal en ciclos semanales automáticos.</p>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {[
+                    { label: "Bot recomendado: Carl-bot o bot propio", color: "#818cf8" },
+                    { label: "Requiere: base de datos compartida (Supabase / Firebase)", color: "#38bdf8" },
+                    { label: "Opcional: webhook Discord → API del portal", color: "#34d399" },
+                  ].map((tip,i) => (
+                    <span key={i} className="px-2.5 py-1 rounded-lg font-body text-[10px] border" style={{ background: "rgba(0,0,0,0.3)", borderColor: `${tip.color}30`, color: tip.color }}>{tip.label}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="rounded-2xl p-6 border border-green-500/20" style={{ background: "rgba(34,197,94,0.06)" }}>
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2.5 rounded-xl" style={{ background: "rgba(34,197,94,0.15)" }}><Banknote size={20} className="text-green-400" /></div>
-              <div><p className="text-white font-display text-sm tracking-widest">NOMINA DISCORD VINCULADA</p><p className="text-slate-500 font-body text-xs">Tu sueldo en el servidor se deposita automaticamente</p></div>
+              <div><p className="text-white font-display text-sm tracking-widest">NÓMINA DISCORD VINCULADA</p><p className="text-slate-500 font-body text-xs">Tu sueldo en el servidor se deposita automáticamente según tu rol</p></div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {[
                 { label: "Rol Discord",     value: discordSueldo.rol      },
                 { label: "Sueldo Semanal",  value: `$${discordSueldo.monto.toLocaleString("es-CL")}` },
                 { label: "Ciclo de Pago",   value: discordSueldo.ciclo    },
-                { label: "Proximo Pago",    value: discordSueldo.proximo  },
+                { label: "Próximo Pago",    value: discordSueldo.proximo  },
               ].map((s,i) => (
                 <div key={i} className="rounded-xl p-4" style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(34,197,94,0.15)" }}>
                   <p className="text-slate-500 font-body text-xs mb-1">{s.label}</p>
-                  <p className="text-white font-display text-sm">{s.value}</p>
+                  <p className="text-white font-display text-sm">{s.value || "—"}</p>
                 </div>
               ))}
             </div>
@@ -2406,6 +2429,334 @@ function AupolSection({ discordUser }) {
   )
 }
 
+// ─── ANTECEDENTES SECTION ────────────────────────────────────────────────────
+function AntecedentesSection({ discordUser }) {
+  const discordName = discordUser?.username ?? "Oficial"
+  const LS_KEY = discordUser?.id ? `ant_data_${discordUser.id}` : "ant_data_guest"
+  const loadData = () => { try { return JSON.parse(localStorage.getItem(LS_KEY)) || {} } catch { return {} } }
+  const saveData = (key, value) => { try { const prev = loadData(); localStorage.setItem(LS_KEY, JSON.stringify({ ...prev, [key]: value })) } catch {} }
+  const saved = loadData()
+
+  const [tab, setTab] = useState("antecedentes")
+  const [search, setSearch] = useState("")
+  const [antecedentes, setAntecedentes] = useState(saved.antecedentes ?? [])
+  const [ordenes, setOrdenes] = useState(saved.ordenes ?? [])
+  const [evidencias, setEvidencias] = useState(saved.evidencias ?? [])
+
+  const [showAntModal, setShowAntModal]   = useState(false)
+  const [showOrdModal, setShowOrdModal]   = useState(false)
+  const [showEviModal, setShowEviModal]   = useState(false)
+
+  const [antForm, setAntForm] = useState({ nombre:"", rut:"", delito:"", descripcion:"", oficial: discordName })
+  const [ordForm, setOrdForm] = useState({ nombre:"", rut:"", tipo:"Arresto", motivo:"", oficial: discordName })
+  const [eviForm, setEviForm] = useState({ titulo:"", casoRef:"", tipo:"Fotografía", descripcion:"", oficial: discordName })
+
+  const ACOLOR = "#f97316"
+  const MODAL_STYLE = { background:"#0a0d14", backdropFilter:"blur(20px)", border:"1px solid rgba(249,115,22,0.25)", boxShadow:"0 0 60px rgba(249,115,22,0.08), 0 24px 64px rgba(0,0,0,0.7)" }
+  const INPUT_STYLE = { background:"rgba(249,115,22,0.05)", border:"1px solid rgba(249,115,22,0.2)", color:"#f8fafc" }
+  const IFO = (e) => (e.target.style.borderColor = "rgba(249,115,22,0.6)")
+  const IFB = (e) => (e.target.style.borderColor = "rgba(249,115,22,0.2)")
+
+  const filtAnt = antecedentes.filter(a => a.nombre.toLowerCase().includes(search.toLowerCase()) || a.rut.includes(search))
+  const filtOrd = ordenes.filter(o => o.nombre.toLowerCase().includes(search.toLowerCase()) || o.rut.includes(search))
+  const filtEvi = evidencias.filter(e => e.titulo.toLowerCase().includes(search.toLowerCase()) || e.casoRef.toLowerCase().includes(search.toLowerCase()))
+
+  function addAnt() {
+    if (!antForm.nombre || !antForm.rut || !antForm.delito) return
+    const nid = `ANT-${String(antecedentes.length+1).padStart(3,"0")}`
+    const nuevo = { id:nid, ...antForm, estado:"Vigente", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...antecedentes]; setAntecedentes(updated); saveData("antecedentes", updated)
+    setAntForm({ nombre:"", rut:"", delito:"", descripcion:"", oficial: discordName }); setShowAntModal(false)
+  }
+  function addOrd() {
+    if (!ordForm.nombre || !ordForm.rut || !ordForm.motivo) return
+    const nid = `ORD-${String(ordenes.length+1).padStart(3,"0")}`
+    const nuevo = { id:nid, ...ordForm, estado:"Activa", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...ordenes]; setOrdenes(updated); saveData("ordenes", updated)
+    setOrdForm({ nombre:"", rut:"", tipo:"Arresto", motivo:"", oficial: discordName }); setShowOrdModal(false)
+  }
+  function addEvi() {
+    if (!eviForm.titulo || !eviForm.casoRef) return
+    const nid = `EVI-${String(evidencias.length+1).padStart(3,"0")}`
+    const nuevo = { id:nid, ...eviForm, estado:"Resguardada", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...evidencias]; setEvidencias(updated); saveData("evidencias", updated)
+    setEviForm({ titulo:"", casoRef:"", tipo:"Fotografía", descripcion:"", oficial: discordName }); setShowEviModal(false)
+  }
+
+  const EST_ANT = { "Vigente":{ bg:"rgba(239,68,68,0.12)",color:"#ef4444",border:"rgba(239,68,68,0.3)" }, "Archivado":{ bg:"rgba(100,116,139,0.15)",color:"#94a3b8",border:"rgba(100,116,139,0.3)" } }
+  const EST_ORD = { "Activa":{ bg:"rgba(249,115,22,0.12)",color:"#f97316",border:"rgba(249,115,22,0.3)" }, "Ejecutada":{ bg:"rgba(34,197,94,0.12)",color:"#22c55e",border:"rgba(34,197,94,0.3)" }, "Cancelada":{ bg:"rgba(100,116,139,0.15)",color:"#94a3b8",border:"rgba(100,116,139,0.3)" } }
+  const EST_EVI = { "Resguardada":{ bg:"rgba(139,92,246,0.12)",color:"#8b5cf6",border:"rgba(139,92,246,0.3)" }, "Procesada":{ bg:"rgba(34,197,94,0.12)",color:"#22c55e",border:"rgba(34,197,94,0.3)" } }
+
+  const tabs = [
+    { id:"antecedentes", label:"Antecedentes", icon:FileText, count: antecedentes.length },
+    { id:"ordenes",      label:"Órdenes",      icon:AlertTriangle, count: ordenes.length },
+    { id:"evidencias",   label:"Evidencias",   icon:Search, count: evidencias.length },
+  ]
+
+  const tabActions = {
+    antecedentes: { label:"+ NUEVO REGISTRO", color:ACOLOR, action: () => setShowAntModal(true) },
+    ordenes:      { label:"+ NUEVA ORDEN",     color:"#ef4444", action: () => setShowOrdModal(true) },
+    evidencias:   { label:"+ NUEVA EVIDENCIA", color:"#8b5cf6", action: () => setShowEviModal(true) },
+  }
+
+  return (
+    <motion.div {...slideUp} className="flex flex-col gap-5">
+      {/* HEADER */}
+      <div className="rounded-2xl p-5 border" style={{ background:"linear-gradient(135deg,rgba(249,115,22,0.10) 0%,rgba(139,92,246,0.06) 100%)", borderColor:"rgba(249,115,22,0.25)" }}>
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-2xl" style={{ background:"rgba(249,115,22,0.15)", border:"1px solid rgba(249,115,22,0.3)" }}>
+              <FileText size={22} style={{ color: ACOLOR }} />
+            </div>
+            <div>
+              <p className="font-display text-[9px] tracking-[0.2em] mb-0.5" style={{ color: ACOLOR }}>SISTEMA DE REGISTROS</p>
+              <h2 className="font-display text-lg text-white tracking-widest">ANTECEDENTES · ÓRDENES · EVIDENCIAS</h2>
+              <p className="text-slate-500 font-body text-xs mt-0.5">Registro oficial de antecedentes, órdenes judiciales y evidencias del servidor.</p>
+            </div>
+          </div>
+          <button onClick={tabActions[tab].action} className="shimmer-btn flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs tracking-widest text-white" style={{ background: `linear-gradient(135deg,${tabActions[tab].color},${tabActions[tab].color}aa)`, boxShadow:`0 0 18px ${tabActions[tab].color}30` }}>
+            {tabActions[tab].label}
+          </button>
+        </div>
+      </div>
+
+      {/* STATS */}
+      <div className="grid grid-cols-3 gap-3">
+        {[
+          { label:"Total Antecedentes", value: antecedentes.length, color:"#ef4444", bg:"rgba(239,68,68,0.07)", border:"rgba(239,68,68,0.2)" },
+          { label:"Órdenes Activas",    value: ordenes.filter(o=>o.estado==="Activa").length, color:"#f97316", bg:"rgba(249,115,22,0.07)", border:"rgba(249,115,22,0.2)" },
+          { label:"Evidencias",         value: evidencias.length, color:"#8b5cf6", bg:"rgba(139,92,246,0.07)", border:"rgba(139,92,246,0.2)" },
+        ].map((s,i) => (
+          <div key={i} className="rounded-xl p-4" style={{ background: s.bg, border:`1px solid ${s.border}` }}>
+            <div className="font-display font-bold text-xl leading-none mb-1" style={{ color: s.color }}>{s.value}</div>
+            <div className="text-slate-500 font-body text-xs">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* SEARCH */}
+      <div className="relative">
+        <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Buscar por nombre, RUT o ID de caso..." className="w-full pl-10 pr-4 py-3 rounded-xl font-body text-sm outline-none" style={{ background:"rgba(20,12,4,0.7)", border:"1px solid rgba(255,255,255,0.07)", color:"#f8fafc" }} />
+      </div>
+
+      {/* TABS */}
+      <div className="flex gap-1 p-1 rounded-xl" style={{ background:"rgba(20,12,4,0.6)" }}>
+        {tabs.map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg font-display text-[10px] tracking-widest transition-all" style={tab===t.id ? { background:"rgba(249,115,22,0.2)", color:"#f97316" } : { color:"#64748b" }}>
+            <t.icon size={11} />
+            {t.label}
+            {t.count > 0 && <span className="px-1.5 py-0.5 rounded font-mono text-[9px]" style={{ background:"rgba(249,115,22,0.25)", color:"#fb923c" }}>{t.count}</span>}
+          </button>
+        ))}
+      </div>
+
+      <AnimatePresence mode="wait">
+        {/* ANTECEDENTES */}
+        {tab === "antecedentes" && (
+          <motion.div key="ant" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} exit={{opacity:0}} className="flex flex-col gap-3">
+            {filtAnt.length === 0 && (
+              <div className="rounded-2xl p-10 border border-dashed border-white/8 flex flex-col items-center gap-2">
+                <FileText size={28} className="text-slate-700" />
+                <p className="text-slate-600 font-body text-sm">No hay antecedentes registrados</p>
+                <button onClick={()=>setShowAntModal(true)} className="mt-1 px-4 py-2 rounded-xl font-display text-xs tracking-widest" style={{ background:"rgba(249,115,22,0.15)", color:ACOLOR, border:"1px solid rgba(249,115,22,0.3)" }}>+ Registrar primero</button>
+              </div>
+            )}
+            {filtAnt.map((a,i) => {
+              const est = EST_ANT[a.estado] || EST_ANT["Vigente"]
+              return (
+                <div key={i} className="rounded-2xl p-5 border" style={{ background:"rgba(20,12,4,0.65)", borderColor:"rgba(239,68,68,0.12)" }}>
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center font-display text-xs shrink-0" style={{ background:"rgba(239,68,68,0.12)", color:"#ef4444", border:"1px solid rgba(239,68,68,0.2)" }}>{a.nombre[0]?.toUpperCase()}</div>
+                      <div>
+                        <p className="text-white font-body text-sm font-semibold">{a.nombre}</p>
+                        <p className="text-slate-500 font-mono text-xs">RUT: {a.rut}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="px-2.5 py-1 rounded-lg font-display text-[9px] tracking-widest" style={{ background: est.bg, color: est.color, border:`1px solid ${est.border}` }}>{a.estado}</span>
+                      <span className="px-2.5 py-1 rounded-lg font-mono text-[9px]" style={{ background:"rgba(255,255,255,0.04)", color:"#64748b" }}>{a.id}</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-white/5">
+                    <p className="text-slate-300 font-body text-xs mb-1"><span className="text-slate-500">Delito: </span>{a.delito}</p>
+                    {a.descripcion && <p className="text-slate-500 font-body text-xs">{a.descripcion}</p>}
+                    <div className="flex items-center gap-3 mt-2">
+                      <span className="text-slate-600 font-mono text-[10px]">{a.fecha}</span>
+                      <span className="text-slate-600 font-body text-[10px]">· Registrado por {a.registradoPor}</span>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 mt-3">
+                    <button onClick={()=>setAntecedentes(prev=>prev.map(x=>x.id===a.id?{...x,estado:"Archivado"}:x))} disabled={a.estado==="Archivado"} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all disabled:opacity-30" style={{ background:"rgba(100,116,139,0.12)", color:"#94a3b8", border:"1px solid rgba(100,116,139,0.2)" }}>Archivar</button>
+                    <button onClick={()=>{const updated=antecedentes.filter(x=>x.id!==a.id);setAntecedentes(updated);saveData("antecedentes",updated)}} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all" style={{ background:"rgba(239,68,68,0.08)", color:"#ef4444", border:"1px solid rgba(239,68,68,0.2)" }}>Eliminar</button>
+                  </div>
+                </div>
+              )
+            })}
+          </motion.div>
+        )}
+
+        {/* ÓRDENES */}
+        {tab === "ordenes" && (
+          <motion.div key="ord" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} exit={{opacity:0}} className="flex flex-col gap-3">
+            {filtOrd.length === 0 && (
+              <div className="rounded-2xl p-10 border border-dashed border-white/8 flex flex-col items-center gap-2">
+                <AlertTriangle size={28} className="text-slate-700" />
+                <p className="text-slate-600 font-body text-sm">No hay órdenes registradas</p>
+                <button onClick={()=>setShowOrdModal(true)} className="mt-1 px-4 py-2 rounded-xl font-display text-xs tracking-widest" style={{ background:"rgba(239,68,68,0.12)", color:"#ef4444", border:"1px solid rgba(239,68,68,0.3)" }}>+ Crear primera orden</button>
+              </div>
+            )}
+            {filtOrd.map((o,i) => {
+              const est = EST_ORD[o.estado] || EST_ORD["Activa"]
+              return (
+                <div key={i} className="rounded-2xl p-5 border" style={{ background:"rgba(20,12,4,0.65)", borderColor:`${est.border}` }}>
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="px-2 py-0.5 rounded font-display text-[9px] tracking-widest" style={{ background:"rgba(249,115,22,0.15)", color:ACOLOR }}>{o.tipo}</span>
+                        <span className="font-mono text-[9px] text-slate-600">{o.id}</span>
+                      </div>
+                      <p className="text-white font-body text-sm font-semibold">{o.nombre}</p>
+                      <p className="text-slate-500 font-mono text-xs">RUT: {o.rut}</p>
+                    </div>
+                    <span className="px-2.5 py-1 rounded-lg font-display text-[9px] tracking-widest shrink-0" style={{ background: est.bg, color: est.color, border:`1px solid ${est.border}` }}>{o.estado}</span>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-white/5">
+                    <p className="text-slate-400 font-body text-xs mb-1"><span className="text-slate-600">Motivo: </span>{o.motivo}</p>
+                    <div className="flex items-center gap-3 mt-1">
+                      <span className="text-slate-600 font-mono text-[10px]">{o.fecha}</span>
+                      <span className="text-slate-600 font-body text-[10px]">· Emitida por {o.registradoPor}</span>
+                    </div>
+                  </div>
+                  {o.estado === "Activa" && (
+                    <div className="flex gap-2 mt-3">
+                      <button onClick={()=>setOrdenes(prev=>prev.map(x=>x.id===o.id?{...x,estado:"Ejecutada"}:x))} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all" style={{ background:"rgba(34,197,94,0.12)", color:"#22c55e", border:"1px solid rgba(34,197,94,0.25)" }}>Marcar Ejecutada</button>
+                      <button onClick={()=>setOrdenes(prev=>prev.map(x=>x.id===o.id?{...x,estado:"Cancelada"}:x))} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all" style={{ background:"rgba(100,116,139,0.12)", color:"#94a3b8", border:"1px solid rgba(100,116,139,0.2)" }}>Cancelar</button>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </motion.div>
+        )}
+
+        {/* EVIDENCIAS */}
+        {tab === "evidencias" && (
+          <motion.div key="evi" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} exit={{opacity:0}} className="flex flex-col gap-3">
+            {filtEvi.length === 0 && (
+              <div className="rounded-2xl p-10 border border-dashed border-white/8 flex flex-col items-center gap-2">
+                <Search size={28} className="text-slate-700" />
+                <p className="text-slate-600 font-body text-sm">No hay evidencias registradas</p>
+                <button onClick={()=>setShowEviModal(true)} className="mt-1 px-4 py-2 rounded-xl font-display text-xs tracking-widest" style={{ background:"rgba(139,92,246,0.12)", color:"#8b5cf6", border:"1px solid rgba(139,92,246,0.3)" }}>+ Registrar evidencia</button>
+              </div>
+            )}
+            {filtEvi.map((e,i) => {
+              const est = EST_EVI[e.estado] || EST_EVI["Resguardada"]
+              const typeIcons = { "Fotografía":"📷", "Video":"🎥", "Documento":"📄", "Objeto":"📦", "Testimonio":"🗣️" }
+              return (
+                <div key={i} className="rounded-2xl p-5 border" style={{ background:"rgba(20,12,4,0.65)", borderColor:"rgba(139,92,246,0.12)" }}>
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0" style={{ background:"rgba(139,92,246,0.12)", border:"1px solid rgba(139,92,246,0.2)" }}>{typeIcons[e.tipo] || "📋"}</div>
+                      <div>
+                        <p className="text-white font-body text-sm font-semibold">{e.titulo}</p>
+                        <p className="text-slate-500 font-body text-xs">Caso: <span className="text-slate-400 font-mono">{e.casoRef}</span></p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded font-display text-[9px]" style={{ background:"rgba(139,92,246,0.12)", color:"#8b5cf6" }}>{e.tipo}</span>
+                      <span className="px-2.5 py-1 rounded-lg font-display text-[9px] tracking-widest" style={{ background: est.bg, color: est.color, border:`1px solid ${est.border}` }}>{e.estado}</span>
+                    </div>
+                  </div>
+                  {e.descripcion && (
+                    <div className="mt-3 pt-3 border-t border-white/5">
+                      <p className="text-slate-400 font-body text-xs">{e.descripcion}</p>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-3 mt-2">
+                    <span className="text-slate-600 font-mono text-[10px]">{e.fecha}</span>
+                    <span className="text-slate-600 font-body text-[10px]">· {e.id} · {e.registradoPor}</span>
+                  </div>
+                  {e.estado === "Resguardada" && (
+                    <div className="mt-3">
+                      <button onClick={()=>setEvidencias(prev=>prev.map(x=>x.id===e.id?{...x,estado:"Procesada"}:x))} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all" style={{ background:"rgba(34,197,94,0.12)", color:"#22c55e", border:"1px solid rgba(34,197,94,0.25)" }}>Marcar Procesada</button>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* MODAL ANTECEDENTE */}
+      <AnimatePresence>
+        {showAntModal && (
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{background:"rgba(0,0,0,0.8)",backdropFilter:"blur(6px)"}} onClick={()=>setShowAntModal(false)}>
+            <motion.div initial={{scale:0.92,opacity:0}} animate={{scale:1,opacity:1}} exit={{scale:0.92,opacity:0}} onClick={e=>e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={MODAL_STYLE}>
+              <div className="flex items-center justify-between"><h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><FileText size={14} style={{color:ACOLOR}}/> NUEVO ANTECEDENTE</h3><button onClick={()=>setShowAntModal(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16}/></button></div>
+              {[["Nombre completo","nombre","text","Ej: Juan Pérez Soto"],["RUT","rut","text","Ej: 18.432.210-K"],["Delito / Infracción","delito","text","Ej: Robo con fuerza"],["Descripción (opcional)","descripcion","text","Detalles adicionales del caso"],["Oficial a cargo","oficial","text","Tu nombre o rango"]].map(([label,field,type,ph])=>(
+                <div key={field}><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">{label.toUpperCase()}</label><input type={type} placeholder={ph} value={antForm[field]} onChange={e=>setAntForm({...antForm,[field]:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={IFO} onBlur={IFB}/></div>
+              ))}
+              <div className="flex gap-3 justify-end mt-1">
+                <button onClick={()=>setShowAntModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
+                <button onClick={addAnt} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{background:`${ACOLOR}20`,color:ACOLOR,border:`1px solid ${ACOLOR}40`}}><Check size={13}/> Registrar</button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* MODAL ORDEN */}
+      <AnimatePresence>
+        {showOrdModal && (
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{background:"rgba(0,0,0,0.8)",backdropFilter:"blur(6px)"}} onClick={()=>setShowOrdModal(false)}>
+            <motion.div initial={{scale:0.92,opacity:0}} animate={{scale:1,opacity:1}} exit={{scale:0.92,opacity:0}} onClick={e=>e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={MODAL_STYLE}>
+              <div className="flex items-center justify-between"><h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><AlertTriangle size={14} style={{color:"#ef4444"}}/> NUEVA ORDEN</h3><button onClick={()=>setShowOrdModal(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16}/></button></div>
+              {[["Nombre del imputado","nombre","text","Ej: Carlos Rojas"],["RUT","rut","text","Ej: 14.321.000-K"],["Motivo de la orden","motivo","text","Ej: Incumplimiento de libertad condicional"],["Oficial emisor","oficial","text","Tu nombre o rango"]].map(([label,field,type,ph])=>(
+                <div key={field}><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">{label.toUpperCase()}</label><input type={type} placeholder={ph} value={ordForm[field]} onChange={e=>setOrdForm({...ordForm,[field]:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={IFO} onBlur={IFB}/></div>
+              ))}
+              <div><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">TIPO DE ORDEN</label>
+                <select value={ordForm.tipo} onChange={e=>setOrdForm({...ordForm,tipo:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none appearance-none" style={INPUT_STYLE}>
+                  {["Arresto","Allanamiento","Citación","Detención preventiva","Extradición"].map(t=><option key={t}>{t}</option>)}
+                </select>
+              </div>
+              <div className="flex gap-3 justify-end mt-1">
+                <button onClick={()=>setShowOrdModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
+                <button onClick={addOrd} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{background:"rgba(239,68,68,0.15)",color:"#ef4444",border:"1px solid rgba(239,68,68,0.35)"}}><Check size={13}/> Emitir Orden</button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* MODAL EVIDENCIA */}
+      <AnimatePresence>
+        {showEviModal && (
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{background:"rgba(0,0,0,0.8)",backdropFilter:"blur(6px)"}} onClick={()=>setShowEviModal(false)}>
+            <motion.div initial={{scale:0.92,opacity:0}} animate={{scale:1,opacity:1}} exit={{scale:0.92,opacity:0}} onClick={e=>e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={MODAL_STYLE}>
+              <div className="flex items-center justify-between"><h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><Search size={14} style={{color:"#8b5cf6"}}/> NUEVA EVIDENCIA</h3><button onClick={()=>setShowEviModal(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16}/></button></div>
+              {[["Título de la evidencia","titulo","text","Ej: Grabación cámara sector norte"],["Referencia de caso","casoRef","text","Ej: CASO-001 / ANT-002"],["Descripción","descripcion","text","Detalles sobre la evidencia"],["Oficial responsable","oficial","text","Tu nombre o rango"]].map(([label,field,type,ph])=>(
+                <div key={field}><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">{label.toUpperCase()}</label><input type={type} placeholder={ph} value={eviForm[field]} onChange={e=>setEviForm({...eviForm,[field]:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={IFO} onBlur={IFB}/></div>
+              ))}
+              <div><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">TIPO DE EVIDENCIA</label>
+                <select value={eviForm.tipo} onChange={e=>setEviForm({...eviForm,tipo:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none appearance-none" style={INPUT_STYLE}>
+                  {["Fotografía","Video","Documento","Objeto","Testimonio"].map(t=><option key={t}>{t}</option>)}
+                </select>
+              </div>
+              <div className="flex gap-3 justify-end mt-1">
+                <button onClick={()=>setShowEviModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
+                <button onClick={addEvi} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{background:"rgba(139,92,246,0.15)",color:"#8b5cf6",border:"1px solid rgba(139,92,246,0.35)"}}><Check size={13}/> Registrar</button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  )
+}
+
 function SnsmSection() {
   const s = DISCORD_ROLES_SISTEMAS["Seguridad Ciudadana"]
   return (
@@ -2622,7 +2973,7 @@ export default function App() {
     }
   }, [])
 
-  const sectionLabel = { home: "PANEL PRINCIPAL", cedula: "CEDULA DIGITAL", banco: "BANCO METROPOLITANO", mercado: "MERCADO NEGRO", deepweb: "DEEP WEB — MERCADO CLANDESTINO", empresas: "GESTION DE EMPRESAS", municipalidad: "MUNICIPALIDAD ACRP", faccion: "FACCIONES", comunidad: "COMUNIDAD", gepol: "GEPOL — GESTIÓN POLICIAL", aupol: "AUPOL — ARCHIVO POLICIAL", snsm: "SNSM — SEG. MUNICIPAL" }
+  const sectionLabel = { home: "PANEL PRINCIPAL", banco: "BANCO METROPOLITANO", mercado: "MERCADO NEGRO", deepweb: "DEEP WEB — MERCADO CLANDESTINO", empresas: "GESTION DE EMPRESAS", municipalidad: "MUNICIPALIDAD ACRP", antecedentes: "REGISTRO DE ANTECEDENTES", faccion: "FACCIONES", comunidad: "COMUNIDAD", gepol: "GEPOL — GESTIÓN POLICIAL", aupol: "AUPOL — ARCHIVO POLICIAL", snsm: "SNSM — SEG. MUNICIPAL" }
 
   return (
     <div className="min-h-screen font-body" style={{ background: "#0f0a05", color: "#f8fafc" }}>
@@ -2650,12 +3001,12 @@ export default function App() {
               </div>
               <AnimatePresence mode="wait">
                 {activeSection === "home"          && <HomeSection      key="home"          setActiveSection={setActiveSection} />}
-                {activeSection === "cedula"        && <CedulaSection    key="cedula"        onSave={setPlayerData} />}
                 {activeSection === "banco"         && <BancoSection     key="banco"         />}
                 {activeSection === "mercado"       && <MercadoSection   key="mercado"       />}
                 {activeSection === "deepweb"       && <DeepWebSection   key="deepweb"       />}
                 {activeSection === "empresas"      && <EmpresasSection  key="empresas"      />}
                 {activeSection === "municipalidad" && <MunicipalidadSection key="municipalidad" />}
+                {activeSection === "antecedentes"  && <AntecedentesSection key="antecedentes" discordUser={discordUser} />}
                 {activeSection === "gepol"         && <GepolSection         key="gepol"          discordUser={discordUser} />}
                 {activeSection === "aupol"         && <AupolSection         key="aupol"          discordUser={discordUser} />}
                 {activeSection === "snsm"          && <SnsmSection          key="snsm"          />}
