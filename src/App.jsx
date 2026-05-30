@@ -63,7 +63,7 @@ const DISCORD_ROLES_SISTEMAS = {
     features: ["Consulta RUT/Placa", "Registro de Detenidos", "Partes Policiales", "Operativos Activos", "Control de Turnos"]
   },
   "PDI": {
-    sistema: "AUPO", fullName: "Archivo Unico Policial Online", color: "#f97316", icon: "Search",
+    sistema: "AUPO", fullName: "Archivo Unico Policial Online", color: "#e8d5bc", icon: "Search",
     desc: "Archivo Unico Policial — Investigacion criminal, antecedentes e inteligencia.",
     features: ["Antecedentes Criminales", "Investigaciones Activas", "Ordenes de Arresto", "Inteligencia Policial", "Informe Pericial"]
   },
@@ -76,13 +76,13 @@ const DISCORD_ROLES_SISTEMAS = {
 
 const TX_TYPES = {
   salary:   { label: "Nomina Discord",    color: "#22c55e", bg: "rgba(34,197,94,0.12)",   border: "rgba(34,197,94,0.3)"   },
-  transfer: { label: "Transferencia",     color: "#f97316", bg: "rgba(249,115,22,0.12)",  border: "rgba(249,115,22,0.3)"  },
+  transfer: { label: "Transferencia",     color: "#e8d5bc", bg: "rgba(249,115,22,0.12)",  border: "rgba(249,115,22,0.3)"  },
   fine:     { label: "Multa/Infraccion",  color: "#ef4444", bg: "rgba(239,68,68,0.12)",   border: "rgba(239,68,68,0.3)"   },
   purchase: { label: "Compra Mercado",    color: "#ec4899", bg: "rgba(236,72,153,0.12)",  border: "rgba(236,72,153,0.3)"  },
   empresa:  { label: "Ingreso Empresa",   color: "#f59e0b", bg: "rgba(245,158,11,0.12)",  border: "rgba(245,158,11,0.3)"  },
   service:  { label: "Pago Servicio",     color: "#64748b", bg: "rgba(100,116,139,0.12)", border: "rgba(100,116,139,0.3)" },
   bail:     { label: "Fianza/Caucion",    color: "#8b5cf6", bg: "rgba(139,92,246,0.12)",  border: "rgba(139,92,246,0.3)"  },
-  deposit:  { label: "Deposito",          color: "#fb923c", bg: "rgba(251,146,60,0.12)",   border: "rgba(251,146,60,0.3)"   },
+  deposit:  { label: "Deposito",          color: "#d4bc9e", bg: "rgba(251,146,60,0.12)",   border: "rgba(251,146,60,0.3)"   },
 }
 
 const RARITY = {
@@ -93,12 +93,14 @@ const RARITY = {
 }
 
 const TEAM = [
-  { role: "Owner",                    dept: "Fundadores",             user: "Brexes777",   color: "#f97316" },
-  { role: "Co-Owner",                 dept: "Fundadores",             user: "Bentey",      color: "#f97316" },
-  { role: "Co-Owner",                 dept: "Fundadores",             user: "MrOrtiz",     color: "#f97316" },
-  { role: "Community Manager",        dept: "Gestión Comunitaria",    user: "MartiNashe",  color: "#ec4899" },
-  { role: "Gerente Administrativo",   dept: "Administración",         user: "Mr Renato",   color: "#fb923c" },
-  { role: "Gerente Ejecutivo",        dept: "Dirección Ejecutiva",    user: "Isla",        color: "#f59e0b" },
+  { role: "Presidente",                     dept: "Dirección Superior",       user: "Simon",       color: "#e8d5bc" },
+  { role: "Vicepresidente",                 dept: "Dirección Superior",       user: "Cauquis",     color: "#d4bc9e" },
+  { role: "Director Asistente",             dept: "Dirección",                user: "Bastián",     color: "#c9a97a" },
+  { role: "Community Manager",              dept: "Gestión Comunitaria",      user: "Jordan",      color: "#b8956a" },
+  { role: "Gerente General",               dept: "Gerencia General",         user: "Logica Puig", color: "#e8d5bc" },
+  { role: "Gerente Operativo",             dept: "Operaciones",              user: "Robert",      color: "#c9a97a" },
+  { role: "Gerente de Recursos Humanos",   dept: "Recursos Humanos",        user: "Camilo",      color: "#d4bc9e" },
+  { role: "Gerente de Administración",     dept: "Administración",          user: "Chisui",      color: "#b8956a" },
 ]
 
 function Particles() {
@@ -106,7 +108,7 @@ function Particles() {
     id: i, left: `${(i * 5.5 + 3) % 100}%`,
     delay: `${(i * 0.7) % 12}s`, dur: `${10 + (i % 8)}s`,
     size: i % 3 === 0 ? "3px" : "2px",
-    color: i % 2 === 0 ? "rgba(249,115,22,0.6)" : "rgba(251,146,60,0.5)",
+    color: i % 2 === 0 ? "rgba(232,213,188,0.5)" : "rgba(201,169,122,0.4)",
   }))
   return <>{particles.map(p => <div key={p.id} className="particle" style={{ left: p.left, animationDelay: p.delay, animationDuration: p.dur, width: p.size, height: p.size, background: p.color }} />)}</>
 }
@@ -118,8 +120,8 @@ function VideoBackground({ fixed = false }) {
         <source src="/assets/bg-video.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, transparent 20%, rgba(10,8,5,0.75) 100%)" }} />
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0a0805] to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0a0805] to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#080808] to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#080808] to-transparent" />
     </div>
   )
 }
@@ -194,10 +196,10 @@ function LoginModal({ onClose, onEnter }) {
     <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <div className="absolute inset-0 bg-black/65 backdrop-blur-sm" onClick={onClose} />
       <motion.div className="relative w-full max-w-sm" initial={{ y: 50, opacity: 0, scale: 0.94 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: 40, opacity: 0, scale: 0.96 }} transition={{ type: "spring", stiffness: 280, damping: 28 }}>
-        <div className="rounded-2xl p-8 border" style={{ background: "rgba(18,10,3,0.92)", backdropFilter: "blur(25px)", borderColor: "rgba(234,88,12,0.35)", boxShadow: "0 0 60px rgba(234,88,12,0.15), 0 24px 64px rgba(0,0,0,0.6)" }}>
+        <div className="rounded-2xl p-8 border" style={{ background: "rgba(18,10,3,0.92)", backdropFilter: "blur(25px)", borderColor: "rgba(232,213,188,0.3)", boxShadow: "0 0 60px rgba(232,213,188,0.1), 0 24px 64px rgba(0,0,0,0.6)" }}>
           <button onClick={onClose} className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors p-1"><X size={18} /></button>
           <div className="flex flex-col items-center mb-7">
-            <img src="/assets/logo.png" alt="Arica Chile Roleplay ER:LC" className="w-20 h-20 object-contain mb-3" style={{ mixBlendMode: "screen" }} />
+            <img src="/assets/logo-fpc.png" alt="Arica Chile Roleplay ER:LC" className="w-20 h-20 object-contain mb-3" style={{ mixBlendMode: "screen" }} />
             <h2 className="font-display text-white text-base tracking-widest">ACCESO AL SERVIDOR</h2>
             <p className="text-slate-500 font-body text-sm mt-1">Verifica tu identidad para continuar</p>
           </div>
@@ -291,16 +293,16 @@ function Sidebar({ activeSection, setActiveSection, onLogout, discordUser, playe
   const robloxFoto = playerData?.fotoUrl || null
 
   return (
-    <aside className="w-[260px] shrink-0 flex flex-col h-full" style={{ background: "#0a0805", borderRight: "1px solid rgba(249,115,22,0.14)" }}>
+    <aside className="w-[260px] shrink-0 flex flex-col h-full" style={{ background: "#080808", borderRight: "1px solid rgba(249,115,22,0.14)" }}>
       <div className="p-5 flex items-center gap-3 border-b border-violet-500/10">
-        <img src="/assets/logo.png" alt="Logo" className="w-11 h-11 object-contain" style={{ mixBlendMode: "screen" }} />
+        <img src="/assets/logo-fpc.png" alt="Logo" className="w-11 h-11 object-contain" style={{ mixBlendMode: "screen" }} />
         <div>
           <div className="font-display text-white text-[11px] tracking-widest leading-tight">ARICA RP</div>
           <div className="font-display text-[#f97316] text-[9px] tracking-[0.25em]">ER:LC ARICA</div>
         </div>
       </div>
       <div className="mx-4 mt-4 p-3 rounded-xl border border-violet-500/20 flex items-center gap-3" style={{ background: "rgba(234,88,12,0.07)" }}>
-        <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg,#ea580c,#ec4899)", border: "2px solid rgba(251,146,60,0.4)" }}>
+        <div className="w-9 h-9 rounded-full overflow-hidden shrink-0 flex items-center justify-center" style={{ background: "linear-gradient(135deg,#c9a97a,#e8d5bc)", border: "2px solid rgba(251,146,60,0.4)" }}>
           {robloxFoto ? (
             <img src={robloxFoto} alt="Avatar" className="w-full h-full object-cover" onError={e => { e.target.style.display = "none" }} />
           ) : (
@@ -352,23 +354,23 @@ const slideUp = { initial: { opacity: 0, y: 22 }, animate: { opacity: 1, y: 0 },
 
 function HomeSection({ setActiveSection }) {
   const services = [
-    { id: "cedula",  icon: CreditCard,  label: "Cédula Digital",  desc: "Tu identidad roleplay con datos, profesión y acceso a servicios personalizados.", color: "#fb923c" },
-    { id: "mercado", icon: ShoppingBag, label: "Mercado",          desc: "Compra y vende artículos entre jugadores en el marketplace de la comunidad.",    color: "#f97316" },
+    { id: "cedula",  icon: CreditCard,  label: "Cédula Digital",  desc: "Tu identidad roleplay con datos, profesión y acceso a servicios personalizados.", color: "#d4bc9e" },
+    { id: "mercado", icon: ShoppingBag, label: "Mercado",          desc: "Compra y vende artículos entre jugadores en el marketplace de la comunidad.",    color: "#e8d5bc" },
     { id: "faccion", icon: Car,         label: "Concesionario",    desc: "Explora vehículos disponibles y gestiona tu flota personal en el servidor.",       color: "#ec4899" },
     { id: "faccion", icon: Building2,   label: "Empresas",         desc: "Crea y administra tu empresa, contrata empleados y genera ingresos.",              color: "#f59e0b" },
   ]
   const serverStats = [
-    { label: "Jugadores Online",  value: "87",    icon: Users,      c: { bg: "rgba(251,146,60,0.07)",  border: "rgba(251,146,60,0.2)",  text: "#fb923c" } },
-    { label: "Comunidad Discord", value: "5.402", icon: TrendingUp, c: { bg: "rgba(234,88,12,0.1)",   border: "rgba(234,88,12,0.25)", text: "#f97316" } },
+    { label: "Jugadores Online",  value: "87",    icon: Users,      c: { bg: "rgba(251,146,60,0.07)",  border: "rgba(251,146,60,0.2)",  text: "#d4bc9e" } },
+    { label: "Comunidad Discord", value: "5.402", icon: TrendingUp, c: { bg: "rgba(234,88,12,0.1)",   border: "rgba(234,88,12,0.25)", text: "#e8d5bc" } },
     { label: "Rating Melonly",    value: "4.9/5", icon: Star,       c: { bg: "rgba(236,72,153,0.07)",  border: "rgba(236,72,153,0.2)",  text: "#ec4899" } },
-    { label: "Eventos Activos",   value: "3",     icon: Zap,        c: { bg: "rgba(251,146,60,0.07)",  border: "rgba(251,146,60,0.2)",  text: "#fb923c" } },
+    { label: "Eventos Activos",   value: "3",     icon: Zap,        c: { bg: "rgba(251,146,60,0.07)",  border: "rgba(251,146,60,0.2)",  text: "#d4bc9e" } },
   ]
   const activity = [
-    { msg: "RamirezRP compró Chaleco Balístico",  time: "hace 2 min",  dot: "#fb923c" },
-    { msg: "Operación SIP exitosa en Zona Norte",  time: "hace 8 min",  dot: "#f97316" },
+    { msg: "RamirezRP compró Chaleco Balístico",  time: "hace 2 min",  dot: "#d4bc9e" },
+    { msg: "Operación SIP exitosa en Zona Norte",  time: "hace 8 min",  dot: "#e8d5bc" },
     { msg: "NuevoJugador_89 se unió al servidor",  time: "hace 15 min", dot: "#ec4899" },
-    { msg: "Evento de patrullaje — Sector 4",      time: "hace 23 min", dot: "#fb923c" },
-    { msg: "Subasta de SUV Carabineros iniciada",  time: "hace 31 min", dot: "#f97316" },
+    { msg: "Evento de patrullaje — Sector 4",      time: "hace 23 min", dot: "#d4bc9e" },
+    { msg: "Subasta de SUV Carabineros iniciada",  time: "hace 31 min", dot: "#e8d5bc" },
   ]
   return (
     <motion.div {...slideUp} className="flex flex-col gap-7">
@@ -380,7 +382,7 @@ function HomeSection({ setActiveSection }) {
           <h2 className="font-display text-3xl text-white tracking-wider glow-violet">ARICA CHILE ROLEPLAY ER:LC</h2>
           <p className="text-slate-500 font-body text-sm mt-1">Inicia sesión, crea tu cédula y accede a todo el ecosistema ACRP.</p>
         </div>
-        <img src="/assets/logo.png" alt="" aria-hidden className="absolute right-6 top-1/2 -translate-y-1/2 w-28 h-28 object-contain opacity-20 pointer-events-none" style={{ mixBlendMode: "screen" }} />
+        <img src="/assets/logo-fpc.png" alt="" aria-hidden className="absolute right-6 top-1/2 -translate-y-1/2 w-28 h-28 object-contain opacity-20 pointer-events-none" style={{ mixBlendMode: "screen" }} />
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {serverStats.map(s => { const Icon = s.icon; return (
@@ -391,7 +393,7 @@ function HomeSection({ setActiveSection }) {
         )})}
       </div>
       <div className="flex flex-col gap-4">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display tracking-widest border w-fit" style={{ background: "rgba(234,88,12,0.12)", borderColor: "rgba(234,88,12,0.3)", color: "#f97316" }}>⚙️ SERVICIOS</span>
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display tracking-widest border w-fit" style={{ background: "rgba(234,88,12,0.12)", borderColor: "rgba(234,88,12,0.3)", color: "#e8d5bc" }}>⚙️ SERVICIOS</span>
         <h3 className="font-display text-white text-lg tracking-wider">¿QUÉ PUEDES HACER?</h3>
         <p className="text-slate-500 font-body text-sm -mt-2">Herramientas y servicios disponibles dentro del portal.</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -404,7 +406,7 @@ function HomeSection({ setActiveSection }) {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display tracking-widest border w-fit" style={{ background: "rgba(234,88,12,0.12)", borderColor: "rgba(234,88,12,0.3)", color: "#f97316" }}>📸 GALERÍA</span>
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display tracking-widest border w-fit" style={{ background: "rgba(234,88,12,0.12)", borderColor: "rgba(234,88,12,0.3)", color: "#e8d5bc" }}>📸 GALERÍA</span>
         <h3 className="font-display text-white text-lg tracking-wider">MOMENTOS DE LA COMUNIDAD</h3>
         <p className="text-slate-500 font-body text-sm -mt-2">Operativos, patrullajes y servicios registrados por ACRP.</p>
         <GalleryCarousel />
@@ -531,11 +533,11 @@ function CedulaSection({ onSave }) {
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">
                 <label className="font-display text-[9px] tracking-widest text-slate-500">NOMBRES (2-3)</label>
-                <input type="text" placeholder="Ej: Juan Carlos" className="w-full p-4 rounded-2xl outline-none font-semibold text-white placeholder-slate-600 font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.5)")} onBlur={e=>(e.target.style.borderColor="rgba(255,255,255,0.08)")} onChange={e=>setFormData({...formData,nombres:e.target.value})} />
+                <input type="text" placeholder="Ej: Juan Carlos" className="w-full p-4 rounded-2xl outline-none font-semibold text-white placeholder-slate-600 font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onFocus={e=>(e.target.style.borderColor="rgba(201,169,122,0.4)")} onBlur={e=>(e.target.style.borderColor="rgba(255,255,255,0.08)")} onChange={e=>setFormData({...formData,nombres:e.target.value})} />
               </div>
               <div className="flex flex-col gap-1">
                 <label className="font-display text-[9px] tracking-widest text-slate-500">APELLIDOS (máx. 2)</label>
-                <input type="text" placeholder="Ej: González Pérez" className="w-full p-4 rounded-2xl outline-none font-semibold text-white placeholder-slate-600 font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.5)")} onBlur={e=>(e.target.style.borderColor="rgba(255,255,255,0.08)")} onChange={e=>setFormData({...formData,apellidos:e.target.value})} />
+                <input type="text" placeholder="Ej: González Pérez" className="w-full p-4 rounded-2xl outline-none font-semibold text-white placeholder-slate-600 font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} onFocus={e=>(e.target.style.borderColor="rgba(201,169,122,0.4)")} onBlur={e=>(e.target.style.borderColor="rgba(255,255,255,0.08)")} onChange={e=>setFormData({...formData,apellidos:e.target.value})} />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -557,11 +559,11 @@ function CedulaSection({ onSave }) {
               <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1 block">FECHA DE NACIMIENTO (15-100 años, hasta 2026)</label>
               <input type="date" className="w-full p-4 rounded-2xl outline-none text-slate-400 font-semibold font-body" style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.08)" }} max="2026-12-31" onChange={e=>setFormData({...formData,fechaNac:e.target.value})} />
             </div>
-            <input type="text" placeholder="Firma del Titular" className="w-full p-4 rounded-2xl outline-none font-bold text-[#f97316] placeholder-slate-600 font-body" style={{ background: "rgba(249,115,22,0.06)", border: "1px solid rgba(249,115,22,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(249,115,22,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(249,115,22,0.25)")} onChange={e=>setFormData({...formData,firma:e.target.value})} />
+            <input type="text" placeholder="Firma del Titular" className="w-full p-4 rounded-2xl outline-none font-bold text-[#f97316] placeholder-slate-600 font-body" style={{ background: "rgba(249,115,22,0.06)", border: "1px solid rgba(249,115,22,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(232,213,188,0.5)")} onBlur={e=>(e.target.style.borderColor="rgba(249,115,22,0.25)")} onChange={e=>setFormData({...formData,firma:e.target.value})} />
             <input type="text" placeholder="Usuario Roblox (username)" className="w-full p-4 rounded-2xl outline-none font-bold text-[#fb923c] placeholder-slate-600 font-body" style={{ background: "rgba(251,146,60,0.06)", border: "1px solid rgba(251,146,60,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(251,146,60,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(251,146,60,0.25)")} onChange={e=>setFormData({...formData,roblox:e.target.value})} />
             <input type="text" placeholder="Discord Tag (Obligatorio)" className="w-full p-4 rounded-2xl outline-none font-bold text-[#7289da] placeholder-slate-600 font-body" style={{ background: "rgba(114,137,218,0.06)", border: "1px solid rgba(114,137,218,0.25)" }} onFocus={e=>(e.target.style.borderColor="rgba(114,137,218,0.6)")} onBlur={e=>(e.target.style.borderColor="rgba(114,137,218,0.25)")} onChange={e=>setFormData({...formData,discord:e.target.value})} />
             {validationError && <p className="text-red-400 font-body text-xs px-2">{validationError}</p>}
-            <button onClick={handleGuardar} disabled={isProcessing} className="w-full py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all mt-2 disabled:opacity-50 font-display tracking-widest text-white shimmer-btn" style={{ background: "linear-gradient(135deg,#fb923c,#3b82f6)", boxShadow: "0 10px 30px rgba(8,145,178,0.3)" }}>
+            <button onClick={handleGuardar} disabled={isProcessing} className="w-full py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all mt-2 disabled:opacity-50 font-display tracking-widest text-white shimmer-btn" style={{ background: "linear-gradient(135deg,#e8d5bc,#c9a97a)", boxShadow: "0 10px 30px rgba(8,145,178,0.3)" }}>
               {isProcessing ? <><RefreshCw className="animate-spin" size={20} /> PROCESANDO DATOS...</> : <><Check size={20} /> GUARDAR IDENTIDAD</>}
             </button>
           </div>
@@ -688,7 +690,7 @@ function BancoSection() {
         {[
           { label: "Ingresos del Mes",  value: `+$${totalIn.toLocaleString("es-CL")}`,   color: "#22c55e", bg: "rgba(34,197,94,0.07)",   border: "rgba(34,197,94,0.2)"   },
           { label: "Egresos del Mes",   value: `-$${totalOut.toLocaleString("es-CL")}`,   color: "#ec4899", bg: "rgba(236,72,153,0.07)",  border: "rgba(236,72,153,0.2)"  },
-          { label: "Nomina Discord",    value: `$${discordSueldo.monto.toLocaleString("es-CL")}/sem`, color: "#f97316", bg: "rgba(249,115,22,0.07)", border: "rgba(249,115,22,0.2)" },
+          { label: "Nomina Discord",    value: `$${discordSueldo.monto.toLocaleString("es-CL")}/sem`, color: "#e8d5bc", bg: "rgba(249,115,22,0.07)", border: "rgba(249,115,22,0.2)" },
         ].map((s,i) => (
           <div key={i} className="rounded-xl p-4" style={{ background: s.bg, border: `1px solid ${s.border}` }}>
             <div className="font-display font-bold text-base leading-none mb-1" style={{ color: s.color }}>{s.value}</div>
@@ -821,12 +823,12 @@ function BancoSection() {
             <h3 className="font-display text-white text-xs tracking-widest mb-4">TABLA DE SUELDOS POR ROL</h3>
             <div className="flex flex-col gap-1">
               {[
-                { rol: "Owner",                  sueldo: 25000, color: "#f97316" },
-                { rol: "Co-Owner",               sueldo: 20000, color: "#f97316" },
+                { rol: "Owner",                  sueldo: 25000, color: "#e8d5bc" },
+                { rol: "Co-Owner",               sueldo: 20000, color: "#e8d5bc" },
                 { rol: "Director Ejecutivo",     sueldo: 16000, color: "#ec4899" },
                 { rol: "Director Corporativo",   sueldo: 14000, color: "#f59e0b" },
-                { rol: "Director de Gestiones",  sueldo: 8500,  color: "#fb923c" },
-                { rol: "Gestor Administrativo",  sueldo: 7000,  color: "#fb923c" },
+                { rol: "Director de Gestiones",  sueldo: 8500,  color: "#d4bc9e" },
+                { rol: "Gestor Administrativo",  sueldo: 7000,  color: "#d4bc9e" },
                 { rol: "Carabinero",             sueldo: 5500,  color: "#22c55e" },
                 { rol: "PDI Detective",          sueldo: 6000,  color: "#8b5cf6" },
                 { rol: "Seguridad Ciudadana",    sueldo: 4500,  color: "#f59e0b" },
@@ -1021,7 +1023,7 @@ function MercadoSection() {
         <h2 className="font-display text-white text-base tracking-widest">MERCADO NEGRO</h2>
         <div className="flex items-center gap-3">
           <span className="text-slate-500 font-body text-sm">{items.length} artículos</span>
-          <button onClick={() => setShowPublicar(true)} className="px-4 py-2 rounded-xl font-display text-[10px] tracking-widest flex items-center gap-2 transition-all" style={{ background: "rgba(234,88,12,0.12)", border: "1px solid rgba(234,88,12,0.35)", color: "#f97316" }}>
+          <button onClick={() => setShowPublicar(true)} className="px-4 py-2 rounded-xl font-display text-[10px] tracking-widest flex items-center gap-2 transition-all" style={{ background: "rgba(234,88,12,0.12)", border: "1px solid rgba(232,213,188,0.3)", color: "#e8d5bc" }}>
             <Plus size={12} /> PUBLICAR
           </button>
         </div>
@@ -1036,7 +1038,7 @@ function MercadoSection() {
             <div key={p.id} className="rounded-2xl p-4 border flex items-center justify-between gap-4" style={{ background: "rgba(20,12,4,0.7)", borderColor: "rgba(234,88,12,0.2)" }}>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="font-display text-[9px] px-2 py-0.5 rounded tracking-widest" style={{ background: "rgba(234,88,12,0.12)", color: "#f97316", border: "1px solid rgba(234,88,12,0.25)" }}>{p.tipo}</span>
+                  <span className="font-display text-[9px] px-2 py-0.5 rounded tracking-widest" style={{ background: "rgba(234,88,12,0.12)", color: "#e8d5bc", border: "1px solid rgba(234,88,12,0.25)" }}>{p.tipo}</span>
                   <span className="font-display text-[9px] px-2 py-0.5 rounded tracking-widest text-slate-500">{p.categoria}</span>
                 </div>
                 <p className="text-white font-body text-sm font-semibold">{p.titulo}</p>
@@ -1059,9 +1061,9 @@ function MercadoSection() {
       <AnimatePresence>
         {showPublicar && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(6px)" }} onClick={() => setShowPublicar(false)}>
-            <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }} onClick={e => e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={{ background: "#0f0a05", border: "1px solid rgba(234,88,12,0.3)", boxShadow: "0 0 60px rgba(234,88,12,0.1), 0 24px 64px rgba(0,0,0,0.8)" }}>
+            <motion.div initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.92, opacity: 0 }} onClick={e => e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={{ background: "#0a0a0a", border: "1px solid rgba(234,88,12,0.3)", boxShadow: "0 0 60px rgba(234,88,12,0.1), 0 24px 64px rgba(0,0,0,0.8)" }}>
               <div className="flex items-center justify-between">
-                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><ShoppingBag size={14} style={{ color: "#f97316" }} /> PUBLICAR EN CANAL MERCADO</h3>
+                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><ShoppingBag size={14} style={{ color: "#e8d5bc" }} /> PUBLICAR EN CANAL MERCADO</h3>
                 <button onClick={() => setShowPublicar(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16} /></button>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -1077,7 +1079,7 @@ function MercadoSection() {
               <textarea placeholder="Descripción (opcional)" value={form.desc} onChange={e => setForm({ ...form, desc: e.target.value })} rows={2} className="w-full px-4 py-3 rounded-xl font-body text-sm text-white placeholder-slate-600 outline-none resize-none" style={{ background: "rgba(234,88,12,0.06)", border: "1px solid rgba(234,88,12,0.2)" }} />
               <div className="flex gap-3">
                 <button onClick={() => setShowPublicar(false)} className="flex-1 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400">Cancelar</button>
-                <button onClick={publicar} className="flex-1 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: "rgba(234,88,12,0.18)", color: "#f97316", border: "1px solid rgba(234,88,12,0.4)" }}>PUBLICAR</button>
+                <button onClick={publicar} className="flex-1 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: "rgba(234,88,12,0.18)", color: "#e8d5bc", border: "1px solid rgba(234,88,12,0.4)" }}>PUBLICAR</button>
               </div>
             </motion.div>
           </motion.div>
@@ -1091,7 +1093,7 @@ function ComunidadSection() {
   return (
     <motion.div {...slideUp} className="flex flex-col gap-6">
       <div>
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display tracking-widest border mb-3" style={{ background: "rgba(234,88,12,0.12)", borderColor: "rgba(234,88,12,0.3)", color: "#f97316" }}>👥 NOSOTROS</span>
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display tracking-widest border mb-3" style={{ background: "rgba(234,88,12,0.12)", borderColor: "rgba(234,88,12,0.3)", color: "#e8d5bc" }}>👥 NOSOTROS</span>
         <h2 className="font-display text-2xl text-white tracking-wider">EQUIPO DIRECTIVO ACRP</h2>
         <p className="text-slate-500 font-body text-sm mt-1">Dirección y desarrollo continuo de la infraestructura del servidor.</p>
       </div>
@@ -1160,7 +1162,7 @@ function EmpresasSection() {
             { nombre: "Bomberos Arica", tipo: "Servicio de Emergencias", color: "#ef4444", icon: "🚒" },
             { nombre: "Carabineros de Chile", tipo: "Institución Policial", color: "#22c55e", icon: "🚔" },
             { nombre: "PDI Arica", tipo: "Policía de Investigaciones", color: "#3b82f6", icon: "🕵️" },
-            { nombre: "SAMU Arica", tipo: "Servicio Médico", color: "#f97316", icon: "🚑" },
+            { nombre: "SAMU Arica", tipo: "Servicio Médico", color: "#e8d5bc", icon: "🚑" },
           ].map((emp, i) => (
             <div key={i} className="flex items-center gap-4 p-4 rounded-xl border" style={{ background: "rgba(0,0,0,0.3)", borderColor: `${emp.color}25` }}>
               <span className="text-2xl">{emp.icon}</span>
@@ -1237,7 +1239,7 @@ function MunicipalidadSection() {
           const Icon = t.icon
           const active = activeTab === t.id
           return (
-            <button key={t.id} onClick={() => setActiveTab(t.id)} className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg font-body text-xs tracking-wide transition-all" style={active ? { background: "rgba(251,146,60,0.15)", color: "#fb923c", boxShadow: "0 0 10px rgba(251,146,60,0.15)" } : { color: "#64748b" }}>
+            <button key={t.id} onClick={() => setActiveTab(t.id)} className="flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg font-body text-xs tracking-wide transition-all" style={active ? { background: "rgba(251,146,60,0.15)", color: "#d4bc9e", boxShadow: "0 0 10px rgba(251,146,60,0.15)" } : { color: "#64748b" }}>
               <Icon size={13} />
               <span className="hidden sm:inline">{t.label}</span>
               <span className="sm:hidden">{t.label.split(" ")[0]}</span>
@@ -1283,7 +1285,7 @@ function MunicipalidadSection() {
                       <p className="text-slate-500 font-body text-xs">Registros del Juzgado de Policía Local</p>
                     </div>
                   </div>
-                  <span className="font-display text-[9px] tracking-widest px-2 py-1 rounded" style={{ background: "rgba(251,146,60,0.15)", color: "#fb923c" }}>REGISTRO</span>
+                  <span className="font-display text-[9px] tracking-widest px-2 py-1 rounded" style={{ background: "rgba(251,146,60,0.15)", color: "#d4bc9e" }}>REGISTRO</span>
                 </div>
                 <div className="flex flex-col items-center py-6 gap-2 opacity-50">
                   <Shield size={28} className="text-slate-500" />
@@ -1312,7 +1314,7 @@ function MunicipalidadSection() {
                       <p className="text-slate-500 font-body text-xs">Autorización anual de tránsito en vías públicas – $75.000</p>
                     </div>
                   </div>
-                  <span className="font-display text-[9px] tracking-widest px-2 py-1 rounded" style={{ background: "rgba(251,146,60,0.15)", color: "#fb923c" }}>TRÁNSITO</span>
+                  <span className="font-display text-[9px] tracking-widest px-2 py-1 rounded" style={{ background: "rgba(251,146,60,0.15)", color: "#d4bc9e" }}>TRÁNSITO</span>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-body text-amber-400" style={{ background: "rgba(245,158,11,0.08)", border: "1px solid rgba(245,158,11,0.2)" }}>
                   <Shield size={12} className="text-amber-400 shrink-0" /> Requisito: no tener multas pendientes de pago al momento de solicitar
@@ -1335,7 +1337,7 @@ function MunicipalidadSection() {
                   <span className="font-display text-[9px] tracking-widest px-2 py-1 rounded" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>COMERCIO</span>
                 </div>
                 <p className="text-slate-400 font-body text-xs leading-relaxed">Para operar legalmente en Chile, toda actividad empresarial requiere patente o registro vigente. Solicite una cita con un funcionario municipal para tramitar su patente o registro.</p>
-                <button onClick={() => { setTramiteTipo("Patente Comercial"); setShowTramiteModal(true) }} className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: "rgba(251,146,60,0.18)", color: "#fb923c", border: "1px solid rgba(251,146,60,0.3)" }}>
+                <button onClick={() => { setTramiteTipo("Patente Comercial"); setShowTramiteModal(true) }} className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: "rgba(251,146,60,0.18)", color: "#d4bc9e", border: "1px solid rgba(251,146,60,0.3)" }}>
                   <Building2 size={13} /> Solicitar Patente Comercial
                 </button>
                 <button onClick={() => { setTramiteTipo("Registro de Empresa"); setShowTramiteModal(true) }} className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: "rgba(255,255,255,0.03)", color: "#94a3b8", border: "1px solid rgba(255,255,255,0.08)" }}>
@@ -1359,8 +1361,8 @@ function MunicipalidadSection() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {[
-                { icon: CreditCard, title: "Certificado de Nacimiento", desc: "Acredita el registro civil de nacimiento, identidad y estado personal", badge: "REGISTRO CIVIL", color: "#fb923c", action: "Generar", free: true },
-                { icon: Car, title: "Padrón de Vehículo", desc: "Certificado de dominio y registro de propiedad vehicular", badge: "REGISTRO DE VEHÍCULOS", color: "#f97316", action: "Generar", free: true },
+                { icon: CreditCard, title: "Certificado de Nacimiento", desc: "Acredita el registro civil de nacimiento, identidad y estado personal", badge: "REGISTRO CIVIL", color: "#d4bc9e", action: "Generar", free: true },
+                { icon: Car, title: "Padrón de Vehículo", desc: "Certificado de dominio y registro de propiedad vehicular", badge: "REGISTRO DE VEHÍCULOS", color: "#e8d5bc", action: "Generar", free: true },
                 { icon: FileText, title: "Certificado de Antecedentes", desc: "Acredita su situación penal ante organismos públicos y privados", badge: "JUZGADO LOCAL", color: "#f59e0b", action: "Solicitar", arancel: "$5.000" },
               ].map((doc, i) => {
                 const Icon = doc.icon
@@ -1393,7 +1395,7 @@ function MunicipalidadSection() {
                 <p className="font-display text-[10px] tracking-[0.2em] text-cyan-400 mb-1">MIS TRÁMITES MUNICIPALES</p>
                 <p className="text-slate-500 font-body text-xs">Historial y estado de tus solicitudes de cita con funcionarios municipales.</p>
               </div>
-              <button onClick={() => setShowTramiteModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: "rgba(251,146,60,0.18)", color: "#fb923c", border: "1px solid rgba(251,146,60,0.3)" }}>
+              <button onClick={() => setShowTramiteModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: "rgba(251,146,60,0.18)", color: "#d4bc9e", border: "1px solid rgba(251,146,60,0.3)" }}>
                 + Nuevo Trámite
               </button>
             </div>
@@ -1438,7 +1440,7 @@ function MunicipalidadSection() {
               </div>
               <div className="flex gap-3 justify-end">
                 <button onClick={() => setShowTramiteModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
-                <button onClick={handleSolicitarTramite} disabled={!tramiteTipo} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all disabled:opacity-40" style={{ background: "rgba(251,146,60,0.2)", color: "#fb923c", border: "1px solid rgba(251,146,60,0.4)" }}>
+                <button onClick={handleSolicitarTramite} disabled={!tramiteTipo} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all disabled:opacity-40" style={{ background: "rgba(251,146,60,0.2)", color: "#d4bc9e", border: "1px solid rgba(251,146,60,0.4)" }}>
                   <BadgeCheck size={13} /> Solicitar Hora
                 </button>
               </div>
@@ -1478,17 +1480,26 @@ function GepolSection({ discordUser }) {
 
   const saved = loadData()
 
-  const [tab, setTab]                 = useState("dashboard")
+  const [tab, setTab]                 = useState("ordenes")
   const [search, setSearch]           = useState("")
   const [detenidos, setDetenidos]     = useState(saved.detenidos    ?? GEPOL_DETENIDOS_INIT)
   const [operativos, setOperativos]   = useState(saved.operativos   ?? GEPOL_OPERATIVOS_INIT)
   const [partes, setPartes]           = useState(saved.partes       ?? GEPOL_PARTES_INIT)
+  const [ordenes, setOrdenes]         = useState(saved.ordenes      ?? [])
+  const [antGepol, setAntGepol]       = useState(saved.antGepol     ?? [])
+  const [evidencias, setEvidencias]   = useState(saved.evidencias   ?? [])
+  const [showOrdModal, setShowOrdModal]   = useState(false)
+  const [showAntModal, setShowAntModal]   = useState(false)
+  const [showEviModal, setShowEviModal]   = useState(false)
   const [showDetModal, setShowDetModal] = useState(false)
   const [showOpeModal, setShowOpeModal] = useState(false)
   const [showParteModal, setShowParteModal] = useState(false)
   const [detForm, setDetForm]         = useState({ nombre:"", rut:"", delito:"", oficial: discordName, turno:"Mañana" })
   const [opeForm, setOpeForm]         = useState({ nombre:"", tipo:"Patrullaje", oficial: discordName, personal:"" })
   const [parteForm, setParteForm]     = useState({ titulo:"", tipo:"Delito", oficial: discordName, rut:"" })
+  const [ordForm, setOrdForm]         = useState({ nombre:"", rut:"", tipo:"Arresto", motivo:"", oficial: discordName })
+  const [antForm, setAntForm]         = useState({ nombre:"", rut:"", delito:"", descripcion:"", oficial: discordName })
+  const [eviForm, setEviForm]         = useState({ titulo:"", casoRef:"", tipo:"Fotografía", descripcion:"", oficial: discordName })
   const [selectedRow, setSelectedRow] = useState(null)
   const [enServicio, setEnServicio] = useState(saved.enServicio ?? false)
   const [horaServicio, setHoraServicio] = useState(saved.horaServicio ?? null)
@@ -1508,16 +1519,14 @@ function GepolSection({ discordUser }) {
   )
 
   const tabs = [
-    { id: "dashboard", label: "Dashboard",   icon: BarChart3  },
-    { id: "detenidos", label: "Detenidos",   icon: Lock       },
-    { id: "partes",    label: "Partes",      icon: FileText   },
-    { id: "operativos",label: "Operativos",  icon: Radio      },
-    { id: "turnos",    label: "Turnos",      icon: Clock      },
+    { id: "ordenes",      label: "Órdenes",      icon: AlertTriangle },
+    { id: "antecedentes", label: "Antecedentes", icon: FileText      },
+    { id: "evidencia",    label: "Evidencia",    icon: Search        },
   ]
 
   const estadoDetenido = { "Detenido": { bg: "rgba(239,68,68,0.15)", color: "#ef4444", border: "rgba(239,68,68,0.3)" }, "Imputado": { bg: "rgba(245,158,11,0.15)", color: "#f59e0b", border: "rgba(245,158,11,0.3)" }, "Liberado": { bg: "rgba(34,197,94,0.12)", color: "#22c55e", border: "rgba(34,197,94,0.3)" } }
-  const estadoOpe = { "Activo": { bg: "rgba(251,146,60,0.12)", color: "#fb923c", border: "rgba(251,146,60,0.3)" }, "Cerrado": { bg: "rgba(100,116,139,0.15)", color: "#94a3b8", border: "rgba(100,116,139,0.3)" } }
-  const estadoParte = { "Abierto": { bg: "rgba(239,68,68,0.12)", color: "#ef4444", border: "rgba(239,68,68,0.3)" }, "Cerrado": { bg: "rgba(34,197,94,0.12)", color: "#22c55e", border: "rgba(34,197,94,0.3)" }, "Derivado": { bg: "rgba(249,115,22,0.12)", color: "#f97316", border: "rgba(249,115,22,0.3)" } }
+  const estadoOpe = { "Activo": { bg: "rgba(251,146,60,0.12)", color: "#d4bc9e", border: "rgba(251,146,60,0.3)" }, "Cerrado": { bg: "rgba(100,116,139,0.15)", color: "#94a3b8", border: "rgba(100,116,139,0.3)" } }
+  const estadoParte = { "Abierto": { bg: "rgba(239,68,68,0.12)", color: "#ef4444", border: "rgba(239,68,68,0.3)" }, "Cerrado": { bg: "rgba(34,197,94,0.12)", color: "#22c55e", border: "rgba(34,197,94,0.3)" }, "Derivado": { bg: "rgba(249,115,22,0.12)", color: "#e8d5bc", border: "rgba(249,115,22,0.3)" } }
 
   function addDetenido() {
     if (!detForm.nombre || !detForm.rut || !detForm.delito) return
@@ -1549,6 +1558,27 @@ function GepolSection({ discordUser }) {
     setParteForm({ titulo:"", tipo:"Delito", oficial: discordName, rut:"" })
     setShowParteModal(false)
   }
+  function addOrden() {
+    if (!ordForm.nombre || !ordForm.rut || !ordForm.motivo) return
+    const nid = `ORD-${String(ordenes.length+1).padStart(3,"0")}`
+    const nuevo = { id:nid, ...ordForm, estado:"Activa", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...ordenes]; setOrdenes(updated); saveData("ordenes", updated)
+    setOrdForm({ nombre:"", rut:"", tipo:"Arresto", motivo:"", oficial: discordName }); setShowOrdModal(false)
+  }
+  function addAntecedente() {
+    if (!antForm.nombre || !antForm.rut || !antForm.delito) return
+    const nid = `ANT-${String(antGepol.length+1).padStart(3,"0")}`
+    const nuevo = { id:nid, ...antForm, estado:"Vigente", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...antGepol]; setAntGepol(updated); saveData("antGepol", updated)
+    setAntForm({ nombre:"", rut:"", delito:"", descripcion:"", oficial: discordName }); setShowAntModal(false)
+  }
+  function addEvidencia() {
+    if (!eviForm.titulo || !eviForm.casoRef) return
+    const nid = `EVI-${String(evidencias.length+1).padStart(3,"0")}`
+    const nuevo = { id:nid, ...eviForm, estado:"Resguardada", fecha: new Date().toLocaleDateString("es-CL",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase(), registradoPor: discordName }
+    const updated = [nuevo, ...evidencias]; setEvidencias(updated); saveData("evidencias", updated)
+    setEviForm({ titulo:"", casoRef:"", tipo:"Fotografía", descripcion:"", oficial: discordName }); setShowEviModal(false)
+  }
 
   const MODAL_STYLE = { background: "#0a0f1c", backdropFilter: "blur(20px)", border: "1px solid rgba(59,130,246,0.25)", boxShadow: "0 0 60px rgba(59,130,246,0.1), 0 24px 64px rgba(0,0,0,0.7)" }
   const INPUT_STYLE = { background: "rgba(59,130,246,0.05)", border: "1px solid rgba(59,130,246,0.2)", color: "#f8fafc" }
@@ -1576,12 +1606,11 @@ function GepolSection({ discordUser }) {
               <p className="text-slate-500 font-body text-xs mt-0.5">Control de operativos, detenidos, partes y personal en servicio.</p>
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-3 gap-2">
             {[
-              { label: "Detenidos",  value: detenidos.filter(d=>d.estado==="Detenido").length, color: "#ef4444" },
-              { label: "Operativos", value: operativos.filter(o=>o.estado==="Activo").length,   color: GCOLOR    },
-              { label: "Partes",     value: partes.filter(p=>p.estado==="Abierto").length,       color: "#f59e0b" },
-              { label: "Personal",   value: GEPOL_TURNOS.filter(t=>t.estado==="En Servicio").length, color: "#22c55e" },
+              { label: "Órdenes",      value: ordenes.filter(o=>o.estado==="Activa").length,  color: GCOLOR    },
+              { label: "Antecedentes", value: antGepol.length,                                color: "#e8d5bc" },
+              { label: "Evidencias",   value: evidencias.filter(e=>e.estado==="Resguardada").length, color: "#8b5cf6" },
             ].map(s => (
               <div key={s.label} className="rounded-xl p-3 text-center min-w-[64px]" style={{ background: `${s.color}10`, border: `1px solid ${s.color}25` }}>
                 <div className="font-display text-xl font-black" style={{ color: s.color }}>{s.value}</div>
@@ -1639,209 +1668,49 @@ function GepolSection({ discordUser }) {
       </div>
 
       <AnimatePresence mode="wait">
-        {/* ── DASHBOARD ── */}
-        {tab === "dashboard" && (
-          <motion.div key="dash" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }} className="flex flex-col gap-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Últimos detenidos */}
-              <div className="rounded-2xl p-5 border border-white/8" style={{ background: "rgba(20,12,4,0.6)" }}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-display text-xs tracking-widest text-white flex items-center gap-2"><Lock size={13} style={{ color: GCOLOR }} /> ÚLTIMOS DETENIDOS</h3>
-                  <button onClick={() => setTab("detenidos")} className="font-display text-[10px] tracking-widest transition-colors hover:text-white" style={{ color: GCOLOR }}>Ver todos →</button>
-                </div>
-                <div className="flex flex-col gap-2">
-                  {detenidos.slice(0,3).map(d => {
-                    const st = estadoDetenido[d.estado] || estadoDetenido["Detenido"]
-                    return (
-                      <div key={d.id} className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "rgba(0,0,0,0.3)" }}>
-                        <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 font-display text-xs" style={{ background: `${GCOLOR}18`, color: GCOLOR }}>{d.nombre.split(" ").map(n=>n[0]).join("").slice(0,2)}</div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-white font-body text-sm truncate">{d.nombre}</p>
-                          <p className="text-slate-600 font-mono text-xs">{d.rut} · {d.fecha}</p>
-                        </div>
-                        <span className="font-display text-[9px] tracking-widest px-2 py-1 rounded shrink-0" style={{ background: st.bg, color: st.color, border: `1px solid ${st.border}` }}>{d.estado}</span>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-              {/* Operativos activos */}
-              <div className="rounded-2xl p-5 border border-white/8" style={{ background: "rgba(20,12,4,0.6)" }}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-display text-xs tracking-widest text-white flex items-center gap-2"><Radio size={13} style={{ color: GCOLOR }} /> OPERATIVOS EN CURSO</h3>
-                  <button onClick={() => setTab("operativos")} className="font-display text-[10px] tracking-widest transition-colors hover:text-white" style={{ color: GCOLOR }}>Ver todos →</button>
-                </div>
-                <div className="flex flex-col gap-2">
-                  {operativos.filter(o=>o.estado==="Activo").slice(0,3).map(o => (
-                    <div key={o.id} className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "rgba(0,0,0,0.3)" }}>
-                      <div className="w-2 h-2 rounded-full shrink-0" style={{ background: "#22c55e", boxShadow: "0 0 6px rgba(34,197,94,0.9)" }} />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-white font-body text-sm truncate">{o.nombre}</p>
-                        <p className="text-slate-600 font-body text-xs">{o.hora} · {o.personal} efectivos</p>
-                      </div>
-                      <span className="font-mono text-[10px] text-slate-500">{o.id}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            {/* Personal en servicio */}
-            <div className="rounded-2xl p-5 border border-white/8" style={{ background: "rgba(20,12,4,0.6)" }}>
-              <h3 className="font-display text-xs tracking-widest text-white mb-4 flex items-center gap-2"><Clock size={13} style={{ color: GCOLOR }} /> PERSONAL EN SERVICIO</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                {GEPOL_TURNOS.filter(t=>t.estado==="En Servicio").map((t,i) => (
-                  <div key={i} className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "rgba(251,146,60,0.04)", border: "1px solid rgba(251,146,60,0.12)" }}>
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center font-display text-xs shrink-0" style={{ background: `${GCOLOR}20`, color: GCOLOR }}>{t.nombre.split(" ").map(n=>n[0]).join("").slice(0,2)}</div>
-                    <div className="min-w-0">
-                      <p className="text-white font-body text-sm truncate">{t.nombre}</p>
-                      <p className="text-slate-600 font-body text-xs">{t.rango} · {t.unidad}</p>
-                    </div>
-                    <div className="w-2 h-2 rounded-full shrink-0" style={{ background: "#22c55e", boxShadow: "0 0 6px rgba(34,197,94,0.9)" }} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* ── DETENIDOS ── */}
-        {tab === "detenidos" && (
-          <motion.div key="det" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }} className="flex flex-col gap-4">
+        {/* ── ÓRDENES ── */}
+        {tab === "ordenes" && (
+          <motion.div key="ord" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }} className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
-              <p className="font-display text-[10px] tracking-[0.2em]" style={{ color: GCOLOR }}>REGISTRO DE DETENIDOS — {filteredDet.length} RESULTADOS</p>
-              <button onClick={() => setShowDetModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: `${GCOLOR}18`, color: GCOLOR, border: `1px solid ${GCOLOR}30` }}>
-                + Nuevo Registro
-              </button>
-            </div>
-            <div className="rounded-2xl border border-white/8 overflow-hidden" style={{ background: "rgba(20,12,4,0.6)" }}>
-              <div className="grid font-display text-[9px] tracking-widest text-slate-600 px-5 py-3" style={{ gridTemplateColumns: "1fr 2fr 1.5fr 2fr 1fr 1fr", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                <span>ID</span><span>IMPUTADO</span><span>RUT</span><span>DELITO</span><span>TURNO</span><span>ESTADO</span>
-              </div>
-              {filteredDet.length === 0 && (
-                <div className="flex items-center justify-center py-10 text-slate-600 font-body text-sm">Sin resultados para "{search}"</div>
-              )}
-              {filteredDet.map((d, i) => {
-                const st = estadoDetenido[d.estado] || estadoDetenido["Detenido"]
-                return (
-                  <div key={d.id} onClick={() => setSelectedRow(selectedRow?.id === d.id ? null : d)} className="grid items-center px-5 py-3.5 cursor-pointer transition-all" style={{ gridTemplateColumns: "1fr 2fr 1.5fr 2fr 1fr 1fr", borderBottom: i < filteredDet.length-1 ? "1px solid rgba(255,255,255,0.04)" : "none", background: selectedRow?.id === d.id ? `${GCOLOR}08` : "transparent" }}
-                    onMouseEnter={e=>(e.currentTarget.style.background=selectedRow?.id===d.id?`${GCOLOR}08`:"rgba(255,255,255,0.02)")}
-                    onMouseLeave={e=>(e.currentTarget.style.background=selectedRow?.id===d.id?`${GCOLOR}08`:"transparent")}>
-                    <span className="font-mono text-xs text-slate-500">{d.id}</span>
-                    <div className="min-w-0 pr-2">
-                      <p className="text-white font-body text-sm truncate">{d.nombre}</p>
-                      <p className="text-slate-600 font-body text-xs">{d.fecha}</p>
-                    </div>
-                    <span className="font-mono text-xs text-slate-400">{d.rut}</span>
-                    <span className="text-slate-300 font-body text-xs truncate pr-2">{d.delito}</span>
-                    <span className="text-slate-500 font-body text-xs">{d.turno}</span>
-                    <span className="font-display text-[9px] tracking-widest px-2 py-1 rounded w-fit" style={{ background: st.bg, color: st.color, border: `1px solid ${st.border}` }}>{d.estado}</span>
-                  </div>
-                )
-              })}
-            </div>
-            {selectedRow && selectedRow.estado !== undefined && detenidos.find(d=>d.id===selectedRow.id) && (
-              <motion.div initial={{ opacity:0, y:8 }} animate={{ opacity:1, y:0 }} className="rounded-2xl p-5 border" style={{ background: `${GCOLOR}07`, borderColor: `${GCOLOR}30` }}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-display text-xs tracking-widest text-white">DETALLE — {selectedRow.id}</h3>
-                  <button onClick={() => setSelectedRow(null)} className="text-slate-500 hover:text-white transition-colors"><X size={16} /></button>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {[["Nombre completo", selectedRow.nombre],["RUT", selectedRow.rut],["Delito imputado", selectedRow.delito],["Oficial actuante", selectedRow.oficial||"—"],["Turno", selectedRow.turno],["Fecha detención", selectedRow.fecha]].map(([l,v])=>(
-                    <div key={l} className="rounded-xl p-3" style={{ background: "rgba(0,0,0,0.3)" }}>
-                      <p className="text-slate-600 font-body text-[10px] tracking-wider mb-0.5">{l}</p>
-                      <p className="text-white font-body text-sm font-semibold">{v}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex gap-2 mt-4">
-                  <button onClick={() => setDetenidos(prev => prev.map(d => d.id===selectedRow.id ? {...d, estado:"Liberado"} : d))} className="px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background:"rgba(34,197,94,0.15)", color:"#22c55e", border:"1px solid rgba(34,197,94,0.3)" }}>Liberar</button>
-                  <button onClick={() => setDetenidos(prev => prev.map(d => d.id===selectedRow.id ? {...d, estado:"Imputado"} : d))} className="px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background:"rgba(245,158,11,0.15)", color:"#f59e0b", border:"1px solid rgba(245,158,11,0.3)" }}>Imputar</button>
-                  <button onClick={() => { setDetenidos(prev => prev.filter(d=>d.id!==selectedRow.id)); setSelectedRow(null) }} className="px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background:"rgba(239,68,68,0.12)", color:"#ef4444", border:"1px solid rgba(239,68,68,0.25)" }}>Eliminar</button>
-                </div>
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-
-        {/* ── PARTES ── */}
-        {tab === "partes" && (
-          <motion.div key="partes" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }} className="flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <p className="font-display text-[10px] tracking-[0.2em]" style={{ color: GCOLOR }}>PARTES POLICIALES — {filteredPar.length} REGISTROS</p>
-              <button onClick={() => setShowParteModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: `${GCOLOR}18`, color: GCOLOR, border: `1px solid ${GCOLOR}30` }}>
-                + Nuevo Parte
-              </button>
+              <p className="font-display text-[10px] tracking-[0.2em]" style={{ color: GCOLOR }}>ÓRDENES — {ordenes.length} REGISTROS</p>
+              <button onClick={() => setShowOrdModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: `${GCOLOR}18`, color: GCOLOR, border: `1px solid ${GCOLOR}30` }}>+ Nueva Orden</button>
             </div>
             <div className="flex flex-col gap-3">
-              {filteredPar.length === 0 && (
-                <div className="flex items-center justify-center py-10 text-slate-600 font-body text-sm rounded-2xl border border-white/8" style={{ background: "rgba(20,12,4,0.6)" }}>Sin resultados para "{search}"</div>
+              {ordenes.length === 0 && (
+                <div className="rounded-2xl p-10 border border-dashed border-white/8 flex flex-col items-center gap-2">
+                  <AlertTriangle size={28} className="text-slate-700" />
+                  <p className="text-slate-600 font-body text-sm">No hay órdenes registradas</p>
+                  <button onClick={()=>setShowOrdModal(true)} className="mt-1 px-4 py-2 rounded-xl font-display text-xs tracking-widest" style={{ background:`${GCOLOR}15`, color:GCOLOR, border:`1px solid ${GCOLOR}30` }}>+ Crear primera orden</button>
+                </div>
               )}
-              {filteredPar.map((p, i) => {
-                const sp = estadoParte[p.estado] || estadoParte["Abierto"]
+              {ordenes.map((o,i) => {
+                const estCol = o.estado==="Activa" ? {bg:"rgba(59,130,246,0.12)",color:"#3b82f6",border:"rgba(59,130,246,0.3)"} : o.estado==="Ejecutada" ? {bg:"rgba(34,197,94,0.12)",color:"#22c55e",border:"rgba(34,197,94,0.3)"} : {bg:"rgba(100,116,139,0.15)",color:"#94a3b8",border:"rgba(100,116,139,0.3)"}
                 return (
-                  <div key={p.id} className="flex items-center gap-4 p-4 rounded-2xl border border-white/8" style={{ background: "rgba(20,12,4,0.6)" }}>
-                    <div className="p-2.5 rounded-xl shrink-0" style={{ background: `${GCOLOR}12` }}><FileText size={16} style={{ color: GCOLOR }} /></div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <p className="text-white font-display text-sm tracking-wide truncate">{p.titulo}</p>
-                        <span className="font-display text-[9px] tracking-widest px-2 py-0.5 rounded shrink-0" style={{ background: sp.bg, color: sp.color, border: `1px solid ${sp.border}` }}>{p.estado}</span>
-                      </div>
-                      <div className="flex items-center gap-3 mt-1 flex-wrap">
-                        <span className="font-mono text-xs text-slate-600">{p.id}</span>
-                        <span className="text-slate-600 font-body text-xs">{p.fecha}</span>
-                        {p.rut !== "—" && <span className="text-slate-500 font-mono text-xs">RUT: {p.rut}</span>}
-                        <span className="text-slate-600 font-body text-xs">Oficial: {p.oficial}</span>
-                      </div>
-                    </div>
-                    <span className="font-display text-[9px] tracking-widest px-2 py-1 rounded shrink-0" style={{ background: "rgba(251,146,60,0.1)", color: "#fb923c" }}>{p.tipo}</span>
-                  </div>
-                )
-              })}
-            </div>
-          </motion.div>
-        )}
-
-        {/* ── OPERATIVOS ── */}
-        {tab === "operativos" && (
-          <motion.div key="ope" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }} className="flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <p className="font-display text-[10px] tracking-[0.2em]" style={{ color: GCOLOR }}>OPERATIVOS POLICIALES — {filteredOpe.length} REGISTROS</p>
-              <button onClick={() => setShowOpeModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: `${GCOLOR}18`, color: GCOLOR, border: `1px solid ${GCOLOR}30` }}>
-                + Nuevo Operativo
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredOpe.length === 0 && (
-                <div className="col-span-2 flex items-center justify-center py-10 text-slate-600 font-body text-sm rounded-2xl border border-white/8" style={{ background: "rgba(20,12,4,0.6)" }}>Sin resultados para "{search}"</div>
-              )}
-              {filteredOpe.map(o => {
-                const so = estadoOpe[o.estado] || estadoOpe["Cerrado"]
-                return (
-                  <div key={o.id} className="rounded-2xl p-5 border border-white/8 flex flex-col gap-3" style={{ background: "rgba(20,12,4,0.6)" }}>
-                    <div className="flex items-start justify-between gap-2">
+                  <div key={i} className="rounded-2xl p-5 border" style={{ background:"rgba(20,12,4,0.65)", borderColor:`${GCOLOR}18` }}>
+                    <div className="flex items-start justify-between gap-3 flex-wrap">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-mono text-xs text-slate-600">{o.id}</span>
-                          <span className="font-display text-[9px] tracking-widest px-2 py-0.5 rounded" style={{ background: so.bg, color: so.color, border: `1px solid ${so.border}` }}>{o.estado}</span>
+                          <span className="px-2 py-0.5 rounded font-display text-[9px] tracking-widest" style={{ background:`${GCOLOR}15`, color:GCOLOR }}>{o.tipo}</span>
+                          <span className="font-mono text-[9px] text-slate-600">{o.id}</span>
                         </div>
-                        <p className="text-white font-display text-sm tracking-wide">{o.nombre}</p>
+                        <p className="text-white font-body text-sm font-semibold">{o.nombre}</p>
+                        <p className="text-slate-500 font-mono text-xs">RUT: {o.rut}</p>
                       </div>
-                      {o.estado === "Activo" && <span className="w-2.5 h-2.5 rounded-full shrink-0 mt-1" style={{ background: "#22c55e", boxShadow: "0 0 8px rgba(34,197,94,0.9)", animation: "pulse 2s infinite" }} />}
+                      <span className="px-2.5 py-1 rounded-lg font-display text-[9px] tracking-widest shrink-0" style={{ background:estCol.bg, color:estCol.color, border:`1px solid ${estCol.border}` }}>{o.estado}</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      {[["Tipo", o.tipo],["Unidad", o.unidad],["Oficial", o.oficial],["Personal", `${o.personal} efectivos`]].map(([l,v])=>(
-                        <div key={l} className="rounded-lg p-2.5" style={{ background:"rgba(0,0,0,0.3)" }}>
-                          <p className="text-slate-600 font-body text-[10px]">{l}</p>
-                          <p className="text-slate-300 font-body text-xs font-semibold mt-0.5">{v}</p>
-                        </div>
-                      ))}
+                    <div className="mt-3 pt-3 border-t border-white/5">
+                      <p className="text-slate-400 font-body text-xs mb-1"><span className="text-slate-600">Motivo: </span>{o.motivo}</p>
+                      <div className="flex items-center gap-3 mt-1">
+                        <span className="text-slate-600 font-mono text-[10px]">{o.fecha}</span>
+                        <span className="text-slate-600 font-body text-[10px]">· Por {o.registradoPor}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between pt-2" style={{ borderTop:"1px solid rgba(255,255,255,0.05)" }}>
-                      <span className="text-slate-600 font-mono text-xs">{o.hora}</span>
-                      {o.estado === "Activo" && (
-                        <button onClick={() => setOperativos(prev=>prev.map(op=>op.id===o.id?{...op,estado:"Cerrado",hora:new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"})+" — Finalizado"}:op))} className="px-3 py-1.5 rounded-lg font-display text-[10px] tracking-widest transition-all" style={{ background:"rgba(239,68,68,0.12)", color:"#ef4444", border:"1px solid rgba(239,68,68,0.25)" }}>Cerrar Operativo</button>
-                      )}
-                    </div>
+                    {o.estado === "Activa" && (
+                      <div className="flex gap-2 mt-3">
+                        <button onClick={()=>setOrdenes(prev=>prev.map(x=>x.id===o.id?{...x,estado:"Ejecutada"}:x))} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all" style={{ background:"rgba(34,197,94,0.12)", color:"#22c55e", border:"1px solid rgba(34,197,94,0.25)" }}>Marcar Ejecutada</button>
+                        <button onClick={()=>setOrdenes(prev=>prev.filter(x=>x.id!==o.id))} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all" style={{ background:"rgba(239,68,68,0.08)", color:"#ef4444", border:"1px solid rgba(239,68,68,0.2)" }}>Eliminar</button>
+                      </div>
+                    )}
                   </div>
                 )
               })}
@@ -1849,26 +1718,92 @@ function GepolSection({ discordUser }) {
           </motion.div>
         )}
 
-        {/* ── TURNOS ── */}
-        {tab === "turnos" && (
-          <motion.div key="tur" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }} className="flex flex-col gap-4">
-            <p className="font-display text-[10px] tracking-[0.2em]" style={{ color: GCOLOR }}>CONTROL DE TURNOS — {GEPOL_TURNOS.length} EFECTIVOS</p>
+        {/* ── ANTECEDENTES ── */}
+        {tab === "antecedentes" && (
+          <motion.div key="ant" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }} className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <p className="font-display text-[10px] tracking-[0.2em]" style={{ color: GCOLOR }}>ANTECEDENTES — {antGepol.length} REGISTROS</p>
+              <button onClick={() => setShowAntModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: `${GCOLOR}18`, color: GCOLOR, border: `1px solid ${GCOLOR}30` }}>+ Nuevo Antecedente</button>
+            </div>
             <div className="flex flex-col gap-3">
-              {GEPOL_TURNOS.map((t, i) => (
-                <div key={i} className="flex items-center gap-4 p-4 rounded-2xl border" style={{ background: "rgba(20,12,4,0.6)", borderColor: t.estado==="En Servicio"?"rgba(251,146,60,0.15)":"rgba(255,255,255,0.06)" }}>
-                  <div className="w-11 h-11 rounded-full flex items-center justify-center font-display text-xs shrink-0" style={{ background: t.estado==="En Servicio"?`${GCOLOR}20`:"rgba(100,116,139,0.15)", color: t.estado==="En Servicio"?GCOLOR:"#94a3b8", border:`1px solid ${t.estado==="En Servicio"?GCOLOR+"30":"rgba(100,116,139,0.2)"}` }}>{t.nombre.split(" ").map(n=>n[0]).join("").slice(0,2)}</div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-white font-body text-sm font-semibold">{t.nombre}</p>
-                    <p className="text-slate-600 font-body text-xs">{t.rango} · {t.unidad}</p>
+              {antGepol.length === 0 && (
+                <div className="rounded-2xl p-10 border border-dashed border-white/8 flex flex-col items-center gap-2">
+                  <FileText size={28} className="text-slate-700" />
+                  <p className="text-slate-600 font-body text-sm">No hay antecedentes registrados</p>
+                  <button onClick={()=>setShowAntModal(true)} className="mt-1 px-4 py-2 rounded-xl font-display text-xs tracking-widest" style={{ background:`${GCOLOR}15`, color:GCOLOR, border:`1px solid ${GCOLOR}30` }}>+ Registrar primero</button>
+                </div>
+              )}
+              {antGepol.map((a,i) => (
+                <div key={i} className="rounded-2xl p-5 border" style={{ background:"rgba(20,12,4,0.65)", borderColor:`${GCOLOR}18` }}>
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center font-display text-xs shrink-0" style={{ background:`${GCOLOR}12`, color:GCOLOR, border:`1px solid ${GCOLOR}20` }}>{a.nombre[0]?.toUpperCase()}</div>
+                      <div>
+                        <p className="text-white font-body text-sm font-semibold">{a.nombre}</p>
+                        <p className="text-slate-500 font-mono text-xs">RUT: {a.rut}</p>
+                      </div>
+                    </div>
+                    <span className="px-2.5 py-1 rounded-lg font-display text-[9px] tracking-widest shrink-0" style={{ background:a.estado==="Vigente"?"rgba(59,130,246,0.12)":"rgba(100,116,139,0.12)", color:a.estado==="Vigente"?"#3b82f6":"#94a3b8", border:`1px solid ${a.estado==="Vigente"?"rgba(59,130,246,0.3)":"rgba(100,116,139,0.3)"}` }}>{a.estado}</span>
                   </div>
-                  <div className="text-right hidden sm:block">
-                    <p className="text-slate-400 font-body text-xs">Turno {t.turno}</p>
-                    <p className="text-slate-600 font-mono text-xs">Desde {t.desde}</p>
+                  <div className="mt-3 pt-3 border-t border-white/5">
+                    <p className="text-slate-300 font-body text-xs mb-1"><span className="text-slate-500">Delito: </span>{a.delito}</p>
+                    {a.descripcion && <p className="text-slate-500 font-body text-xs">{a.descripcion}</p>}
+                    <div className="flex items-center gap-3 mt-2">
+                      <span className="text-slate-600 font-mono text-[10px]">{a.fecha}</span>
+                      <span className="text-slate-600 font-body text-[10px]">· Por {a.registradoPor}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg" style={{ background: t.estado==="En Servicio"?"rgba(34,197,94,0.12)":"rgba(100,116,139,0.12)", border:`1px solid ${t.estado==="En Servicio"?"rgba(34,197,94,0.3)":"rgba(100,116,139,0.2)"}` }}>
-                    <div className="w-1.5 h-1.5 rounded-full" style={{ background: t.estado==="En Servicio"?"#22c55e":"#64748b", boxShadow: t.estado==="En Servicio"?"0 0 6px rgba(34,197,94,0.9)":"none" }} />
-                    <span className="font-display text-[9px] tracking-widest" style={{ color: t.estado==="En Servicio"?"#22c55e":"#94a3b8" }}>{t.estado}</span>
+                  <div className="flex gap-2 mt-3">
+                    <button onClick={()=>setAntGepol(prev=>prev.map(x=>x.id===a.id?{...x,estado:"Archivado"}:x))} disabled={a.estado==="Archivado"} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all disabled:opacity-30" style={{ background:"rgba(100,116,139,0.12)", color:"#94a3b8", border:"1px solid rgba(100,116,139,0.2)" }}>Archivar</button>
+                    <button onClick={()=>setAntGepol(prev=>prev.filter(x=>x.id!==a.id))} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all" style={{ background:"rgba(239,68,68,0.08)", color:"#ef4444", border:"1px solid rgba(239,68,68,0.2)" }}>Eliminar</button>
                   </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* ── EVIDENCIA ── */}
+        {tab === "evidencia" && (
+          <motion.div key="evi" initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }} className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <p className="font-display text-[10px] tracking-[0.2em]" style={{ color: GCOLOR }}>EVIDENCIA — {evidencias.length} REGISTROS</p>
+              <button onClick={() => setShowEviModal(true)} className="flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs tracking-widest transition-all" style={{ background: `${GCOLOR}18`, color: GCOLOR, border: `1px solid ${GCOLOR}30` }}>+ Nueva Evidencia</button>
+            </div>
+            <div className="flex flex-col gap-3">
+              {evidencias.length === 0 && (
+                <div className="rounded-2xl p-10 border border-dashed border-white/8 flex flex-col items-center gap-2">
+                  <Search size={28} className="text-slate-700" />
+                  <p className="text-slate-600 font-body text-sm">No hay evidencias registradas</p>
+                  <button onClick={()=>setShowEviModal(true)} className="mt-1 px-4 py-2 rounded-xl font-display text-xs tracking-widest" style={{ background:`${GCOLOR}15`, color:GCOLOR, border:`1px solid ${GCOLOR}30` }}>+ Registrar primera</button>
+                </div>
+              )}
+              {evidencias.map((e,i) => (
+                <div key={i} className="rounded-2xl p-5 border" style={{ background:"rgba(20,12,4,0.65)", borderColor:`${GCOLOR}18` }}>
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="px-2 py-0.5 rounded font-display text-[9px] tracking-widest" style={{ background:`${GCOLOR}15`, color:GCOLOR }}>{e.tipo}</span>
+                        <span className="font-mono text-[9px] text-slate-600">{e.id}</span>
+                      </div>
+                      <p className="text-white font-body text-sm font-semibold">{e.titulo}</p>
+                      <p className="text-slate-500 font-body text-xs">Caso: {e.casoRef}</p>
+                    </div>
+                    <span className="px-2.5 py-1 rounded-lg font-display text-[9px] tracking-widest shrink-0" style={{ background:e.estado==="Resguardada"?"rgba(59,130,246,0.12)":"rgba(34,197,94,0.12)", color:e.estado==="Resguardada"?"#3b82f6":"#22c55e", border:`1px solid ${e.estado==="Resguardada"?"rgba(59,130,246,0.3)":"rgba(34,197,94,0.3)"}` }}>{e.estado}</span>
+                  </div>
+                  <div className="mt-3 pt-3 border-t border-white/5">
+                    {e.descripcion && <p className="text-slate-500 font-body text-xs mb-1">{e.descripcion}</p>}
+                    <div className="flex items-center gap-3 mt-1">
+                      <span className="text-slate-600 font-mono text-[10px]">{e.fecha}</span>
+                      <span className="text-slate-600 font-body text-[10px]">· Por {e.registradoPor}</span>
+                    </div>
+                  </div>
+                  {e.estado === "Resguardada" && (
+                    <div className="flex gap-2 mt-3">
+                      <button onClick={()=>setEvidencias(prev=>prev.map(x=>x.id===e.id?{...x,estado:"Procesada"}:x))} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all" style={{ background:"rgba(34,197,94,0.12)", color:"#22c55e", border:"1px solid rgba(34,197,94,0.25)" }}>Marcar Procesada</button>
+                      <button onClick={()=>setEvidencias(prev=>prev.filter(x=>x.id!==e.id))} className="px-3 py-1.5 rounded-lg font-display text-[9px] tracking-widest transition-all" style={{ background:"rgba(239,68,68,0.08)", color:"#ef4444", border:"1px solid rgba(239,68,68,0.2)" }}>Eliminar</button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -1876,106 +1811,73 @@ function GepolSection({ discordUser }) {
         )}
       </AnimatePresence>
 
-      {/* ── MODAL: NUEVO DETENIDO ── */}
+      {/* ── MODAL: NUEVA ORDEN ── */}
       <AnimatePresence>
-        {showDetModal && (
-          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background:"rgba(0,0,0,0.8)", backdropFilter:"blur(6px)" }} onClick={()=>setShowDetModal(false)}>
+        {showOrdModal && (
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background:"rgba(0,0,0,0.8)", backdropFilter:"blur(6px)" }} onClick={()=>setShowOrdModal(false)}>
             <motion.div initial={{scale:0.92,opacity:0}} animate={{scale:1,opacity:1}} exit={{scale:0.92,opacity:0}} onClick={e=>e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={MODAL_STYLE}>
               <div className="flex items-center justify-between">
-                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><Lock size={14} style={{color:GCOLOR}} /> REGISTRAR DETENIDO</h3>
-                <button onClick={()=>setShowDetModal(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16}/></button>
+                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><AlertTriangle size={14} style={{color:GCOLOR}}/> NUEVA ORDEN</h3>
+                <button onClick={()=>setShowOrdModal(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16}/></button>
               </div>
-              {[["Nombre completo","nombre","text","Ej: Juan Pérez Soto"],["RUT","rut","text","Ej: 18.432.210-K"],["Delito imputado","delito","text","Ej: Robo con violencia"],["Oficial actuante","oficial","text","Ej: Sgto. Morales"]].map(([label,field,type,placeholder])=>(
-                <div key={field}>
-                  <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">{label.toUpperCase()}</label>
-                  <input type={type} placeholder={placeholder} value={detForm[field]} onChange={e=>setDetForm({...detForm,[field]:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/>
-                </div>
+              {[["Nombre del imputado","nombre","text","Ej: Carlos Rojas"],["RUT","rut","text","Ej: 14.321.000-K"],["Motivo de la orden","motivo","text","Ej: Incumplimiento de libertad condicional"],["Oficial emisor","oficial","text","Tu nombre o rango"]].map(([label,field,type,ph])=>(
+                <div key={field}><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">{label.toUpperCase()}</label><input type={type} placeholder={ph} value={ordForm[field]} onChange={e=>setOrdForm({...ordForm,[field]:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/></div>
               ))}
-              <div>
-                <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">TURNO</label>
-                <select value={detForm.turno} onChange={e=>setDetForm({...detForm,turno:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none appearance-none" style={INPUT_STYLE}>
-                  {["Mañana","Tarde","Nocturno"].map(t=><option key={t}>{t}</option>)}
+              <div><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">TIPO DE ORDEN</label>
+                <select value={ordForm.tipo} onChange={e=>setOrdForm({...ordForm,tipo:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none appearance-none" style={INPUT_STYLE}>
+                  {["Arresto","Allanamiento","Citación","Detención preventiva","Extradición"].map(t=><option key={t}>{t}</option>)}
                 </select>
               </div>
               <div className="flex gap-3 justify-end mt-1">
-                <button onClick={()=>setShowDetModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
-                <button onClick={addDetenido} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{background:`${GCOLOR}20`,color:GCOLOR,border:`1px solid ${GCOLOR}40`}}><Check size={13}/> Registrar</button>
+                <button onClick={()=>setShowOrdModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
+                <button onClick={addOrden} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{background:`${GCOLOR}20`,color:GCOLOR,border:`1px solid ${GCOLOR}40`}}><Check size={13}/> Emitir Orden</button>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── MODAL: NUEVO OPERATIVO ── */}
+      {/* ── MODAL: NUEVO ANTECEDENTE ── */}
       <AnimatePresence>
-        {showOpeModal && (
-          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background:"rgba(0,0,0,0.8)", backdropFilter:"blur(6px)" }} onClick={()=>setShowOpeModal(false)}>
+        {showAntModal && (
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background:"rgba(0,0,0,0.8)", backdropFilter:"blur(6px)" }} onClick={()=>setShowAntModal(false)}>
             <motion.div initial={{scale:0.92,opacity:0}} animate={{scale:1,opacity:1}} exit={{scale:0.92,opacity:0}} onClick={e=>e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={MODAL_STYLE}>
               <div className="flex items-center justify-between">
-                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><Radio size={14} style={{color:GCOLOR}}/> NUEVO OPERATIVO</h3>
-                <button onClick={()=>setShowOpeModal(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16}/></button>
+                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><FileText size={14} style={{color:GCOLOR}}/> NUEVO ANTECEDENTE</h3>
+                <button onClick={()=>setShowAntModal(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16}/></button>
               </div>
-              <div>
-                <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">NOMBRE DEL OPERATIVO</label>
-                <input type="text" placeholder="Ej: Operativo Sector Norte" value={opeForm.nombre} onChange={e=>setOpeForm({...opeForm,nombre:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">TIPO</label>
-                  <select value={opeForm.tipo} onChange={e=>setOpeForm({...opeForm,tipo:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none appearance-none" style={INPUT_STYLE}>
-                    {["Patrullaje","Control","Allanamiento","Emergencia","Investigación"].map(t=><option key={t}>{t}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">PERSONAL</label>
-                  <input type="number" placeholder="Nº efectivos" value={opeForm.personal} onChange={e=>setOpeForm({...opeForm,personal:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/>
-                </div>
-              </div>
-              <div>
-                <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">OFICIAL A CARGO</label>
-                <input type="text" placeholder="Ej: Cap. Rojas" value={opeForm.oficial} onChange={e=>setOpeForm({...opeForm,oficial:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/>
-              </div>
+              {[["Nombre completo","nombre","text","Ej: Juan Pérez Soto"],["RUT","rut","text","Ej: 18.432.210-K"],["Delito / Infracción","delito","text","Ej: Robo con fuerza"],["Descripción (opcional)","descripcion","text","Detalles adicionales"],["Oficial a cargo","oficial","text","Tu nombre o rango"]].map(([label,field,type,ph])=>(
+                <div key={field}><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">{label.toUpperCase()}</label><input type={type} placeholder={ph} value={antForm[field]} onChange={e=>setAntForm({...antForm,[field]:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/></div>
+              ))}
               <div className="flex gap-3 justify-end mt-1">
-                <button onClick={()=>setShowOpeModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
-                <button onClick={addOperativo} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{background:`${GCOLOR}20`,color:GCOLOR,border:`1px solid ${GCOLOR}40`}}><Check size={13}/> Crear Operativo</button>
+                <button onClick={()=>setShowAntModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
+                <button onClick={addAntecedente} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{background:`${GCOLOR}20`,color:GCOLOR,border:`1px solid ${GCOLOR}40`}}><Check size={13}/> Registrar</button>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── MODAL: NUEVO PARTE ── */}
+      {/* ── MODAL: NUEVA EVIDENCIA ── */}
       <AnimatePresence>
-        {showParteModal && (
-          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background:"rgba(0,0,0,0.8)", backdropFilter:"blur(6px)" }} onClick={()=>setShowParteModal(false)}>
+        {showEviModal && (
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background:"rgba(0,0,0,0.8)", backdropFilter:"blur(6px)" }} onClick={()=>setShowEviModal(false)}>
             <motion.div initial={{scale:0.92,opacity:0}} animate={{scale:1,opacity:1}} exit={{scale:0.92,opacity:0}} onClick={e=>e.stopPropagation()} className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4" style={MODAL_STYLE}>
               <div className="flex items-center justify-between">
-                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><FileText size={14} style={{color:GCOLOR}}/> NUEVO PARTE POLICIAL</h3>
-                <button onClick={()=>setShowParteModal(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16}/></button>
+                <h3 className="font-display text-sm tracking-widest text-white flex items-center gap-2"><Search size={14} style={{color:GCOLOR}}/> NUEVA EVIDENCIA</h3>
+                <button onClick={()=>setShowEviModal(false)} className="text-slate-500 hover:text-white transition-colors"><X size={16}/></button>
               </div>
-              <div>
-                <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">DESCRIPCIÓN DEL PARTE</label>
-                <input type="text" placeholder="Ej: Robo con fuerza en Local Comercial" value={parteForm.titulo} onChange={e=>setParteForm({...parteForm,titulo:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">TIPO</label>
-                  <select value={parteForm.tipo} onChange={e=>setParteForm({...parteForm,tipo:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none appearance-none" style={INPUT_STYLE}>
-                    {["Delito","Accidente","Denuncia","Informe","Citación"].map(t=><option key={t}>{t}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">RUT IMPUTADO</label>
-                  <input type="text" placeholder="— (si aplica)" value={parteForm.rut} onChange={e=>setParteForm({...parteForm,rut:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/>
-                </div>
-              </div>
-              <div>
-                <label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">OFICIAL REDACTOR</label>
-                <input type="text" placeholder="Ej: Sgto. Morales" value={parteForm.oficial} onChange={e=>setParteForm({...parteForm,oficial:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/>
+              {[["Título de la evidencia","titulo","text","Ej: Grabación sector norte"],["Referencia de caso","casoRef","text","Ej: ORD-001 / ANT-002"],["Descripción","descripcion","text","Detalles sobre la evidencia"],["Oficial responsable","oficial","text","Tu nombre o rango"]].map(([label,field,type,ph])=>(
+                <div key={field}><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">{label.toUpperCase()}</label><input type={type} placeholder={ph} value={eviForm[field]} onChange={e=>setEviForm({...eviForm,[field]:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none" style={INPUT_STYLE} onFocus={INPUT_FOCUS} onBlur={INPUT_BLUR}/></div>
+              ))}
+              <div><label className="font-display text-[9px] tracking-widest text-slate-500 mb-1.5 block">TIPO DE EVIDENCIA</label>
+                <select value={eviForm.tipo} onChange={e=>setEviForm({...eviForm,tipo:e.target.value})} className="w-full px-4 py-2.5 rounded-xl font-body text-sm outline-none appearance-none" style={INPUT_STYLE}>
+                  {["Fotografía","Video","Documento","Objeto","Testimonio"].map(t=><option key={t}>{t}</option>)}
+                </select>
               </div>
               <div className="flex gap-3 justify-end mt-1">
-                <button onClick={()=>setShowParteModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
-                <button onClick={addParte} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{background:`${GCOLOR}20`,color:GCOLOR,border:`1px solid ${GCOLOR}40`}}><Check size={13}/> Crear Parte</button>
+                <button onClick={()=>setShowEviModal(false)} className="px-5 py-2.5 rounded-xl font-display text-xs tracking-widest text-slate-400 hover:text-white transition-colors">Cancelar</button>
+                <button onClick={addEvidencia} className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs tracking-widest transition-all" style={{background:`${GCOLOR}20`,color:GCOLOR,border:`1px solid ${GCOLOR}40`}}><Check size={13}/> Registrar</button>
               </div>
             </motion.div>
           </motion.div>
@@ -1984,7 +1886,6 @@ function GepolSection({ discordUser }) {
     </motion.div>
   )
 }
-
 const AUPOL_COLOR = "#22c55e"
 const AUPOL_PROCEDIMIENTOS_INIT = []
 const AUPOL_PATRULLAJES_INIT = []
@@ -2451,10 +2352,10 @@ function AntecedentesSection({ discordUser }) {
   const [ordForm, setOrdForm] = useState({ nombre:"", rut:"", tipo:"Arresto", motivo:"", oficial: discordName })
   const [eviForm, setEviForm] = useState({ titulo:"", casoRef:"", tipo:"Fotografía", descripcion:"", oficial: discordName })
 
-  const ACOLOR = "#f97316"
+  const ACOLOR = "#e8d5bc"
   const MODAL_STYLE = { background:"#0a0d14", backdropFilter:"blur(20px)", border:"1px solid rgba(249,115,22,0.25)", boxShadow:"0 0 60px rgba(249,115,22,0.08), 0 24px 64px rgba(0,0,0,0.7)" }
   const INPUT_STYLE = { background:"rgba(249,115,22,0.05)", border:"1px solid rgba(249,115,22,0.2)", color:"#f8fafc" }
-  const IFO = (e) => (e.target.style.borderColor = "rgba(249,115,22,0.6)")
+  const IFO = (e) => (e.target.style.borderColor = "rgba(232,213,188,0.5)")
   const IFB = (e) => (e.target.style.borderColor = "rgba(249,115,22,0.2)")
 
   const filtAnt = antecedentes.filter(a => a.nombre.toLowerCase().includes(search.toLowerCase()) || a.rut.includes(search))
@@ -2484,7 +2385,7 @@ function AntecedentesSection({ discordUser }) {
   }
 
   const EST_ANT = { "Vigente":{ bg:"rgba(239,68,68,0.12)",color:"#ef4444",border:"rgba(239,68,68,0.3)" }, "Archivado":{ bg:"rgba(100,116,139,0.15)",color:"#94a3b8",border:"rgba(100,116,139,0.3)" } }
-  const EST_ORD = { "Activa":{ bg:"rgba(249,115,22,0.12)",color:"#f97316",border:"rgba(249,115,22,0.3)" }, "Ejecutada":{ bg:"rgba(34,197,94,0.12)",color:"#22c55e",border:"rgba(34,197,94,0.3)" }, "Cancelada":{ bg:"rgba(100,116,139,0.15)",color:"#94a3b8",border:"rgba(100,116,139,0.3)" } }
+  const EST_ORD = { "Activa":{ bg:"rgba(249,115,22,0.12)",color:"#e8d5bc",border:"rgba(249,115,22,0.3)" }, "Ejecutada":{ bg:"rgba(34,197,94,0.12)",color:"#22c55e",border:"rgba(34,197,94,0.3)" }, "Cancelada":{ bg:"rgba(100,116,139,0.15)",color:"#94a3b8",border:"rgba(100,116,139,0.3)" } }
   const EST_EVI = { "Resguardada":{ bg:"rgba(139,92,246,0.12)",color:"#8b5cf6",border:"rgba(139,92,246,0.3)" }, "Procesada":{ bg:"rgba(34,197,94,0.12)",color:"#22c55e",border:"rgba(34,197,94,0.3)" } }
 
   const tabs = [
@@ -2524,7 +2425,7 @@ function AntecedentesSection({ discordUser }) {
       <div className="grid grid-cols-3 gap-3">
         {[
           { label:"Total Antecedentes", value: antecedentes.length, color:"#ef4444", bg:"rgba(239,68,68,0.07)", border:"rgba(239,68,68,0.2)" },
-          { label:"Órdenes Activas",    value: ordenes.filter(o=>o.estado==="Activa").length, color:"#f97316", bg:"rgba(249,115,22,0.07)", border:"rgba(249,115,22,0.2)" },
+          { label:"Órdenes Activas",    value: ordenes.filter(o=>o.estado==="Activa").length, color:"#e8d5bc", bg:"rgba(249,115,22,0.07)", border:"rgba(249,115,22,0.2)" },
           { label:"Evidencias",         value: evidencias.length, color:"#8b5cf6", bg:"rgba(139,92,246,0.07)", border:"rgba(139,92,246,0.2)" },
         ].map((s,i) => (
           <div key={i} className="rounded-xl p-4" style={{ background: s.bg, border:`1px solid ${s.border}` }}>
@@ -2543,10 +2444,10 @@ function AntecedentesSection({ discordUser }) {
       {/* TABS */}
       <div className="flex gap-1 p-1 rounded-xl" style={{ background:"rgba(20,12,4,0.6)" }}>
         {tabs.map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg font-display text-[10px] tracking-widest transition-all" style={tab===t.id ? { background:"rgba(249,115,22,0.2)", color:"#f97316" } : { color:"#64748b" }}>
+          <button key={t.id} onClick={() => setTab(t.id)} className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg font-display text-[10px] tracking-widest transition-all" style={tab===t.id ? { background:"rgba(249,115,22,0.2)", color:"#e8d5bc" } : { color:"#64748b" }}>
             <t.icon size={11} />
             {t.label}
-            {t.count > 0 && <span className="px-1.5 py-0.5 rounded font-mono text-[9px]" style={{ background:"rgba(249,115,22,0.25)", color:"#fb923c" }}>{t.count}</span>}
+            {t.count > 0 && <span className="px-1.5 py-0.5 rounded font-mono text-[9px]" style={{ background:"rgba(249,115,22,0.25)", color:"#d4bc9e" }}>{t.count}</span>}
           </button>
         ))}
       </div>
@@ -2795,7 +2696,7 @@ function ComingSoon({ label }) {
   )
 }
 
-function SectionBadge({ emoji, text, color = "#f97316", bg = "rgba(234,88,12,0.12)", border = "rgba(234,88,12,0.3)" }) {
+function SectionBadge({ emoji, text, color = "#e8d5bc", bg = "rgba(234,88,12,0.12)", border = "rgba(234,88,12,0.3)" }) {
   return <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display tracking-widest border" style={{ background: bg, borderColor: border, color }}>{emoji} {text}</span>
 }
 
@@ -2810,7 +2711,7 @@ function LandingPage({ onLogin }) {
         <div className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-start gap-0">
           <motion.div className="flex items-center gap-3 flex-wrap mb-8" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2, duration: 0.7 }}>
             <SectionBadge emoji="🎮" text="PORTAL OFICIAL ARICA CHILE ROLEPLAY ER:LC" />
-            <SectionBadge emoji="" text="ERLC · ACRP" color="#fb923c" bg="rgba(251,146,60,0.12)" border="rgba(251,146,60,0.3)" />
+            <SectionBadge emoji="" text="ERLC · ACRP" color="#d4bc9e" bg="rgba(251,146,60,0.12)" border="rgba(251,146,60,0.3)" />
           </motion.div>
 
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-12 w-full">
@@ -2831,7 +2732,7 @@ function LandingPage({ onLogin }) {
               <div className="rounded-2xl p-6 border" style={{ background: "rgba(15,10,3,0.80)", backdropFilter: "blur(20px)", borderColor: "rgba(255,255,255,0.08)" }}>
                 <div className="flex items-center gap-2 mb-5"><span className="w-2 h-2 rounded-full bg-green-400" style={{ boxShadow: "0 0 8px rgba(74,222,128,0.9)" }} /><span className="text-green-400 font-body text-xs tracking-widest font-bold">Online</span></div>
                 {[
-                  { label: "Jugadores en ACRP", value: "87 / 200", bar: 0.43, color: "#f97316" },
+                  { label: "Jugadores en ACRP", value: "87 / 200", bar: 0.43, color: "#e8d5bc" },
                   { label: "Comunidad Discord",  value: "2.300",   bar: 0.60, color: "#ea580c" },
                   { label: "Rating Melonly",     value: "4.9 / 5", bar: 0.98, color: "#f59e0b" },
                 ].map(s => (
@@ -2857,9 +2758,9 @@ function LandingPage({ onLogin }) {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
-              { num: "01", icon: "💬", title: "Únete al Discord",      desc: "Ingresa al servidor oficial y conecta tu cuenta para acceder al portal.",         color: "#5865F2", href: "https://discord.gg/zuw56G9qGa" },
-              { num: "02", icon: "🛡️", title: "Aprueba la Whitelist", desc: "Responde el cuestionario de roleplay para obtener acceso verificado.",              color: "#f97316", href: null },
-              { num: "03", icon: "🪪",  title: "Crea tu Cédula",       desc: "Registra tu identidad roleplay y accede a todo el ecosistema del portal.",          color: "#fb923c", href: null },
+              { num: "01", icon: "💬", title: "Únete al Discord",      desc: "Ingresa al servidor oficial y conecta tu cuenta para acceder al portal.",         color: "#7289da", href: "https://discord.gg/zuw56G9qGa" },
+              { num: "02", icon: "🛡️", title: "Aprueba la Whitelist", desc: "Responde el cuestionario de roleplay para obtener acceso verificado.",              color: "#e8d5bc", href: null },
+              { num: "03", icon: "🪪",  title: "Crea tu Cédula",       desc: "Registra tu identidad roleplay y accede a todo el ecosistema del portal.",          color: "#d4bc9e", href: null },
             ].map((step, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i*0.12, duration: 0.5 }} onClick={() => step.href && window.open(step.href, "_blank")} className="relative rounded-2xl p-6 border flex flex-col gap-4" style={{ background: "rgba(20,12,4,0.7)", borderColor: `${step.color}22`, backdropFilter: "blur(12px)", cursor: step.href ? "pointer" : "default" }}>
                 <div className="absolute top-4 right-5 font-display text-4xl font-black opacity-10 text-white">{step.num}</div>
@@ -2876,14 +2777,14 @@ function LandingPage({ onLogin }) {
       <div className="relative px-6 pb-20" style={{ zIndex: 1, background: "rgba(10,8,5,0.55)", backdropFilter: "blur(2px)" }}>
         <div className="max-w-5xl mx-auto">
           <div className="mb-10">
-            <SectionBadge emoji="⚙️" text="SERVICIOS" color="#fb923c" bg="rgba(251,146,60,0.08)" border="rgba(251,146,60,0.25)" />
+            <SectionBadge emoji="⚙️" text="SERVICIOS" color="#d4bc9e" bg="rgba(251,146,60,0.08)" border="rgba(251,146,60,0.25)" />
             <h2 className="font-display text-3xl md:text-4xl text-white tracking-wider mt-4">¿QUÉ PUEDES HACER?</h2>
             <p className="text-slate-500 font-body text-sm mt-2">Herramientas y servicios disponibles dentro del portal.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: "🪪", title: "Cédula Digital", desc: "Tu identidad roleplay con datos, profesión y acceso a servicios personalizados.", color: "#fb923c" },
-              { icon: "🛒", title: "Mercado",         desc: "Compra y vende artículos entre jugadores en el marketplace de la comunidad.",    color: "#f97316" },
+              { icon: "🪪", title: "Cédula Digital", desc: "Tu identidad roleplay con datos, profesión y acceso a servicios personalizados.", color: "#d4bc9e" },
+              { icon: "🛒", title: "Mercado",         desc: "Compra y vende artículos entre jugadores en el marketplace de la comunidad.",    color: "#e8d5bc" },
               { icon: "🚗", title: "Concesionario",   desc: "Explora vehículos disponibles y gestiona tu flota personal en el servidor.",       color: "#ec4899" },
               { icon: "🏢", title: "Empresas",         desc: "Crea y administra tu empresa, contrata empleados y genera ingresos.",              color: "#f59e0b" },
             ].map((svc, i) => (
@@ -2976,14 +2877,14 @@ export default function App() {
   const sectionLabel = { home: "PANEL PRINCIPAL", banco: "BANCO METROPOLITANO", mercado: "MERCADO NEGRO", deepweb: "DEEP WEB — MERCADO CLANDESTINO", empresas: "GESTION DE EMPRESAS", municipalidad: "MUNICIPALIDAD ACRP", antecedentes: "REGISTRO DE ANTECEDENTES", faccion: "FACCIONES", comunidad: "COMUNIDAD", gepol: "GEPOL — GESTIÓN POLICIAL", aupol: "AUPOL — ARCHIVO POLICIAL", snsm: "SNSM — SEG. MUNICIPAL" }
 
   return (
-    <div className="min-h-screen font-body" style={{ background: "#0f0a05", color: "#f8fafc" }}>
+    <div className="min-h-screen font-body" style={{ background: "#0a0a0a", color: "#f8fafc" }}>
       <div className="scan-line" />
       <Particles />
       <AnimatePresence mode="wait">
         {view === "landing" && <LandingPage key="landing" onLogin={() => setShowLogin(true)} />}
         {view === "dashboard" && (
           <motion.div key="dashboard" className="flex h-screen overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} discordUser={discordUser} playerData={playerData} onLogout={() => { try { localStorage.removeItem("discord_user") } catch {}; setDiscordUser(null); setPlayerData(null); setView("landing"); setActiveSection("home") }} />
+            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} discordUser={discordUser} playerData={playerData} onLogout={() => { try { localStorage.removeItem("discord_user") } catch {}; setDiscordUser(null); setPlayerData(null); setActiveSection("home"); setView("landing") }} />
             <main className="flex-1 overflow-y-auto p-6 md:p-8 cyber-grid">
               <div className="flex items-center justify-between mb-7">
                 <h1 className="font-display text-white text-sm md:text-base tracking-widest">{sectionLabel[activeSection] ?? "PANEL"}</h1>
@@ -2994,8 +2895,8 @@ export default function App() {
                     <div className="text-[#fb923c] font-body text-[11px]">◉ En línea</div>
                   </div>
                   {discordUser?.avatar
-                    ? <img src={`https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png?size=64`} alt="avatar" className="w-8 h-8 rounded-full object-cover shrink-0" style={{ border: "2px solid rgba(251,146,60,0.5)" }} />
-                    : <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-display text-xs shrink-0" style={{ background: "linear-gradient(135deg,#ea580c,#ec4899)" }}>{(discordUser?.username?.[0] ?? "R").toUpperCase()}</div>
+                    ? <img src={`https://cdn.discordapp.com/avatars/${discordUser.id}/${discordUser.avatar}.png?size=64`} alt="avatar" className="w-8 h-8 rounded-full object-cover shrink-0" style={{ border: "2px solid rgba(201,169,122,0.4)" }} />
+                    : <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-display text-xs shrink-0" style={{ background: "linear-gradient(135deg,#c9a97a,#e8d5bc)" }}>{(discordUser?.username?.[0] ?? "R").toUpperCase()}</div>
                   }
                 </div>
               </div>
