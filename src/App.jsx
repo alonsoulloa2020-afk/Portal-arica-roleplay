@@ -10,19 +10,20 @@ import {
   RefreshCw, ChevronLeft, Landmark, MapPin,
   FileText, PiggyBank, Banknote, Receipt,
   AlertTriangle, Lock, Eye, Radio,
-  BadgeCheck, Search, Siren, Plus
+  BadgeCheck, Search, Siren, Plus,
+  Stethoscope, Wrench, FlameKindling, Microscope
 } from "lucide-react"
 import clsx from "clsx"
 
 const GALLERY_IMAGES = [
-  { src: "/assets/hero1.png", label: "Bomberos Arica — Rescate Vehicular" },
-  { src: "/assets/hero2.png", label: "Staff ACRP — Vehículos Especiales" },
+  { src: "/assets/hero1.png", label: "Bomberos PRCP — Rescate Vehicular" },
+  { src: "/assets/hero2.png", label: "Staff PRCP — Vehículos Especiales" },
   { src: "/assets/hero3.png", label: "Carabineros — Patrullaje Navideño" },
   { src: "/assets/hero4.png", label: "Operativo Mayor — Zona Urbana" },
   { src: "/assets/hero5.png", label: "Carabineros — Unidad Túnel" },
   { src: "/assets/hero6.png", label: "Carabineros — Control Carretero" },
   { src: "/assets/hero7.png", label: "Carabineros — Grúa y Desvío" },
-  { src: "/assets/hero8.png", label: "Bomberos — Segunda Compañía ACRP" },
+  { src: "/assets/hero8.png", label: "Bomberos — Segunda Compañía PRCP" },
   { src: "/assets/hero9.png", label: "PDI — Operativo Autopista" },
 ]
 
@@ -51,14 +52,24 @@ const NAV_ITEMS = [
 ]
 
 const NAV_SISTEMAS = [
-  { id: "gepol", label: "GEPOL (PDI)",  icon: Siren,  color: "#3b82f6" },
-  { id: "aupol", label: "AUPOL (CAR)",  icon: ShieldCheck, color: "#22c55e" },
-  { id: "snsm",  label: "SNSM",   icon: Eye,    color: "#f59e0b" },
+  { id: "gepol",  label: "GEPOL (PDI)",         icon: Siren,        color: "#3b82f6",  rol: "PDI"             },
+  { id: "aupol",  label: "OUTPOL (CAR)",         icon: ShieldCheck,  color: "#22c55e",  rol: "Carabineros"     },
+  { id: "snsm",   label: "SNSM (Municipal)",     icon: Eye,          color: "#f59e0b",  rol: "Municipalidad"   },
+]
+
+// Roles de facciones disponibles en el servidor
+const FACCIONES = [
+  { id: "pdi",         label: "PDI",          fullName: "Policía de Investigaciones",  icon: Siren,        color: "#3b82f6",  sistemas: ["gepol"],         desc: "Investigación criminal, detenciones e inteligencia policial.", emoji: "🕵️" },
+  { id: "carabineros", label: "Carabineros",  fullName: "Carabineros de Chile",        icon: ShieldCheck,  color: "#22c55e",  sistemas: ["aupol"],         desc: "Orden público, patrullajes y control de tránsito.", emoji: "🚔" },
+  { id: "samu",        label: "SAMU",         fullName: "Servicio de Atención Médica Urgente", icon: Stethoscope, color: "#ef4444",  sistemas: [],          desc: "Atención prehospitalaria y emergencias médicas.", emoji: "🚑" },
+  { id: "bomberos",    label: "Bomberos",     fullName: "Cuerpo de Bomberos",          icon: FlameKindling,color: "#f97316",  sistemas: [],                desc: "Combate de incendios, rescate y emergencias.", emoji: "🚒" },
+  { id: "mecanico",    label: "Mecánico",     fullName: "Taller Mecánico PRCP",        icon: Wrench,       color: "#d4bc9e",  sistemas: [],                desc: "Reparación de vehículos y asistencia vial.", emoji: "🔧" },
+  { id: "municipalidad",label: "Municipalidad",fullName: "Municipalidad de PRCP",     icon: Landmark,     color: "#f59e0b",  sistemas: ["snsm"],          desc: "Administración municipal, regulación y servicios comunales.", emoji: "🏛️" },
 ]
 
 const DISCORD_ROLES_SISTEMAS = {
   "Carabineros": {
-    sistema: "GEPOL", fullName: "Gestion Policial ACRP", color: "#3b82f6", icon: "Siren",
+    sistema: "GEPOL", fullName: "Gestion Policial PRCP", color: "#3b82f6", icon: "Siren",
     desc: "Sistema de Gestion Policial — Control de operativos, registros y partes.",
     features: ["Consulta RUT/Placa", "Registro de Detenidos", "Partes Policiales", "Operativos Activos", "Control de Turnos"]
   },
@@ -93,14 +104,14 @@ const RARITY = {
 }
 
 const TEAM = [
-  { role: "Presidente",                     dept: "Dirección Superior",       user: "Saimon",       color: "#e8d5bc" },
-  { role: "Vicepresidente",                 dept: "Dirección Superior",       user: "Koukiz",     color: "#d4bc9e" },
+  { role: "Presidente",                     dept: "Dirección Superior",       user: "Simon",       color: "#e8d5bc" },
+  { role: "Vicepresidente",                 dept: "Dirección Superior",       user: "Cauquis",     color: "#d4bc9e" },
   { role: "Director Asistente",             dept: "Dirección",                user: "Bastián",     color: "#c9a97a" },
   { role: "Community Manager",              dept: "Gestión Comunitaria",      user: "Jordan",      color: "#b8956a" },
-  { role: "Gerente General",               dept: "Gerencia General",         user: "Luiji Capu", color: "#e8d5bc" },
+  { role: "Gerente General",               dept: "Gerencia General",         user: "Logica Puig", color: "#e8d5bc" },
   { role: "Gerente Operativo",             dept: "Operaciones",              user: "Robert",      color: "#c9a97a" },
   { role: "Gerente de Recursos Humanos",   dept: "Recursos Humanos",        user: "Camilo",      color: "#d4bc9e" },
-  { role: "Gerente de Administración",     dept: "Administración",          user: "Shisui",      color: "#b8956a" },
+  { role: "Gerente de Administración",     dept: "Administración",          user: "Chisui",      color: "#b8956a" },
 ]
 
 function Particles() {
@@ -199,7 +210,7 @@ function LoginModal({ onClose, onEnter }) {
         <div className="rounded-2xl p-8 border" style={{ background: "rgba(18,10,3,0.92)", backdropFilter: "blur(25px)", borderColor: "rgba(232,213,188,0.3)", boxShadow: "0 0 60px rgba(232,213,188,0.1), 0 24px 64px rgba(0,0,0,0.6)" }}>
           <button onClick={onClose} className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors p-1"><X size={18} /></button>
           <div className="flex flex-col items-center mb-7">
-            <img src="/assets/logo-fpc.png" alt="Precordillera Roleplay Community" className="w-20 h-20 object-contain mb-3" style={{ mixBlendMode: "screen" }} />
+            <img src="/assets/logo-fpc.png" alt="Precordillera Roleplay Community · IRLS" className="w-20 h-20 object-contain mb-3" style={{ mixBlendMode: "screen" }} />
             <h2 className="font-display text-white text-base tracking-widest">ACCESO AL SERVIDOR</h2>
             <p className="text-slate-500 font-body text-sm mt-1">Verifica tu identidad para continuar</p>
           </div>
@@ -285,20 +296,24 @@ function MarketCard({ item }) {
   )
 }
 
-function Sidebar({ activeSection, setActiveSection, onLogout, discordUser, playerData }) {
+function Sidebar({ activeSection, setActiveSection, onLogout, discordUser, playerData, selectedFaccion }) {
   const primerNombre = playerData?.nombres?.trim().split(/\s+/)[0] || null
   const primerApellido = playerData?.apellidos?.trim().split(/\s+/)[0] || null
   const displayName = primerNombre && primerApellido ? `${primerNombre} ${primerApellido}` : (discordUser?.username ?? "Jugador_001")
   const profesion = playerData?.profesion || null
   const robloxFoto = playerData?.fotoUrl || null
 
+  // What systems can this faction access?
+  const faccionData = FACCIONES.find(f => f.id === selectedFaccion)
+  const allowedSistemas = faccionData ? NAV_SISTEMAS.filter(s => faccionData.sistemas.includes(s.id)) : []
+
   return (
     <aside className="w-[260px] shrink-0 flex flex-col h-full" style={{ background: "#080808", borderRight: "1px solid rgba(249,115,22,0.14)" }}>
       <div className="p-5 flex items-center gap-3 border-b border-violet-500/10">
         <img src="/assets/logo-fpc.png" alt="Logo" className="w-11 h-11 object-contain" style={{ mixBlendMode: "screen" }} />
         <div>
-          <div className="font-display text-white text-[11px] tracking-widest leading-tight">Precordillera RP</div>
-          <div className="font-display text-[#f97316] text-[9px] tracking-[0.25em]">ER:LC Precordillera</div>
+          <div className="font-display text-white text-[11px] tracking-widest leading-tight">PRECORDILLERA RP</div>
+          <div className="font-display text-[#f97316] text-[9px] tracking-[0.25em]">IRLS PRCP</div>
         </div>
       </div>
       <div className="mx-4 mt-4 p-3 rounded-xl border border-violet-500/20 flex items-center gap-3" style={{ background: "rgba(234,88,12,0.07)" }}>
@@ -312,6 +327,7 @@ function Sidebar({ activeSection, setActiveSection, onLogout, discordUser, playe
         <div className="min-w-0 flex-1">
           <div className="text-white font-display text-[11px] tracking-wider truncate">{displayName}</div>
           {profesion && <div className="text-slate-500 font-body text-[10px] truncate">{profesion}</div>}
+          {faccionData && <div className="font-display text-[9px] tracking-widest truncate mt-0.5" style={{ color: faccionData.color }}>{faccionData.emoji} {faccionData.label}</div>}
           <div className="text-[#fb923c] font-body text-[11px] flex items-center gap-1 mt-0.5"><span className="w-1.5 h-1.5 rounded-full bg-[#fb923c] inline-block" style={{ boxShadow: "0 0 6px rgba(251,146,60,0.9)" }} /> En línea</div>
         </div>
       </div>
@@ -326,21 +342,25 @@ function Sidebar({ activeSection, setActiveSection, onLogout, discordUser, playe
             </button>
           )
         })}
-        {/* Sistemas Policiales */}
-        <div className="pt-3 pb-1 px-4">
-          <span className="font-display text-[9px] tracking-[0.2em] text-slate-600 uppercase">Sistemas Policiales</span>
-        </div>
-        {NAV_SISTEMAS.map(({ id, label, icon: Icon, color }) => {
-          const active = activeSection === id
-          return (
-            <button key={id} onClick={() => setActiveSection(id)} className={clsx("relative flex items-center gap-3 px-4 py-2.5 rounded-xl font-body text-sm tracking-wider transition-all duration-200 group text-left")} style={active ? { background: `${color}15`, color: color } : { color: "#64748b" }}>
-              {active && <motion.div layoutId="sistemaIndicator" className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full" style={{ background: color, boxShadow: `0 0 8px ${color}` }} />}
-              <Icon size={16} className="shrink-0 transition-colors" style={active ? { color } : {}} />
-              {label}
-              <span className="ml-auto text-[9px] font-display px-1.5 py-0.5 rounded" style={{ background: `${color}20`, color }}>{id.toUpperCase()}</span>
-            </button>
-          )
-        })}
+        {/* Sistemas Policiales — solo si la facción tiene acceso */}
+        {allowedSistemas.length > 0 && (
+          <>
+            <div className="pt-3 pb-1 px-4">
+              <span className="font-display text-[9px] tracking-[0.2em] text-slate-600 uppercase">Sistemas Institucionales</span>
+            </div>
+            {allowedSistemas.map(({ id, label, icon: Icon, color }) => {
+              const active = activeSection === id
+              return (
+                <button key={id} onClick={() => setActiveSection(id)} className={clsx("relative flex items-center gap-3 px-4 py-2.5 rounded-xl font-body text-sm tracking-wider transition-all duration-200 group text-left")} style={active ? { background: `${color}15`, color: color } : { color: "#64748b" }}>
+                  {active && <motion.div layoutId="sistemaIndicator" className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full" style={{ background: color, boxShadow: `0 0 8px ${color}` }} />}
+                  <Icon size={16} className="shrink-0 transition-colors" style={active ? { color } : {}} />
+                  {label}
+                  <span className="ml-auto text-[9px] font-display px-1.5 py-0.5 rounded" style={{ background: `${color}20`, color }}>{id.toUpperCase()}</span>
+                </button>
+              )
+            })}
+          </>
+        )}
       </nav>
       <div className="p-4 border-t border-violet-500/10 flex flex-col gap-0.5">
         <button className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-500 hover:text-slate-300 font-body text-sm tracking-wider hover:bg-white/4 transition-all"><Settings size={15} /> Ajustes</button>
@@ -379,8 +399,8 @@ function HomeSection({ setActiveSection }) {
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-2"><span className="w-2 h-2 rounded-full bg-green-400" style={{ boxShadow: "0 0 8px rgba(74,222,128,0.9)" }} /><span className="text-green-400 font-body text-xs tracking-widest">Online</span></div>
           <p className="font-body text-slate-400 text-sm tracking-widest mb-1">BIENVENIDO AL SERVIDOR</p>
-          <h2 className="font-display text-3xl text-white tracking-wider glow-violet">ARICA CHILE ROLEPLAY ER:LC</h2>
-          <p className="text-slate-500 font-body text-sm mt-1">Inicia sesión, crea tu cédula y accede a todo el ecosistema ACRP.</p>
+          <h2 className="font-display text-3xl text-white tracking-wider glow-violet">PRECORDILLERA ROLEPLAY ER:LC</h2>
+          <p className="text-slate-500 font-body text-sm mt-1">Inicia sesión, crea tu cédula y accede a todo el ecosistema PRCP.</p>
         </div>
         <img src="/assets/logo-fpc.png" alt="" aria-hidden className="absolute right-6 top-1/2 -translate-y-1/2 w-28 h-28 object-contain opacity-20 pointer-events-none" style={{ mixBlendMode: "screen" }} />
       </div>
@@ -408,7 +428,7 @@ function HomeSection({ setActiveSection }) {
       <div className="flex flex-col gap-4">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display tracking-widest border w-fit" style={{ background: "rgba(234,88,12,0.12)", borderColor: "rgba(234,88,12,0.3)", color: "#e8d5bc" }}>📸 GALERÍA</span>
         <h3 className="font-display text-white text-lg tracking-wider">MOMENTOS DE LA COMUNIDAD</h3>
-        <p className="text-slate-500 font-body text-sm -mt-2">Operativos, patrullajes y servicios registrados por ACRP.</p>
+        <p className="text-slate-500 font-body text-sm -mt-2">Operativos, patrullajes y servicios registrados por PRCP.</p>
         <GalleryCarousel />
       </div>
       <div className="rounded-2xl p-5 border border-violet-500/12" style={{ background: "rgba(20,12,4,0.5)", backdropFilter: "blur(12px)" }}>
@@ -434,7 +454,7 @@ const PROFESIONES_ROL = {
   "Seguridad Ciudadana": "Agente Seg. Ciudadana",
   "Médico": "Médico / SAMU",
   "Civil": "Civil",
-  "Staff": "Staff ACRP",
+  "Staff": "Staff PRCP",
   "Admin": "Administrador",
   "Moderador": "Moderador",
 }
@@ -522,7 +542,7 @@ function CedulaSection({ onSave }) {
   return (
     <motion.div {...slideUp} className="flex flex-col gap-6">
       <div className="flex items-center justify-between p-5 rounded-2xl border border-white/10" style={{ background: "rgba(20,12,4,0.6)", backdropFilter: "blur(20px)" }}>
-        <div><h2 className="font-display text-xl text-[#fb923c] tracking-widest italic">PORTAL IDENTIDAD</h2><p className="text-[10px] tracking-[0.3em] text-slate-500 uppercase font-bold mt-0.5">Arica Chile Roleplay • Sistema Centralizado</p></div>
+        <div><h2 className="font-display text-xl text-[#fb923c] tracking-widest italic">PORTAL IDENTIDAD</h2><p className="text-[10px] tracking-[0.3em] text-slate-500 uppercase font-bold mt-0.5">Precordillera Roleplay • Sistema Centralizado</p></div>
         <div className="text-right"><p className="text-xs text-[#fb923c] font-mono font-bold uppercase tracking-widest flex items-center gap-2 justify-end"><Clock size={13} /> SANTIAGO, CHILE</p><p className="text-xl font-black font-mono text-white">{horaChile}</p></div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-7">
@@ -640,7 +660,7 @@ function CedulaSection({ onSave }) {
               </div>
             )}
           </div>
-          <p className="text-[10px] text-slate-600 uppercase tracking-[0.5em] font-black font-display">Cedula Oficial Arica Chile Roleplay ER:LC</p>
+          <p className="text-[10px] text-slate-600 uppercase tracking-[0.5em] font-black font-display">Cedula Oficial Precordillera Roleplay Community · IRLS</p>
           {identidadFinal.registrado && (
             <div className="flex gap-2 mt-1 flex-wrap justify-center">
               <span className="px-3 py-1 rounded-lg font-body text-xs text-green-400 border border-green-500/30" style={{ background: "rgba(34,197,94,0.08)" }}>✓ Identidad Verificada</span>
@@ -1094,7 +1114,7 @@ function ComunidadSection() {
     <motion.div {...slideUp} className="flex flex-col gap-6">
       <div>
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-display tracking-widest border mb-3" style={{ background: "rgba(234,88,12,0.12)", borderColor: "rgba(234,88,12,0.3)", color: "#e8d5bc" }}>👥 NOSOTROS</span>
-        <h2 className="font-display text-2xl text-white tracking-wider">EQUIPO DIRECTIVO ACRP</h2>
+        <h2 className="font-display text-2xl text-white tracking-wider">EQUIPO DIRECTIVO PRCP</h2>
         <p className="text-slate-500 font-body text-sm mt-1">Dirección y desarrollo continuo de la infraestructura del servidor.</p>
       </div>
       <TeamList animated={false} />
@@ -1157,12 +1177,12 @@ function EmpresasSection() {
       )}
       {activeTab === "mercado" && (
         <div className="rounded-2xl p-5 border border-amber-500/15 flex flex-col gap-4" style={{ background: "rgba(20,12,4,0.6)" }}>
-          <p className="font-display text-xs tracking-widest text-amber-400 mb-2">DIRECTORIO PÚBLICO — EMPRESAS ACRP</p>
+          <p className="font-display text-xs tracking-widest text-amber-400 mb-2">DIRECTORIO PÚBLICO — EMPRESAS PRCP</p>
           {[
-            { nombre: "Bomberos Arica", tipo: "Servicio de Emergencias", color: "#ef4444", icon: "🚒" },
+            { nombre: "Bomberos PRCP", tipo: "Servicio de Emergencias", color: "#ef4444", icon: "🚒" },
             { nombre: "Carabineros de Chile", tipo: "Institución Policial", color: "#22c55e", icon: "🚔" },
-            { nombre: "PDI Arica", tipo: "Policía de Investigaciones", color: "#3b82f6", icon: "🕵️" },
-            { nombre: "SAMU Arica", tipo: "Servicio Médico", color: "#e8d5bc", icon: "🚑" },
+            { nombre: "PDI PRCP", tipo: "Policía de Investigaciones", color: "#3b82f6", icon: "🕵️" },
+            { nombre: "SAMU PRCP", tipo: "Servicio Médico", color: "#e8d5bc", icon: "🚑" },
           ].map((emp, i) => (
             <div key={i} className="flex items-center gap-4 p-4 rounded-xl border" style={{ background: "rgba(0,0,0,0.3)", borderColor: `${emp.color}25` }}>
               <span className="text-2xl">{emp.icon}</span>
@@ -1177,7 +1197,7 @@ function EmpresasSection() {
       )}
       {activeTab === "registro" && (
         <div className="rounded-2xl p-6 border border-amber-500/15 flex flex-col gap-4" style={{ background: "rgba(20,12,4,0.6)" }}>
-          <p className="font-display text-xs tracking-widest text-amber-400 mb-1">REGISTRO LEGAL — SII ARICA RP</p>
+          <p className="font-display text-xs tracking-widest text-amber-400 mb-1">REGISTRO LEGAL — SII PRECORDILLERA RP</p>
           <p className="text-slate-400 font-body text-sm">Para registrar tu empresa ante el SII RP debes completar el formulario y enviarlo al equipo de administración vía Discord.</p>
           <div className="flex flex-col gap-3">
             {[["Nombre de Empresa","text","Nombre legal..."],["RUT Empresa","text","XX.XXX.XXX-X"],["Rubro","text","Ej: Transporte, Retail..."]].map(([label, type, ph], i) => (
@@ -1602,7 +1622,7 @@ function GepolSection({ discordUser }) {
                 <span className="w-2 h-2 rounded-full" style={{ background: "#22c55e", boxShadow: "0 0 8px rgba(34,197,94,0.9)" }} />
                 <span className="font-body text-xs text-green-400">Sistema Activo</span>
               </div>
-              <h2 className="font-display text-xl text-white tracking-widest">GESTIÓN POLICIAL — PDI ARICA</h2>
+              <h2 className="font-display text-xl text-white tracking-widest">GESTIÓN POLICIAL — PDI PRCP</h2>
               <p className="text-slate-500 font-body text-xs mt-0.5">Control de operativos, detenidos, partes y personal en servicio.</p>
             </div>
           </div>
@@ -2006,12 +2026,12 @@ function AupolSection({ discordUser }) {
             </div>
             <div>
               <div className="flex items-center gap-2 mb-0.5">
-                <span className="font-display text-[9px] tracking-[0.2em] px-2 py-0.5 rounded" style={{ background:`${ACOLOR}20`, color:ACOLOR }}>AUPOL</span>
+                <span className="font-display text-[9px] tracking-[0.2em] px-2 py-0.5 rounded" style={{ background:`${ACOLOR}20`, color:ACOLOR }}>OUTPOL</span>
                 <BadgeCheck size={12} style={{ color:ACOLOR }} />
                 <span className="w-2 h-2 rounded-full" style={{ background:"#22c55e", boxShadow:"0 0 8px rgba(34,197,94,0.9)" }} />
                 <span className="font-body text-xs text-green-400">Sistema Activo</span>
               </div>
-              <h2 className="font-display text-xl text-white tracking-widest">CARABINEROS DE CHILE — ARICA</h2>
+              <h2 className="font-display text-xl text-white tracking-widest">CARABINEROS — PRCP</h2>
               <p className="text-slate-500 font-body text-xs mt-0.5">Archivo Único Policial — Procedimientos, patrullajes e infracciones de tránsito.</p>
             </div>
           </div>
@@ -2687,6 +2707,127 @@ function SnsmSection() {
 }
 
 
+function FaccionesSection({ selectedFaccion, onSelectFaccion }) {
+  const [hoveredId, setHoveredId] = useState(null)
+  const currentFaccion = FACCIONES.find(f => f.id === selectedFaccion)
+
+  return (
+    <motion.div {...slideUp} className="flex flex-col gap-6">
+      {/* HEADER */}
+      <div className="rounded-2xl p-5 border" style={{ background: "linear-gradient(135deg,rgba(232,213,188,0.08) 0%,rgba(232,213,188,0.03) 100%)", borderColor: "rgba(232,213,188,0.2)" }}>
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-2xl" style={{ background: "rgba(232,213,188,0.1)", border: "1px solid rgba(232,213,188,0.25)" }}>
+            <Shield size={22} style={{ color: "#e8d5bc" }} />
+          </div>
+          <div>
+            <p className="font-display text-[9px] tracking-[0.2em] mb-0.5" style={{ color: "#e8d5bc" }}>SISTEMA DE ROLES</p>
+            <h2 className="font-display text-lg text-white tracking-widest">SELECCIÓN DE FACCIÓN</h2>
+            <p className="text-slate-500 font-body text-xs mt-0.5">Elige tu institución para acceder a los sistemas operativos correspondientes.</p>
+          </div>
+        </div>
+        {currentFaccion && (
+          <div className="mt-4 flex items-center gap-3 p-3 rounded-xl" style={{ background: `${currentFaccion.color}12`, border: `1px solid ${currentFaccion.color}30` }}>
+            <currentFaccion.icon size={16} style={{ color: currentFaccion.color }} />
+            <span className="font-display text-xs tracking-widest" style={{ color: currentFaccion.color }}>ROL ACTIVO: {currentFaccion.fullName.toUpperCase()}</span>
+            {currentFaccion.sistemas.length > 0 && (
+              <span className="ml-auto font-display text-[9px] tracking-widest px-2 py-0.5 rounded" style={{ background: "rgba(34,197,94,0.12)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.3)" }}>✓ SISTEMAS HABILITADOS</span>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* GRID DE FACCIONES */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {FACCIONES.map((faccion) => {
+          const selected = selectedFaccion === faccion.id
+          const Icon = faccion.icon
+          const hovered = hoveredId === faccion.id
+          return (
+            <motion.div
+              key={faccion.id}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.3 }}
+              onMouseEnter={() => setHoveredId(faccion.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              onClick={() => onSelectFaccion(selected ? null : faccion.id)}
+              className="relative rounded-2xl p-6 border cursor-pointer transition-all duration-300 flex flex-col gap-4 select-none"
+              style={{
+                background: selected
+                  ? `linear-gradient(135deg,${faccion.color}18 0%,${faccion.color}08 100%)`
+                  : hovered ? "rgba(30,20,10,0.8)" : "rgba(20,12,4,0.65)",
+                borderColor: selected ? `${faccion.color}55` : hovered ? `${faccion.color}30` : "rgba(255,255,255,0.06)",
+                boxShadow: selected ? `0 0 28px ${faccion.color}20` : "none",
+              }}
+            >
+              {/* Icon + badge */}
+              <div className="flex items-start justify-between">
+                <div className="p-3 rounded-2xl" style={{ background: `${faccion.color}18`, border: `1px solid ${faccion.color}25` }}>
+                  <Icon size={24} style={{ color: faccion.color }} />
+                </div>
+                {selected && (
+                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="flex items-center gap-1 px-2 py-1 rounded-lg" style={{ background: `${faccion.color}20`, border: `1px solid ${faccion.color}40` }}>
+                    <Check size={10} style={{ color: faccion.color }} />
+                    <span className="font-display text-[9px] tracking-widest" style={{ color: faccion.color }}>ACTIVO</span>
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Info */}
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-2xl">{faccion.emoji}</span>
+                  <h3 className="font-display text-sm tracking-wide text-white">{faccion.label}</h3>
+                </div>
+                <p className="text-slate-500 font-body text-xs leading-relaxed mb-2">{faccion.desc}</p>
+                <p className="text-slate-600 font-display text-[9px] tracking-widest">{faccion.fullName.toUpperCase()}</p>
+              </div>
+
+              {/* Sistemas badge */}
+              <div className="flex items-center gap-2 flex-wrap">
+                {faccion.sistemas.length > 0 ? (
+                  faccion.sistemas.map(s => {
+                    const sistema = NAV_SISTEMAS.find(n => n.id === s)
+                    return sistema ? (
+                      <span key={s} className="font-display text-[9px] tracking-widest px-2 py-0.5 rounded" style={{ background: `${sistema.color}15`, color: sistema.color, border: `1px solid ${sistema.color}30` }}>
+                        ◉ {sistema.label}
+                      </span>
+                    ) : null
+                  })
+                ) : (
+                  <span className="font-display text-[9px] tracking-widest px-2 py-0.5 rounded text-slate-600" style={{ background: "rgba(100,116,139,0.1)", border: "1px solid rgba(100,116,139,0.15)" }}>
+                    Sin sistemas policiales
+                  </span>
+                )}
+              </div>
+
+              {/* Select button */}
+              <button
+                className="w-full py-2.5 rounded-xl font-display text-[10px] tracking-widest transition-all mt-1"
+                style={selected
+                  ? { background: `${faccion.color}20`, color: faccion.color, border: `1px solid ${faccion.color}40` }
+                  : { background: "rgba(255,255,255,0.04)", color: "#64748b", border: "1px solid rgba(255,255,255,0.07)" }
+                }
+              >
+                {selected ? "✓ ROL SELECCIONADO" : "SELECCIONAR ROL"}
+              </button>
+            </motion.div>
+          )
+        })}
+      </div>
+
+      {/* NOTA INFORMATIVA */}
+      <div className="rounded-xl p-4 border border-white/6 flex items-start gap-3" style={{ background: "rgba(0,0,0,0.3)" }}>
+        <AlertTriangle size={14} className="text-slate-600 shrink-0 mt-0.5" />
+        <p className="text-slate-600 font-body text-xs leading-relaxed">
+          <span className="text-slate-400 font-semibold">Importante:</span> Para acceder a los sistemas institucionales (GEPOL, OUTPOL, SNSM) debes tener el rol correspondiente en el Discord oficial de Precordillera Roleplay. El rol seleccionado aquí refleja tu cargo dentro del servidor.
+        </p>
+      </div>
+    </motion.div>
+  )
+}
+
 function ComingSoon({ label }) {
   return (
     <motion.div {...slideUp} className="flex flex-col items-center justify-center h-64 rounded-2xl border border-violet-500/15 gap-3" style={{ background: "rgba(20,12,4,0.4)" }}>
@@ -2710,8 +2851,8 @@ function LandingPage({ onLogin }) {
       <div className="relative min-h-screen flex flex-col items-center justify-center" style={{ zIndex: 1 }}>
         <div className="relative z-10 w-full max-w-6xl mx-auto px-6 flex flex-col items-start gap-0">
           <motion.div className="flex items-center gap-3 flex-wrap mb-8" initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2, duration: 0.7 }}>
-            <SectionBadge emoji="🎮" text="PORTAL OFICIAL ARICA CHILE ROLEPLAY ER:LC" />
-            <SectionBadge emoji="" text="ERLC · ACRP" color="#d4bc9e" bg="rgba(251,146,60,0.12)" border="rgba(251,146,60,0.3)" />
+            <SectionBadge emoji="🎮" text="PORTAL OFICIAL PRECORDILLERA ROLEPLAY ER:LC" />
+            <SectionBadge emoji="" text="ERLC · PRCP" color="#d4bc9e" bg="rgba(251,146,60,0.12)" border="rgba(251,146,60,0.3)" />
           </motion.div>
 
           <div className="flex flex-col lg:flex-row items-start lg:items-center gap-12 w-full">
@@ -2721,7 +2862,7 @@ function LandingPage({ onLogin }) {
                 <span className="block text-5xl md:text-6xl lg:text-7xl text-white">ROLEPLAY</span>
                 <span className="block text-5xl md:text-6xl lg:text-7xl bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(90deg,#f97316,#fbbf24)" }}>COMIENZA AQUÍ</span>
               </h1>
-              <p className="text-slate-400 font-body mt-5 text-base md:text-lg tracking-wide max-w-lg">Inicia sesión, crea tu cédula y accede a todo el ecosistema de Arica Chile Roleplay.</p>
+              <p className="text-slate-400 font-body mt-5 text-base md:text-lg tracking-wide max-w-lg">Inicia sesión, crea tu cédula y accede a todo el ecosistema de Precordillera Roleplay.</p>
               <motion.button onClick={onLogin} className="shimmer-btn mt-8 flex items-center gap-3 px-8 py-4 rounded-2xl font-display text-sm tracking-widest text-white" style={{ background: "linear-gradient(135deg,#5865F2 0%,#4752C4 100%)", boxShadow: "0 0 30px rgba(88,101,242,0.5)" }} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                 <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
                 Iniciar sesión con Discord
@@ -2732,7 +2873,7 @@ function LandingPage({ onLogin }) {
               <div className="rounded-2xl p-6 border" style={{ background: "rgba(15,10,3,0.80)", backdropFilter: "blur(20px)", borderColor: "rgba(255,255,255,0.08)" }}>
                 <div className="flex items-center gap-2 mb-5"><span className="w-2 h-2 rounded-full bg-green-400" style={{ boxShadow: "0 0 8px rgba(74,222,128,0.9)" }} /><span className="text-green-400 font-body text-xs tracking-widest font-bold">Online</span></div>
                 {[
-                  { label: "Jugadores en ACRP", value: "87 / 200", bar: 0.43, color: "#e8d5bc" },
+                  { label: "Jugadores en PRCP", value: "87 / 200", bar: 0.43, color: "#e8d5bc" },
                   { label: "Comunidad Discord",  value: "2.300",   bar: 0.60, color: "#ea580c" },
                   { label: "Rating Melonly",     value: "4.9 / 5", bar: 0.98, color: "#f59e0b" },
                 ].map(s => (
@@ -2745,7 +2886,7 @@ function LandingPage({ onLogin }) {
             </motion.div>
           </div>
         </div>
-        <motion.p className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-widest text-slate-700" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>BETA v1.0 · ARICA CHILE ROLEPLAY ER:LC · 2025</motion.p>
+        <motion.p className="absolute bottom-5 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-widest text-slate-700" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}>BETA v1.0 · PRECORDILLERA ROLEPLAY ER:LC · 2025</motion.p>
       </div>
 
       {/* CÓMO UNIRTE */}
@@ -2803,7 +2944,7 @@ function LandingPage({ onLogin }) {
           <div className="mb-6">
             <SectionBadge emoji="📸" text="GALERÍA" color="#ec4899" bg="rgba(236,72,153,0.08)" border="rgba(236,72,153,0.25)" />
             <h2 className="font-display text-3xl md:text-4xl text-white tracking-wider mt-4">MOMENTOS DE LA COMUNIDAD</h2>
-            <p className="text-slate-500 font-body text-sm mt-2">Operativos, patrullajes y servicios registrados por ACRP.</p>
+            <p className="text-slate-500 font-body text-sm mt-2">Operativos, patrullajes y servicios registrados por PRCP.</p>
           </div>
           <GalleryCarousel />
         </div>
@@ -2828,7 +2969,7 @@ function LandingPage({ onLogin }) {
             {["Normativa General", "Soporte Técnico"].map(link => <span key={link} className="px-3 py-1.5 rounded-lg font-body text-xs text-slate-400 border border-white/8 cursor-pointer hover:text-white transition-colors" style={{ background: "rgba(255,255,255,0.03)" }}>{link}</span>)}
             <a href="https://discord.gg/zuw56G9qGa" target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 rounded-lg font-body text-xs text-slate-400 border border-white/8 cursor-pointer hover:text-white transition-colors" style={{ background: "rgba(255,255,255,0.03)" }}>Discord Oficial</a>
           </div>
-          <p className="text-slate-600 font-body text-xs">Portal <span className="text-[#f97316]">Arica Chile Roleplay ER:LC</span> · 2025</p>
+          <p className="text-slate-600 font-body text-xs">Portal <span className="text-[#f97316]">Precordillera Roleplay Community · IRLS</span> · 2025</p>
         </div>
       </div>
     </motion.div>
@@ -2841,6 +2982,17 @@ export default function App() {
   const [activeSection, setActiveSection] = useState("home")
   const [discordUser, setDiscordUser] = useState(null)
   const [playerData, setPlayerData] = useState(null)  // {nombres, apellidos, profesion, fotoUrl}
+  const [selectedFaccion, setSelectedFaccion] = useState(() => {
+    try { return localStorage.getItem("selected_faccion") || null } catch { return null }
+  })
+
+  const handleSelectFaccion = (faccionId) => {
+    setSelectedFaccion(faccionId)
+    try {
+      if (faccionId) localStorage.setItem("selected_faccion", faccionId)
+      else localStorage.removeItem("selected_faccion")
+    } catch {}
+  }
 
   // Handle Discord OAuth2 implicit flow token in URL hash
   useEffect(() => {
@@ -2874,7 +3026,7 @@ export default function App() {
     }
   }, [])
 
-  const sectionLabel = { home: "PANEL PRINCIPAL", banco: "BANCO METROPOLITANO", mercado: "MERCADO NEGRO", deepweb: "DEEP WEB — MERCADO CLANDESTINO", empresas: "GESTION DE EMPRESAS", municipalidad: "MUNICIPALIDAD ACRP", antecedentes: "REGISTRO DE ANTECEDENTES", faccion: "FACCIONES", comunidad: "COMUNIDAD", gepol: "GEPOL — GESTIÓN POLICIAL", aupol: "AUPOL — ARCHIVO POLICIAL", snsm: "SNSM — SEG. MUNICIPAL" }
+  const sectionLabel = { home: "PANEL PRINCIPAL", banco: "BANCO METROPOLITANO", mercado: "MERCADO NEGRO", deepweb: "DEEP WEB — MERCADO CLANDESTINO", empresas: "GESTION DE EMPRESAS", municipalidad: "MUNICIPALIDAD PRCP", antecedentes: "REGISTRO DE ANTECEDENTES", faccion: "SELECCIÓN DE FACCIÓN", comunidad: "COMUNIDAD", gepol: "GEPOL — GESTIÓN POLICIAL", aupol: "OUTPOL — ARCHIVO POLICIAL", snsm: "SNSM — SEG. MUNICIPAL" }
 
   return (
     <div className="min-h-screen font-body" style={{ background: "#0a0a0a", color: "#f8fafc" }}>
@@ -2884,7 +3036,7 @@ export default function App() {
         {view === "landing" && <LandingPage key="landing" onLogin={() => setShowLogin(true)} />}
         {view === "dashboard" && (
           <motion.div key="dashboard" className="flex h-screen overflow-hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} discordUser={discordUser} playerData={playerData} onLogout={() => { try { localStorage.removeItem("discord_user") } catch {}; setDiscordUser(null); setPlayerData(null); setActiveSection("home"); setView("landing") }} />
+            <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} discordUser={discordUser} playerData={playerData} selectedFaccion={selectedFaccion} onLogout={() => { try { localStorage.removeItem("discord_user") } catch {}; setDiscordUser(null); setPlayerData(null); setActiveSection("home"); setView("landing") }} />
             <main className="flex-1 overflow-y-auto p-6 md:p-8 cyber-grid">
               <div className="flex items-center justify-between mb-7">
                 <h1 className="font-display text-white text-sm md:text-base tracking-widest">{sectionLabel[activeSection] ?? "PANEL"}</h1>
@@ -2911,7 +3063,7 @@ export default function App() {
                 {activeSection === "gepol"         && <GepolSection         key="gepol"          discordUser={discordUser} />}
                 {activeSection === "aupol"         && <AupolSection         key="aupol"          discordUser={discordUser} />}
                 {activeSection === "snsm"          && <SnsmSection          key="snsm"          />}
-                {activeSection === "faccion"       && <ComingSoon       key="faccion"       label="Facciones" />}
+                {activeSection === "faccion"       && <FaccionesSection key="faccion" selectedFaccion={selectedFaccion} onSelectFaccion={handleSelectFaccion} />}
                 {activeSection === "comunidad"     && <ComunidadSection key="comunidad"     />}
               </AnimatePresence>
             </main>
